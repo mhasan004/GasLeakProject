@@ -2,16 +2,13 @@ import dash
 import dash_core_components as dcc   # has a component for every HTML tag (html.H1() puts the string in a h1 html tag for ex)
 import dash_html_components as html  # 
 
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css'] #CSS file
-
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets) #running the app with the CSS file
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']   # external cssCSS file
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)    # initialize app with the external CSS file
 
 app.layout = html.Div(
     children = [                            # children is like an array. html components and a graph.
         html.H1(children='Hello Dash'),     # same as html.H1('Hello Dash')
-        html.Div(children='''
-            Dash: A web application framework for Python.
-        '''),
+        html.Div(children="Dash: A web application framework for Python."),
 
         dcc.Graph(
             id='bar_graph',     #id of the graph
@@ -43,7 +40,6 @@ app.layout = html.Div(
                 }
             }
         )
-
     ]
 )
 
