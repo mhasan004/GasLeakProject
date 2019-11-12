@@ -39,7 +39,6 @@ fig = go.Figure(
         )
     )
 )
-
 fig.update_layout(
         title = 'Most trafficked US airports<br>(Hover for airport names)',
         geo = dict(
@@ -101,7 +100,7 @@ if __name__ == '__main__':
 
 
 
-    
+
 # Valid properties:
 #         autocolorscale
 #             Determines whether the colorscale is a default palette
