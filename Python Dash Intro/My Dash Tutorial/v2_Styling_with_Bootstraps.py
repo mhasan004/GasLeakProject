@@ -2,7 +2,8 @@ import dash
 import dash_core_components as dcc                                                                  # has a component for every HTML tag (html.H1() puts the string in a h1 html tag for ex)
 import dash_html_components as html  
 
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']                               # external cssCSS file
+# Bootstrap CSS:
+external_stylesheets = ['https://codepen.io/amyoshino/pen/jzXypZ.css']                              # external CSS file
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)                                # initialize app with the external CSS file
 
 app.layout = html.Div(   
@@ -71,7 +72,7 @@ app.layout = html.Div(
                 )
             ], className="six columns"),
         ])
-    ])
+    ],  className='ten columns offset-by-one')                                      #***just added one column padding on the sides to make it look better
 )
 
 if __name__ == '__main__':
