@@ -45,21 +45,29 @@ app.layout = html.Div([
     [dash.dependencies.Input('my-dropdown', 'value')])
 def update_output(value):
     what_city_to_graph = {
-        'NYC': [1,2,3],#[[1,2,3],[4, 5, 6],[7, 8, 9]],
+        'NYC': [3, 6, 7],#[[1,2,3],[4, 5, 6],[7, 8, 9]],
         'MTL': [1, 2, 4],
-        'SF': [5, 3, 6]
+        'SF':  [5, 3, 6]
     }
     return {
         'data': [
             {
-            'type': 'scatter',
-            'x': [1,2,3],
-            'y': what_city_to_graph['NYC'],
+                'type': 'scatter',
+                'x': [1,2,3],
+                'y': what_city_to_graph['NYC'],
+                'name': 'NYC'
             },
             {
-            'type': 'scatter',
-            'x': [1,2,3],
-            'y': what_city_to_graph['SF'],
+                'type': 'scatter',
+                'x': [1,2,3],
+                'y': what_city_to_graph['SF'],
+                'name': 'SF'
+            },
+            {
+                'type': 'scatter',
+                'x': [1,2,3],
+                'y': what_city_to_graph['MTL'],
+                'name': 'MT',
             }
         ],
         'layout': {

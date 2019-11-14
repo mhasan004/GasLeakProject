@@ -38,13 +38,15 @@ def update_output(value):
     return {
         'data': [
             {
-            'type': 'scatter',
-            'y': what_city_to_graph[value]  # loading the y axis array values.
+                'type': 'scatter',
+                'y': what_city_to_graph[value],  # loading the y axis array values.
+                'name': value
             },
             {
-            'type': 'scatter',
-            'x': [1,2,3],
-            'y': what_city_to_graph['SF'],
+                'type': 'scatter',
+                'x': [1,2,3],
+                'y': what_city_to_graph['SF'],
+                'value': 'SF'
             }
         ],
         'layout': {
