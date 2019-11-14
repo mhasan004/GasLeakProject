@@ -44,13 +44,13 @@ app.layout = html.Div(
             ], className="six columns"),
             html.Div([          # INDIVIDUAL GRAPH COLUMN LENGTH DIV
                 dcc.Graph(
-                    id='bar_graph2',     
+                    id='lines_graph',     
                     figure={
                         'data': [
-                            {'x': [1, 2, 3], 'y': [4, 1, 2], 'type': 'line', 'name': 'Line Graph A'},
-                            {'x': [1, 2, 3], 'y': [2, 4, 5], 'type': 'line', 'name': 'Line Graph B'},
-                            {'x': [1, 2, 3], 'y': [5, 2, 3], 'type': 'line', 'name': 'Line Graph C'},
-                        ],
+                            {'x': [1, 2, 3, 4, 5, 6], 'y': [4, 1, 2,5,6,2], 'type': 'line', 'name': 'Line Graph A'},
+                            {'x': [1, 2, 3, 4, 5, 6], 'y': [2, 4, 5,3,5,7], 'type': 'line', 'name': 'Line Graph B'},
+                            {'x': [1, 2, 3, 4, 5, 6], 'y': [5, 2, 3,2,8,3], 'type': 'line', 'name': 'Line Graph C'},
+                         ],
                         'layout': {
                             'title': 'Dash Data Visualization',
                             'xaxis' : dict(
