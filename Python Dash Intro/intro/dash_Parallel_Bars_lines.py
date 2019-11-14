@@ -3,8 +3,8 @@ import dash_html_components as html
 import dash_core_components as dcc
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+
 app.layout = html.Div([
     dcc.Dropdown(
         id='my-dropdown',
@@ -21,17 +21,31 @@ app.layout = html.Div([
             'showSendToCloud': True,
             'plotlyServerURL': 'https://plot.ly'
         }
-    )
+    ),
+    dcc.Graph(
+        id='scatter_plot',     #id of the graph
+        figure={
+            'data': [
+                # 'x': [what x location is the bars?]
+                # 'Y': set: [height of bars/points]
+                {'x': [1, 2, 3], 'y': [4, 1, 2], 'type': 'bar', 'name': 'Bar Graph A'},
+                {'x': [1, 2, 3], 'y': [2, 4, 5], 'type': 'bar', 'name': 'Bar Graph B'},
+                {'x': [1, 2, 3], 'y': [5, 2, 3], 'type': 'line', 'name': 'Line Graph C'},
+            ],
+            'layout': {
+                'title': 'Dash Data Visualization 2'
+            }
+        }
+     )
 ])
 
 
 @app.callback(
     dash.dependencies.Output('graph', 'figure'),
     [dash.dependencies.Input('my-dropdown', 'value')])
-
 def update_output(value):
-    what_city_to_graph = {                    #This is a dictinary where the keys are cities and values are the y vals for those cities 
-        'NYC': [4,2,3],
+    what_city_to_graph = {
+        'NYC': [1,2,3],#[[1,2,3],[4, 5, 6],[7, 8, 9]],
         'MTL': [1, 2, 4],
         'SF': [5, 3, 6]
     }
@@ -39,7 +53,8 @@ def update_output(value):
         'data': [
             {
             'type': 'scatter',
-            'y': what_city_to_graph[value]  # loading the y axis array values.
+            'x': [1,2,3],
+            'y': what_city_to_graph['NYC'],
             },
             {
             'type': 'scatter',
@@ -51,6 +66,11 @@ def update_output(value):
             'title': value
         }
     }
+
+
+
+
+
 
 
 if __name__ == '__main__':
