@@ -1,7 +1,17 @@
+# pip install dash and plotly andplotly-geo
+# pip3 install auxlib # auxlib is required in python 3.6.1
+# pip3 install conda==4.2.7
+# conda update conda
+# pip install geopandas==0.3.0
+# pip install pyshp==1.2.10
+# pip install shapely==1.6.3
 import dash
 import dash_core_components as dcc                                                                  # has a component for every HTML tag (html.H1() puts the string in a h1 html tag for ex)
 import dash_html_components as html  
-import plotly.graph_objects as go
+import plotly.graph_objects as go           # for plotly parallel plots
+import plotly.figure_factory as ff          # for map
+
+# plotly Parallel coords:
 fig = go.Figure(data=
     go.Parcoords(
         line_color='blue',
@@ -21,6 +31,17 @@ fig = go.Figure(data=
         ])
     )
 )
+# plotly map:
+fips = ['06021', '06023', '06027',
+        '06029', '06033', '06059',
+        '06047', '06049', '06051',
+        '06055', '06061']
+values = range(len(fips))
+fig_map = ff.create_choropleth(fips=fips, values=values)
+fig_map.layout.template = None
+
+
+
 # Bootstrap CSS:
 external_stylesheets = ['https://codepen.io/amyoshino/pen/jzXypZ.css']                              # external CSS file
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)                                # initialize app with the external CSS file
@@ -112,6 +133,12 @@ app.layout = html.Div(
             dcc.Graph(
                 id = "Parallel_coord",
                 figure = fig
+            )
+        ],  className = "row"),
+        html.Div([          #  ROW 3 DIV HAS PLOTLY PARALLEL COORDINATE
+            dcc.Graph(
+                id = "map",
+                figure = fig_map
             )
         ],  className = "row")
     ],  className='ten columns offset-by-one')                                      #***just added one column padding on the sides to make it look better
