@@ -31,7 +31,7 @@ colors = {
 app.layout = html.Div(  
     html.Div(style={'backgroundColor': colors['background']}, children=[              # GLOBAL DIV                                                                
         html.Div([          # COMPONENT ROW 1 DIV
-            html.H1(children='Hello Dash',
+            html.H1(children='Hello Dash B',
                 style={
                     'textAlign': 'center',
                     'color': colors['text']

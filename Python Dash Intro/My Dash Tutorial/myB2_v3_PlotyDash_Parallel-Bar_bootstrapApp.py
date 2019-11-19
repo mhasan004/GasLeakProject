@@ -6,18 +6,30 @@ fig = go.Figure(data=
     go.Parcoords(
         line_color='blue',
         dimensions = list([
-            dict(range = [1,5],
-                 constraintrange = [1,2], # change this range by dragging the pink line
-                 label = 'A', values = [1,4]),
-            dict(range = [1.5,5],
-                 tickvals = [1.5,3,4.5],
-                 label = 'B', values = [3,1.5]),
-            dict(range = [1,5],
-                 tickvals = [1,2,4,5],
-                 label = 'C', values = [2,4],
-                 ticktext = ['text 1', 'text 2', 'text 3', 'text 4']),
-            dict(range = [1,5],
-                 label = 'D', values = [4,2])
+            dict(                           # 1) dict() the first column and it has:
+                range = [1,5],                  # 3) the range of this bar
+                constraintrange = [1,2],        # 4) the range of the bar i slide around in this column
+                label = 'A',                    # 2) Name of the bar
+                values = [1,4,3]                # 5) the values in that bar. each index is connected to the index of the next bar
+            ),
+             dict(
+                label = 'B',
+                range = [1.5,5],
+                tickvals = [1.5,3,4.5],  
+                values = [3,1.5]
+                 ),
+            dict(
+                label = 'C', 
+                ticktext = ['text 1', 'text 2', 'text 3', 'text 4'],
+                range = [1,5],
+                tickvals = [1,2,4,5], 
+                values = [2,4]
+            ),
+            dict(
+                label = 'D', 
+                range = [1,5],
+                values = [4,2]
+            )
         ])
     )
 )
@@ -31,7 +43,7 @@ colors = {
 app.layout = html.Div(  
     html.Div(style={'backgroundColor': colors['background']}, children=[              # GLOBAL DIV                                                                
         html.Div([          # COMPONENT ROW 1 DIV
-            html.H1(children='Hello Dash',
+            html.H1(children='Hello Dash B',
                 style={
                     'textAlign': 'center',
                     'color': colors['text']
@@ -74,46 +86,18 @@ app.layout = html.Div(
                         }
                     }
                 ),
-            ], className="six columns"),
+            ], className="four columns"),
+
+
             html.Div([          # INDIVIDUAL GRAPH COLUMN LENGTH DIV
                 dcc.Graph(
                     id='line_graph',     
-                    figure={
-                        'data': [
-                            {'x': [1, 2, 3, 4, 5, 6], 'y': [4, 1, 2,5,6,2], 'type': 'line', 'name': 'Line Graph A'},
-                            {'x': [1, 2, 3, 4, 5, 6], 'y': [2, 4, 5,3,5,7], 'type': 'line', 'name': 'Line Graph B'},
-                            {'x': [1, 2, 3, 4, 5, 6], 'y': [5, 2, 3,2,8,3], 'type': 'line', 'name': 'Line Graph C'},
-                        ],
-                        'layout': {
-                            'title': 'Dash Data Visualization',
-                            'xaxis' : dict(
-                                title='x Axis',
-                                titlefont=dict(
-                                family='Courier New, monospace',
-                                size=20,
-                                color='#7f7f7f'
-                            )),
-                            'yaxis' : dict(
-                                title='y Axis',
-                                titlefont=dict(
-                                family='Helvetica, monospace',
-                                size=20,
-                                color='#7f7f7f'
-                            )),
-                            'plot_bgcolor': colors['background'],
-                            'paper_bgcolor': colors['background'],
-                            'font': {'color': colors['text']}
-                        }
-                    }
+                    figure=fig       
                 )
-            ], className="six columns"),
-        ], className = "row"),
-        html.Div([          #  ROW 3 DIV HAS PLOTLY PARALLEL COORDINATE
-            dcc.Graph(
-                id = "Parallel_coord",
-                figure = fig
-            )
-        ],  className = "row")
+            ], className="eight columns"),
+            
+        ], className = "row")
+
     ],  className='ten columns offset-by-one')                                      #***just added one column padding on the sides to make it look better
 )
 

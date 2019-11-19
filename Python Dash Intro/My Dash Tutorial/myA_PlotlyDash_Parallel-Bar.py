@@ -1,3 +1,4 @@
+# Just plotting the dash bar graphs and a plotly to dash parallelcoord graph beneath it. no bootstrap
 # To import plotly grpahs into dcc.Graph(). just make a fig = go.figure(...) then inside dcc.Grph() make figure = fig
 import dash
 import dash_core_components as dcc   # has a component for every HTML tag (html.H1() puts the string in a h1 html tag for ex)
@@ -31,7 +32,7 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)    # initia
 
 app.layout = html.Div(
     children = [                            # children is like an array. html components and a graph.
-        html.H1(children='Hello Dash'),     # same as html.H1('Hello Dash')
+        html.H1(children='Hello Dash A'),     # same as html.H1('Hello Dash')
         html.Div(children="Dash: A web application framework for Python."),
         dcc.Graph(
             id='bar_graph',     #id of the graph
