@@ -1,0 +1,9 @@
+pip install Dash
+pip install dash_core_components
+pip install plotly.graph_objects
+
+
+----anaconde terminal:
+conda install plotly
+conda install geopandas
+

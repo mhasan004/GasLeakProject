@@ -1,3 +1,4 @@
+# Bar and Parallel graph in one row
 import dash
 import dash_core_components as dcc                                                                  # has a component for every HTML tag (html.H1() puts the string in a h1 html tag for ex)
 import dash_html_components as html  
@@ -6,27 +7,28 @@ fig = go.Figure(data=
     go.Parcoords(
         line_color='blue',
         dimensions = list([
+            dict(
+                range = [1,5],              # range of the bar. if i dont have this, will be long (bad)
+                tickvals = [1,2,4,5],
+                label = 'Stuff',            # name of the bar 
+                values = [2,4],         # marks on the bar
+                ticktext = ['text 1', 'text 2', 'text 3', 'text 4']
+            ),
             dict(                           # 1) dict() the first column and it has:
-                range = [1,5],                  # 3) the range of this bar
-                constraintrange = [1,2],        # 4) the range of the bar i slide around in this column
                 label = 'A',                    # 2) Name of the bar
-                values = [1,4,3]                # 5) the values in that bar. each index is connected to the index of the next bar
-            ),
-             dict(
-                label = 'B',
-                range = [1.5,5],
-                tickvals = [1.5,3,4.5],  
-                values = [3,1.5]
-                 ),
-            dict(
-                label = 'C', 
-                ticktext = ['text 1', 'text 2', 'text 3', 'text 4'],
-                range = [1,5],
                 tickvals = [1,2,4,5], 
-                values = [2,4]
+                range = [1,5],                  # 3) the range of this bar. If i dont set it, bar will be long
+                values = [1,4]                # 5) the values in that bar. each index is connected to the index of the next bar
             ),
             dict(
-                label = 'D', 
+                label = 'B',
+                range = [1,5],                
+                tickvals = [1,2,4,5],  
+                values = [3,1.5]
+            ),
+            dict(
+                label = 'c', 
+                tickvals = [1,2,4,5], 
                 range = [1,5],
                 values = [4,2]
             )
