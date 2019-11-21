@@ -1,0 +1,4 @@
+sudo apt update
+pip3 install conda
+pip3 install ploty-geo
+pip3 install dash
