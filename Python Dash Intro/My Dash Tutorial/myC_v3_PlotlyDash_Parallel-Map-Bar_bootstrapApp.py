@@ -70,7 +70,7 @@ colors = {
 app.layout = html.Div(  
     html.Div(style={'backgroundColor': colors['background']}, children=[              # GLOBAL DIV                                                                
         html.Div([          # COMPONENT ROW 1 DIV
-            html.H1(children='Gas Leaks,
+            html.H1(children='Gas Leaks',
                 style={
                     'textAlign': 'center',
                     'color': colors['text']
