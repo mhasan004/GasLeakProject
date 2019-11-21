@@ -100,7 +100,7 @@ colors = {
 #colors of maps
 fig_map.update_layout(
     plot_bgcolor = 'white',
-    paper_bgcolor = 'black'
+    paper_bgcolor = 'white'#'black'
 )
 
 
