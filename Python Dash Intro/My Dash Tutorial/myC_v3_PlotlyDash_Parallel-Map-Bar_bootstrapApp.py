@@ -11,6 +11,7 @@ import pandas as pd
 df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2011_february_us_airport_traffic.csv')
 df['text'] = df['airport'] + '' + df['city'] + ', ' + df['state'] + '' + 'Arrivals: ' + df['cnt'].astype(str)
 
+df2 = pd.read_csv("https://raw.githubusercontent.com/bcdunbar/datasets/master/parcoords_data.csv")
 
 
 fig_map = go.Figure(data=go.Scattergeo(
@@ -25,7 +26,34 @@ fig_map.update_layout(
     title = 'This map will show all the gas leaks reported',
     geo_scope='usa',
 )
-
+fig_parallel2 = go.Figure(data=
+    go.Parcoords(
+        line = dict(color = df2['colorVal'],
+                   colorscale = 'Electric',
+                   showscale = True,
+                   cmin = -4000,
+                   cmax = -100),
+        dimensions = list([
+            dict(range = [32000,227900],
+                 constraintrange = [100000,150000],
+                 label = "Block Height", values = df2['blockHeight']),
+            dict(range = [0,700000],
+                 label = 'Block Width', values = df2['blockWidth']),
+            dict(tickvals = [0,0.5,1,2,3],
+                 ticktext = ['A','AB','B','Y','Z'],
+                 label = 'Cyclinder Material', values = df2['cycMaterial']),
+            dict(range = [-1,4],
+                 tickvals = [0,1,2,3],
+                 label = 'Block Material', values = df2['blockMaterial']),
+            dict(range = [134,3154],
+                 visible = True,
+                 label = 'Total Weight', values = df2['totalWeight']),
+            dict(range = [9,19984],
+                 label = 'Assembly Penalty Wt', values = df2['assemblyPW']),
+            dict(range = [49000,568000],
+                 label = 'Height st Width', values = df2['HstW'])])
+    )
+)
 
 
 fig = go.Figure(data=
@@ -141,8 +169,17 @@ app.layout = html.Div(
                     id='map',     
                     figure=fig_map       
                 )
-            ], className="twelve columns"),
+            ], className="six columns"),
+            html.Div([          # INDIVIDUAL GRAPH COLUMN LENGTH DIV
+                dcc.Graph(
+                    id='parallel2',     
+                    figure=fig_parallel2       
+                )
+            ], className="six columns"),
+
         ], className = "row"),
+
+
     ],  className='ten columns offset-by-one')                                      #***just added one column padding on the sides to make it look better
 )
 
