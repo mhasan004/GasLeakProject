@@ -1,4 +1,38 @@
 sudo apt update
-pip3 install conda
-pip3 install ploty-geo
 pip3 install dash
+pip3 install numpy
+pip3 install conda
+pip3 install pandas
+
+pip install geopandas==0.3.0
+pip install pyshp==1.2.10
+pip install shapely==1.6.3
+
+
+
+
+# or using conda can do:
+conda install plotly -y
+conda install geopandas -y
+############################# ANACONDA INSTALL #####################################
+1) Install Anaconda and extrract file: https://www.anaconda.com/distribution/
+2) use this guide
+    a) cd to the tmp directory of ubuntu
+    b) curl -O https://repo.anaconda.com/archive/Anaconda3-2019.03-Linux-x86_64.sh
+    c) sha256sum Anaconda3-2019.03-Linux-x86_64.sh
+    d) bash Anaconda3-2019.03-Linux-x86_64.sh
+        do what it tells u to do to install it
+    e) source ~/.bashrc
+    f) conda list
+
+    g) if it didnt work do: https://stackoverflow.com/questions/49821930/conda-command-not-found-even-though-path-is-exported
+        export PATH=~/anaconda3/bin:$PATH
+        nano ~/.bash_profile
+            export PATH=/usr/local/anaconda3/bin:$PATH
+        source ~/.bash_profile
+    
+    conda update -n base -c defaults conda
+    conda update conda
+ ##############################################################################       
+
+
