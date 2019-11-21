@@ -14,17 +14,17 @@ df['text'] = df['airport'] + '' + df['city'] + ', ' + df['state'] + '' + 'Arriva
 
 
 fig_map = go.Figure(data=go.Scattergeo(
-        lon = df['long'],
-        lat = df['lat'],
-        text = df['text'],
-        mode = 'markers',
-        marker_color = df['cnt'],
-        ))
+    lon = df['long'],
+    lat = df['lat'],
+    text = df['text'],
+    mode = 'markers',
+    marker_color = df['cnt']
+))
 
 fig_map.update_layout(
-        title = 'This map will show all the gas leaks reported',
-        geo_scope='usa',
-    )
+    title = 'This map will show all the gas leaks reported',
+    geo_scope='usa',
+)
 
 
 
@@ -60,13 +60,22 @@ fig = go.Figure(data=
         ])
     )
 )
+
 # Bootstrap CSS:
 external_stylesheets = ['https://codepen.io/amyoshino/pen/jzXypZ.css']                              # external CSS file
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)                                # initialize app with the external CSS file
 colors = {
-    'background': '#111111',
-    'text': '#7FDBFF'
+    'background': 'black',
+    'text': 'white'
 }
+
+#colors of maps
+fig_map.update_layout(
+    plot_bgcolor = 'white',
+    paper_bgcolor = 'black'
+)
+
+
 app.layout = html.Div(  
     html.Div(style={'backgroundColor': colors['background']}, children=[              # GLOBAL DIV                                                                
         html.Div([          # COMPONENT ROW 1 DIV
@@ -75,7 +84,7 @@ app.layout = html.Div(
                     'textAlign': 'center',
                     'color': colors['text']
             }),                                                                                     # same as html.H1('Hello Dash')
-            html.Div(children="DUsing the Dash framework",
+            html.Div(children="Using the Dash framework",
                 style={
                     'textAlign': 'center',
                     'color': colors['text']
@@ -108,9 +117,9 @@ app.layout = html.Div(
                                 size=20,
                                 color='#7f7f7f'
                             )),
-                            'plot_bgcolor': colors['background'],
-                            'paper_bgcolor': colors['background'],
-                            'font': {'color': colors['text']}
+                            'plot_bgcolor': 'black',#colors['background'],
+                            'paper_bgcolor': 'black',#colors['background'],
+                            'font': {'color': 'white'}#colors['text']}
                         }
                     }
                 ),
@@ -119,8 +128,8 @@ app.layout = html.Div(
 
             html.Div([          # INDIVIDUAL GRAPH COLUMN LENGTH DIV
                 dcc.Graph(
-                    id='line_graph',     
-                    figure=fig       
+                    id='parallelcol',     
+                    figure=fig,
                 )
             ], className="eight columns"),
         ], className = "row"),
@@ -131,7 +140,7 @@ app.layout = html.Div(
                     id='map',     
                     figure=fig_map       
                 )
-            ], className="row"),
+            ], className="twelve columns"),
         ], className = "row"),
 
     
