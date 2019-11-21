@@ -34,28 +34,28 @@ fig = go.Figure(data=
         dimensions = list([
             dict(
                 range = [1,5],              # range of the bar. if i dont have this, will be long (bad)
-                tickvals = [1,2,4,5],
+                tickvals = [1,2,3,4,5],  
                 label = 'Stuff',            # name of the bar 
-                values = [2,4],         # marks on the bar
-                ticktext = ['text 1', 'text 2', 'text 3', 'text 4']
+                ticktext = ['text 1', 'text 2', 'text 3', 'text 4', 'text 5'],
+                values = [2,4,5,1]         # marks on the bar
             ),
             dict(                           # 1) dict() the first column and it has:
                 label = 'A',                    # 2) Name of the bar
-                tickvals = [1,2,4,5], 
+                tickvals = [1,2,3,4,5],         # labels the tick marks so we know where the ticks are at
                 range = [1,5],                  # 3) the range of this bar. If i dont set it, bar will be long
-                values = [1,4]                # 5) the values in that bar. each index is connected to the index of the next bar
+                values = [1,4,2,5]                # 5) the values in that bar. each index is connected to the index of the next bar
             ),
             dict(
                 label = 'B',
                 range = [1,5],                
-                tickvals = [1,2,4,5],  
-                values = [3,1.5]
+                tickvals = [1,2,3,4,5],  
+                values = [3,1.5,2,2]
             ),
             dict(
                 label = 'c', 
-                tickvals = [1,2,4,5], 
+                tickvals = [1,2,3,4,5],  
                 range = [1,5],
-                values = [4,2]
+                values = [4,2,4,6]
             )
         ])
     )
@@ -77,8 +77,9 @@ fig_map.update_layout(
 
 
 app.layout = html.Div(  
-    html.Div(style={'backgroundColor': colors['background']}, children=[              # GLOBAL DIV                                                                
-        html.Div([          # COMPONENT ROW 1 DIV
+    html.Div(style={
+        'backgroundColor': colors['background']}, children=[           # GLOBAL DIV                                                                
+        html.Div([              # COMPONENT ROW 1 DIV
             html.H1(children='Gas Leaks',
                 style={
                     'textAlign': 'center',
@@ -108,14 +109,14 @@ app.layout = html.Div(
                                 titlefont=dict(
                                 family='Courier New, monospace',
                                 size=20,
-                                color='#7f7f7f'
+                                color='white'#'#7f7f7f'
                             )),
                             'yaxis' : dict(
                                 title='y Axis',
                                 titlefont=dict(
                                 family='Helvetica, monospace',
                                 size=20,
-                                color='#7f7f7f'
+                                color='white'#'#7f7f7f'
                             )),
                             'plot_bgcolor': 'black',#colors['background'],
                             'paper_bgcolor': 'black',#colors['background'],
@@ -142,15 +143,6 @@ app.layout = html.Div(
                 )
             ], className="twelve columns"),
         ], className = "row"),
-
-    
-        
-
-
-
-
-
-
     ],  className='ten columns offset-by-one')                                      #***just added one column padding on the sides to make it look better
 )
 
