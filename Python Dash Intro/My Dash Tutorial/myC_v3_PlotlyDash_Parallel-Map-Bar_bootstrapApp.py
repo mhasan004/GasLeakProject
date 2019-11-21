@@ -8,25 +8,23 @@ import plotly.figure_factory as ff
 import numpy as np
 import pandas as pd
 
-df_sample = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/minoritymajority.csv')
-df_sample_r = df_sample[df_sample['STNAME'] == 'California']
-values = df_sample_r['TOT_POP'].tolist()
-fips = df_sample_r['FIPS'].tolist()
-colorscale = [
-    'rgb(193, 193, 193)',
-    'rgb(239,239,239)',
-    'rgb(195, 196, 222)',
-    'rgb(144,148,194)',
-    'rgb(101,104,168)',
-    'rgb(65, 53, 132)'
-]
-fig_map = ff.create_choropleth(
-    fips=fips, values=values, scope=['CA', 'AZ', 'Nevada', 'Oregon', ' Idaho'],
-    binning_endpoints=[14348, 63983, 134827, 426762, 2081313], colorscale=colorscale,
-    county_outline={'color': 'rgb(255,255,255)', 'width': 0.5}, round_legend_values=True,
-    legend_title='Population by County', title='California and Nearby States'
-)
+df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2011_february_us_airport_traffic.csv')
+df['text'] = df['airport'] + '' + df['city'] + ', ' + df['state'] + '' + 'Arrivals: ' + df['cnt'].astype(str)
 
+
+
+fig_map = go.Figure(data=go.Scattergeo(
+        lon = df['long'],
+        lat = df['lat'],
+        text = df['text'],
+        mode = 'markers',
+        marker_color = df['cnt'],
+        ))
+
+fig_map.update_layout(
+        title = 'This map will show all the gas leaks reported',
+        geo_scope='usa',
+    )
 
 
 
@@ -72,12 +70,12 @@ colors = {
 app.layout = html.Div(  
     html.Div(style={'backgroundColor': colors['background']}, children=[              # GLOBAL DIV                                                                
         html.Div([          # COMPONENT ROW 1 DIV
-            html.H1(children='Hello Dash B',
+            html.H1(children='Gas Leaks,
                 style={
                     'textAlign': 'center',
                     'color': colors['text']
             }),                                                                                     # same as html.H1('Hello Dash')
-            html.Div(children="Dash: A web application framework for Python.",
+            html.Div(children="DUsing the Dash framework",
                 style={
                     'textAlign': 'center',
                     'color': colors['text']
@@ -133,7 +131,7 @@ app.layout = html.Div(
                     id='map',     
                     figure=fig_map       
                 )
-            ], className="eight columns"),
+            ], className="row"),
         ], className = "row"),
 
     
