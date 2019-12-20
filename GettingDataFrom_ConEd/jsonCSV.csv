@@ -1,4 +1,4 @@
-tiketnumber,longitude,latitude,zip,classification,datereported
+Ticket Number,Longitude,Latitude,Zipcode,Classification,Date Reported
 ML19001225,40.75402,-73.97419,10017,M,\/Date(1548123352000)\/
 ML19003831,40.77168,-73.97763,10023,M,\/Date(1551966025000)\/
 ML19004663,40.75472,-73.97591,10017,M,\/Date(1553211480000)\/

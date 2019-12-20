@@ -3,3 +3,17 @@
 # 3) put the ticket numbers into a dictionary if it doesnt exist
 # 4) print that object into the csv file
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
