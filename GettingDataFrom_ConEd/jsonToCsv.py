@@ -10,11 +10,11 @@ import csv
 with open("test.json") as file:
     data_json = json.load(file)
 
-with open("test.csv", "w") as file:
-    data_csv = csv.writer(file)
-    for item in test:
-        fields = list(item['fields'].values())
-        csv_file.writerow([item['pk'], item['model']] + fields)
+# with open("test.csv", "w") as file:
+#     data_csv = csv.writer(file)
+#     for item in csv_file:
+#         fields = list(item['fields'].values())
+#         csv_file.writerow([item['pk'], item['model']] + fields)
 
 
 
