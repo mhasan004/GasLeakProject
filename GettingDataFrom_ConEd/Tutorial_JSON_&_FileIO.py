@@ -21,14 +21,39 @@ data['aKey'].append({
 # with open('test.json','a') as outf:
 #     a = json.dumps(data, sort_keys=True, indent=4)                        # turns the dict() into a string. dict() is the same format as JSON. indent=4 to make it look good
 #     outf.write(a)                                                         # append to end of list
-############################################## ) READ FROM JSON FILE #######################################
+############################################## 2) READ FROM JSON FILE #######################################
 with open('test.json',"r") as readf:
     dataj = json.load(readf)
 print(dataj["key1"])
 
+#This is another Method: (better)
+jsonDict = pd.read_json('test.json', orient='records')
+for row in range(0, len(jsonDict)):         # go thru each row/dot
+    s = ""
+    for col in range(0, len(dotp)):         # go through each column/dot property
+        s+=str(jsonDict[dotp[col]][row])+" "
+    print(s)
+
+############################################## 3) CSV ###############################
+with open('test.csv', 'r') as csvfile:                   # Read the csv file
+    csv_empty = [row for row in csv.DictReader(csvfile)] # see if csv empty
+with open('test.csv', 'w', newline='') as outf:      # Write this string s on the csv
+    writer = csv.writer(outf)
+    writer.writerow(s)
+with open('test.csv','a') as out:                    # Asppend this string s on a new line
+    out.write(s)
+    
 
 
-############################################## x) JSON to CSV USING MY FILE###############################
+
+
+
+
+
+
+
+
+###################################################### JSOn to CSV older methods ###############################
 ########################## pandas:
 # import pandas as pd
 # df = pd.read_json('test.json')

@@ -1,27 +1,72 @@
-# 1) (Need to know all the tickets we got atm) read from the csv file's first column if it exists and add it to the dictionary 
-# 2) read from a json file
-# 3) put the ticket numbers into a dictionary if it doesnt exist
-# 4) print that object into the csv file
+# 1) What tickets do we have? read the ticket col of csv of ticket txt file and add tickets to ticketDictionary
+# 2) anotherDict = contents of json file
+# 3) Loop through the ticketNumber dictionary key and compare it to tickets in the ticketDictionary
+    # 4) if the ticket exists, ignore it. If it dont exist 
+        #a) add the ticket to the dictionay.txt file and the tickeDictionary and push to end of csv
+        #b)
 import json
 import csv
 import pandas as pd
-# df = pd.read_json('test.json')
-# df.to_csv("test.csv")  #need to use two csv 
-# df.to_csv("test.csv") 
 
-csvFileName = "test.csv"
-jsonFileName = "test.json"
+csvFileName = "test.csv"                    # add to the end
+jsonFileName = "test.json"                  # constant read (json web site)
+dictionaryFileName= "ticketDictionary.txt"  # add to end (just for me to see what i got)
+ticketSet = set()                           # need to add what i got in the csv atm
+jsonDict  = []                              # json file to dict: #jsonDict["TicketNumber/Long/lat/etc"][int index of the dot]) 
+dotp= [                                     # Need this to acces the dot properties
+    "TicketNumber",
+    "Latitude",
+    "Longitude",
+    "Zip",
+    "ClassificationType",
+    "DateReported",
+    "LastInspected"
+]
 
-# If the csv is empty, print the header
+
+
+
+# 1) If the csv is empty, print the header
 with open('test.csv', 'r') as csvfile:
     csv_dict = [row for row in csv.DictReader(csvfile)]
     if len(csv_dict) == 0:
         csvHeader = ["Ticket Number","Longitude","Latitude","Zipcode","Classification","Date Reported"]
-        outf = csv.writer(open("test.csv","w", newline='')) 
-        outf.writerow(csvHeader)  
+        with open('test.csv', 'w', newline='') as outf:
+            writer = csv.writer(outf)
+            writer.writerow(csvHeader)
+
+# 2) Add the new JSON data to the Json Dictionary: jsonDict[dotp[i]/columns(dot properties)][j/rows(dots)]
+jsonDict = pd.read_json('test.json', orient='records')
+    # for row in range(0, len(jsonDict)):         # go thru each row/dot
+    #     s = ""
+    #     for col in range(0, len(dotp)):         # go through each column/dot property
+    #         s+=str(jsonDict[dotp[col]][row])+" "
+    #     print(s)
+
+# 3) read the csv file and add ticket Nubers to the ticketSet
+
+
+datetime.strftime(Format_String)
+
+
+
+# 4) See if jsonDict Ticket is in ticketDict. If so, skip this row since we have this info already. If not add to ticketDic and txt and csv add
+for dotN in range(0, len(jsonDict)):
+    if jsonDict["TicketNumber"][dotN] not in ticketSet: # If we DONT have this ticket add it
+        ticketSet.add(jsonDict["TicketNumber"][dotN])
+        with open('test.csv','a') as out:
+            s=""
+            for col in range(0, len(dotp)-1):         # go through each column/dot property
+                s+=str(jsonDict[dotp[col]][dotN])
+                if col != len(dotp)-2:
+                    s+=',' 
+            s+="\n"
+            out.write(s)
+
+
 
 # Append the other stuff
-pd.read_json('test.json').drop(columns=['LastInspected']).to_csv("test.csv", mode='a', header=False) #append to csvuse ("test.csv", mode='a', header=False)
+# pd.read_json('test.json').drop(columns=['LastInspected']).to_csv("test.csv", mode='a', header=False) #append to csvuse ("test.csv", mode='a', header=False)
 
 
 
