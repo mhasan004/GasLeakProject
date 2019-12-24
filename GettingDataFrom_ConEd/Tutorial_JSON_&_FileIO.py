@@ -22,29 +22,37 @@ data['aKey'].append({
 #     a = json.dumps(data, sort_keys=True, indent=4)                        # turns the dict() into a string. dict() is the same format as JSON. indent=4 to make it look good
 #     outf.write(a)                                                         # append to end of list
 ############################################## 2) READ FROM JSON FILE #######################################
+#For JSON Data: [{},{},{}] multiple JSON objects in one JSOn array
+import pandas as pd
+elem = [the keys inside every JSOn object {} ]
+jsonDict = pd.read_json('test.json', orient='records')
+for row in range(0, len(jsonDict)):             # go thru each row/JSON object
+    s = ""
+    for col in range(0, len(elems)):   # go through each column/JSON Object elements
+        s+=str(jsonDict[elems[col]][row])+" "
+    print(s)
+
+# Older method:
 with open('test.json',"r") as readf:
     dataj = json.load(readf)
 print(dataj["key1"])
 
-#This is another Method: (better)
-jsonDict = pd.read_json('test.json', orient='records')
-for row in range(0, len(jsonDict)):         # go thru each row/dot
-    s = ""
-    for col in range(0, len(dotp)):         # go through each column/dot property
-        s+=str(jsonDict[dotp[col]][row])+" "
-    print(s)
-
 ############################################## 3) CSV ###############################
-with open('test.csv', 'r') as csvfile:                   # Read the csv file
+import pandas as pd
+csvData = pd.read_csv(csvFile)                           # Reading the CSV w Pandas: csvData[colStr][rowNumber]
+
+with open('test.csv', 'r') as csvfile:                   # OLD MAthod Reading
     csv_empty = [row for row in csv.DictReader(csvfile)] # see if csv empty
-with open('test.csv', 'w', newline='') as outf:      # Write this string s on the csv
+
+with open('test.csv', 'w', newline='') as outf:          # Write this string s on the csv
     writer = csv.writer(outf)
     writer.writerow(s)
-with open('test.csv','a') as out:                    # Asppend this string s on a new line
+with open('test.csv','a') as out:                        # Asppend this string s on a new line
     out.write(s)
-    
 
-
+############################################# 4) Writing to txt #####################################
+outf = open("file.txt","w+")
+outf.write("This is line %d\r\n" % (i+1))
 
 
 
