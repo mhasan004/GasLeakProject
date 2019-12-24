@@ -16,8 +16,8 @@ def turnToDatetime(microsoftDate):          # Function to turn Microsoft JSOn da
     return str(date.strftime('%m/%d/20%y %I:%M %p')) # mm/dd/yyyy time am/pm
 
 
-csvFile = "test.csv"                        # add to the end
-jsonFile = "test.json"                      # constant read (json web site)
+csvFile = "UNION.csv"#"test.csv"                        # add to the end
+jsonFile = "ConEdGasLeakList_ManualRecords_UNION.json"#"test.json"                      # constant read (json web site)
 ticketListFile = "ticketList.txt"           # add to end (just for me to see what i got)
 ticketSet = set()                           # need to add what i got in the csv atm
 jsonDict  = []                              # json file to dict: #jsonDict["TicketNumber/Long/lat/etc"][int index of the dot]) 
@@ -50,7 +50,6 @@ outTXT = open(ticketListFile,"w+")                          # Settign up to writ
 for row in range(0,len(csvData)):
     ticketSet.add(str(csvData["TicketNumber"][row]))    
     outTXT.write(str(csvData["TicketNumber"][row])+"\n")
-print("ML19006608" in ticketListFile)
 
 
 # 4) See if the ticket in "jsonDict" is in "ticketDict". If dont got add to "ticketDic", and .txt and .csv file for stoage. If got, skip this row since we have this info already. 

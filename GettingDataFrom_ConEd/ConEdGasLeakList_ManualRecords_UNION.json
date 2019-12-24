@@ -1,6 +1,3 @@
-https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&
-
-RECORD 1: 12/09/2019  1:41am: 260 entries
 [ {"TicketNumber":"ML19001225","Latitude":40.75402,"Longitude":-73.97419,"Zip":"10017","ClassificationType":"M","DateReported":"\/Date(1548123352000)\/","LastInspected":"\/Date(1548347559000)\/"},
     {"TicketNumber":"ML19003831","Latitude":40.77168,"Longitude":-73.97763,"Zip":"10023","ClassificationType":"M","DateReported":"\/Date(1551966025000)\/","LastInspected":"\/Date(1570796888000)\/"},
     {"TicketNumber":"ML19004663","Latitude":40.75472,"Longitude":-73.97591,"Zip":"10017","ClassificationType":"M","DateReported":"\/Date(1553211480000)\/","LastInspected":"\/Date(1555940700000)\/"},
@@ -260,12 +257,8 @@ RECORD 1: 12/09/2019  1:41am: 260 entries
     {"TicketNumber":"XL19015808","Latitude":40.85629,"Longitude":-73.89372,"Zip":"10458","ClassificationType":"P","DateReported":"\/Date(1575648479000)\/","LastInspected":"\/Date(1575828660000)\/"},
     {"TicketNumber":"XL19015830","Latitude":40.87243,"Longitude":-73.89894,"Zip":"10468","ClassificationType":"M","DateReported":"\/Date(1575660688000)\/","LastInspected":"\/Date(1575666180000)\/"},
     {"TicketNumber":"XL19015874","Latitude":40.82285,"Longitude":-73.87933,"Zip":"10473","ClassificationType":"P","DateReported":"\/Date(1575739452000)\/","LastInspected":"\/Date(1575837120000)\/"},
-    {"TicketNumber":"XL19015893","Latitude":40.88796,"Longitude":-73.90938,"Zip":"10463","ClassificationType":"P","DateReported":"\/Date(1575777757000)\/","LastInspected":"\/Date(1575782460000)\/"}
-]
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-RECORD 2: 12/11/2019 9:29pm: 236 entires
-[ {"TicketNumber":"ML19001225","Latitude":40.75402,"Longitude":-73.97419,"Zip":"10017","ClassificationType":"M","DateReported":"\/Date(1548123352000)\/","LastInspected":"\/Date(1548347559000)\/"},
+    {"TicketNumber":"XL19015893","Latitude":40.88796,"Longitude":-73.90938,"Zip":"10463","ClassificationType":"P","DateReported":"\/Date(1575777757000)\/","LastInspected":"\/Date(1575782460000)\/"},
+    {"TicketNumber":"ML19001225","Latitude":40.75402,"Longitude":-73.97419,"Zip":"10017","ClassificationType":"M","DateReported":"\/Date(1548123352000)\/","LastInspected":"\/Date(1548347559000)\/"},
     {"TicketNumber":"ML19003831","Latitude":40.77168,"Longitude":-73.97763,"Zip":"10023","ClassificationType":"M","DateReported":"\/Date(1551966025000)\/","LastInspected":"\/Date(1570796888000)\/"},
     {"TicketNumber":"ML19004663","Latitude":40.75472,"Longitude":-73.97591,"Zip":"10017","ClassificationType":"M","DateReported":"\/Date(1553211480000)\/","LastInspected":"\/Date(1555940700000)\/"},
     {"TicketNumber":"ML19005447","Latitude":40.80325,"Longitude":-73.96749,"Zip":"10025","ClassificationType":"M","DateReported":"\/Date(1554403835000)\/","LastInspected":"\/Date(1566270397000)\/"},
@@ -500,12 +493,8 @@ RECORD 2: 12/11/2019 9:29pm: 236 entires
     {"TicketNumber":"XL19015908","Latitude":40.84474,"Longitude":-73.90759,"Zip":"10457","ClassificationType":"M","DateReported":"\/Date(1575817894000)\/","LastInspected":"\/Date(1575826260000)\/"},
     {"TicketNumber":"XL19015986","Latitude":40.83082,"Longitude":-73.8172,"Zip":"10465","ClassificationType":"P","DateReported":"\/Date(1575986463000)\/","LastInspected":"\/Date(1576000800000)\/"},
     {"TicketNumber":"XL19015991","Latitude":40.8192,"Longitude":-73.89576,"Zip":"10459","ClassificationType":"M","DateReported":"\/Date(1575990448000)\/","LastInspected":"\/Date(1575997080000)\/"},
-    {"TicketNumber":"XL19016000","Latitude":40.80867,"Longitude":-73.85194,"Zip":"10473","ClassificationType":"M","DateReported":"\/Date(1575997546000)\/","LastInspected":"\/Date(1576058400000)\/"}
-]
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-RECORD 3: 12/13/2019 1:04am: 225 entires
-[ {"TicketNumber":"QL18004912","Latitude":40.75644,"Longitude":-73.80735,"Zip":"11358","ClassificationType":"M","DateReported":"\/Date(1530125443000)\/","LastInspected":"\/Date(1573135860000)\/"},
+    {"TicketNumber":"XL19016000","Latitude":40.80867,"Longitude":-73.85194,"Zip":"10473","ClassificationType":"M","DateReported":"\/Date(1575997546000)\/","LastInspected":"\/Date(1576058400000)\/"},
+    {"TicketNumber":"QL18004912","Latitude":40.75644,"Longitude":-73.80735,"Zip":"11358","ClassificationType":"M","DateReported":"\/Date(1530125443000)\/","LastInspected":"\/Date(1573135860000)\/"},
     {"TicketNumber":"WL18009064","Latitude":41.15131,"Longitude":-73.76978,"Zip":"10514","ClassificationType":"M","DateReported":"\/Date(1533908024000)\/","LastInspected":"\/Date(1572626700000)\/"},
     {"TicketNumber":"WL19000217","Latitude":41.02267,"Longitude":-73.87048,"Zip":"10522","ClassificationType":"M","DateReported":"\/Date(1546890629000)\/","LastInspected":"\/Date(1571768400000)\/"},
     {"TicketNumber":"WL19001940","Latitude":41.04208,"Longitude":-73.74286,"Zip":"10604","ClassificationType":"M","DateReported":"\/Date(1549897929000)\/","LastInspected":"\/Date(1571336040000)\/"},
@@ -729,12 +718,8 @@ RECORD 3: 12/13/2019 1:04am: 225 entires
     {"TicketNumber":"QL19009422","Latitude":40.74645,"Longitude":-73.82433,"Zip":"11355","ClassificationType":"P","DateReported":"\/Date(1576081329000)\/","LastInspected":"\/Date(1576185180000)\/"},
     {"TicketNumber":"WL19014785","Latitude":40.97056,"Longitude":-73.78154,"Zip":"10804","ClassificationType":"M","DateReported":"\/Date(1576075747000)\/","LastInspected":"\/Date(1576081634000)\/"},
     {"TicketNumber":"WL19014798","Latitude":41.22299,"Longitude":-73.71501,"Zip":"10507","ClassificationType":"M","DateReported":"\/Date(1576083600000)\/","LastInspected":"\/Date(1576085313000)\/"},
-    {"TicketNumber":"WL19014811","Latitude":40.94234,"Longitude":-73.75574,"Zip":"10538","ClassificationType":"M","DateReported":"\/Date(1576099259000)\/","LastInspected":"\/Date(1576107720000)\/"}
-]
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-RECORD 4: 12/14/2019 1:01am: 222 entires
-[   {"TicketNumber":"QL18004912","Latitude":40.75644,"Longitude":-73.80735,"Zip":"11358","ClassificationType":"M","DateReported":"\/Date(1530125443000)\/","LastInspected":"\/Date(1573135860000)\/"},
+    {"TicketNumber":"WL19014811","Latitude":40.94234,"Longitude":-73.75574,"Zip":"10538","ClassificationType":"M","DateReported":"\/Date(1576099259000)\/","LastInspected":"\/Date(1576107720000)\/"},
+    {"TicketNumber":"QL18004912","Latitude":40.75644,"Longitude":-73.80735,"Zip":"11358","ClassificationType":"M","DateReported":"\/Date(1530125443000)\/","LastInspected":"\/Date(1573135860000)\/"},
     {"TicketNumber":"WL18009064","Latitude":41.15131,"Longitude":-73.76978,"Zip":"10514","ClassificationType":"M","DateReported":"\/Date(1533908024000)\/","LastInspected":"\/Date(1572626700000)\/"},
     {"TicketNumber":"WL19000217","Latitude":41.02267,"Longitude":-73.87048,"Zip":"10522","ClassificationType":"M","DateReported":"\/Date(1546890629000)\/","LastInspected":"\/Date(1571768400000)\/"},
     {"TicketNumber":"WL19001940","Latitude":41.04208,"Longitude":-73.74286,"Zip":"10604","ClassificationType":"M","DateReported":"\/Date(1549897929000)\/","LastInspected":"\/Date(1571336040000)\/"},
@@ -955,12 +940,8 @@ RECORD 4: 12/14/2019 1:01am: 222 entires
     {"TicketNumber":"ML19019504","Latitude":40.78855,"Longitude":-73.94898,"Zip":"10029","ClassificationType":"M","DateReported":"\/Date(1576113982000)\/","LastInspected":"\/Date(1576120440000)\/"},
     {"TicketNumber":"WL19014785","Latitude":40.97056,"Longitude":-73.78154,"Zip":"10804","ClassificationType":"M","DateReported":"\/Date(1576075747000)\/","LastInspected":"\/Date(1576081634000)\/"},
     {"TicketNumber":"WL19014798","Latitude":41.22299,"Longitude":-73.71501,"Zip":"10507","ClassificationType":"M","DateReported":"\/Date(1576083600000)\/","LastInspected":"\/Date(1576085313000)\/"},
-    {"TicketNumber":"WL19014811","Latitude":40.94234,"Longitude":-73.75574,"Zip":"10538","ClassificationType":"M","DateReported":"\/Date(1576099259000)\/","LastInspected":"\/Date(1576107720000)\/"}
-]
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-RECORD 5: 12/15/2019 1:01am: 242 entires
-[   {"TicketNumber":"QL18004912","Latitude":40.75644,"Longitude":-73.80735,"Zip":"11358","ClassificationType":"M","DateReported":"\/Date(1530125443000)\/","LastInspected":"\/Date(1573135860000)\/"},
+    {"TicketNumber":"WL19014811","Latitude":40.94234,"Longitude":-73.75574,"Zip":"10538","ClassificationType":"M","DateReported":"\/Date(1576099259000)\/","LastInspected":"\/Date(1576107720000)\/"},
+    {"TicketNumber":"QL18004912","Latitude":40.75644,"Longitude":-73.80735,"Zip":"11358","ClassificationType":"M","DateReported":"\/Date(1530125443000)\/","LastInspected":"\/Date(1573135860000)\/"},
     {"TicketNumber":"WL18009064","Latitude":41.15131,"Longitude":-73.76978,"Zip":"10514","ClassificationType":"M","DateReported":"\/Date(1533908024000)\/","LastInspected":"\/Date(1572626700000)\/"},
     {"TicketNumber":"WL19000217","Latitude":41.02267,"Longitude":-73.87048,"Zip":"10522","ClassificationType":"M","DateReported":"\/Date(1546890629000)\/","LastInspected":"\/Date(1571768400000)\/"},
     {"TicketNumber":"WL19001940","Latitude":41.04208,"Longitude":-73.74286,"Zip":"10604","ClassificationType":"M","DateReported":"\/Date(1549897929000)\/","LastInspected":"\/Date(1571336040000)\/"},
@@ -1201,12 +1182,8 @@ RECORD 5: 12/15/2019 1:01am: 242 entires
     {"TicketNumber":"WL19014932","Latitude":40.92857,"Longitude":-73.79673,"Zip":"10804","ClassificationType":"P","DateReported":"\/Date(1576312166000)\/","LastInspected":"\/Date(1576338060000)\/"},
     {"TicketNumber":"XL19016133","Latitude":40.84671,"Longitude":-73.88547,"Zip":"10460","ClassificationType":"M","DateReported":"\/Date(1576246983000)\/","LastInspected":"\/Date(1576249550000)\/"},
     {"TicketNumber":"XL19016146","Latitude":40.87875,"Longitude":-73.84629,"Zip":"10469","ClassificationType":"P","DateReported":"\/Date(1576256219000)\/","LastInspected":"\/Date(1576330860000)\/"},
-    {"TicketNumber":"XL19016163","Latitude":40.86402,"Longitude":-73.86327,"Zip":"10467","ClassificationType":"P","DateReported":"\/Date(1576272059000)\/","LastInspected":"\/Date(1576328400000)\/"}
-]
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-RECORD 6: 12/16/2019 1:01am: 251 entires
-[   {"TicketNumber":"QL18004912","Latitude":40.75644,"Longitude":-73.80735,"Zip":"11358","ClassificationType":"M","DateReported":"\/Date(1530125443000)\/","LastInspected":"\/Date(1573135860000)\/"},
+    {"TicketNumber":"XL19016163","Latitude":40.86402,"Longitude":-73.86327,"Zip":"10467","ClassificationType":"P","DateReported":"\/Date(1576272059000)\/","LastInspected":"\/Date(1576328400000)\/"},
+    {"TicketNumber":"QL18004912","Latitude":40.75644,"Longitude":-73.80735,"Zip":"11358","ClassificationType":"M","DateReported":"\/Date(1530125443000)\/","LastInspected":"\/Date(1573135860000)\/"},
     {"TicketNumber":"WL18009064","Latitude":41.15131,"Longitude":-73.76978,"Zip":"10514","ClassificationType":"M","DateReported":"\/Date(1533908024000)\/","LastInspected":"\/Date(1572626700000)\/"},
     {"TicketNumber":"WL19000217","Latitude":41.02267,"Longitude":-73.87048,"Zip":"10522","ClassificationType":"M","DateReported":"\/Date(1546890629000)\/","LastInspected":"\/Date(1571768400000)\/"},
     {"TicketNumber":"WL19001940","Latitude":41.04208,"Longitude":-73.74286,"Zip":"10604","ClassificationType":"M","DateReported":"\/Date(1549897929000)\/","LastInspected":"\/Date(1571336040000)\/"},
@@ -1456,12 +1433,8 @@ RECORD 6: 12/16/2019 1:01am: 251 entires
     {"TicketNumber":"WL19014932","Latitude":40.92857,"Longitude":-73.79673,"Zip":"10804","ClassificationType":"P","DateReported":"\/Date(1576312166000)\/","LastInspected":"\/Date(1576432860000)\/"},
     {"TicketNumber":"XL19016133","Latitude":40.84671,"Longitude":-73.88547,"Zip":"10460","ClassificationType":"M","DateReported":"\/Date(1576246983000)\/","LastInspected":"\/Date(1576249500000)\/"},
     {"TicketNumber":"XL19016146","Latitude":40.87875,"Longitude":-73.84629,"Zip":"10469","ClassificationType":"P","DateReported":"\/Date(1576256219000)\/","LastInspected":"\/Date(1576416720000)\/"},
-    {"TicketNumber":"XL19016163","Latitude":40.86402,"Longitude":-73.86327,"Zip":"10467","ClassificationType":"P","DateReported":"\/Date(1576272059000)\/","LastInspected":"\/Date(1576414740000)\/"}
-]
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-RECORD 7: 12/17 1:01am 243 entries
-[{"TicketNumber":"QL18004912","Latitude":40.75644,"Longitude":-73.80735,"Zip":"11358","ClassificationType":"M","DateReported":"\/Date(1530125443000)\/","LastInspected":"\/Date(1573135860000)\/"},
+    {"TicketNumber":"XL19016163","Latitude":40.86402,"Longitude":-73.86327,"Zip":"10467","ClassificationType":"P","DateReported":"\/Date(1576272059000)\/","LastInspected":"\/Date(1576414740000)\/"},
+    {"TicketNumber":"QL18004912","Latitude":40.75644,"Longitude":-73.80735,"Zip":"11358","ClassificationType":"M","DateReported":"\/Date(1530125443000)\/","LastInspected":"\/Date(1573135860000)\/"},
     {"TicketNumber":"WL18009064","Latitude":41.15131,"Longitude":-73.76978,"Zip":"10514","ClassificationType":"M","DateReported":"\/Dat5e(133908024000)\/","LastInspected":"\/Date(1572626700000)\/"},
     {"TicketNumber":"WL19000217","Latitude":41.02267,"Longitude":-73.87048,"Zip":"10522","ClassificationType":"M","DateReported":"\/Date(1546890629000)\/","LastInspected":"\/Date(1571768400000)\/"},
     {"TicketNumber":"WL19001940","Latitude":41.04208,"Longitude":-73.74286,"Zip":"10604","ClassificationType":"M","DateReported":"\/Date(1549897929000)\/","LastInspected":"\/Date(1571336040000)\/"},
@@ -1703,12 +1676,8 @@ RECORD 7: 12/17 1:01am 243 entries
     {"TicketNumber":"WL19014925","Latitude":41.20606,"Longitude":-73.89231,"Zip":"10520","ClassificationType":"M","DateReported":"\/Date(1576289193000)\/","LastInspected":"\/Date(1576295640000)\/"},
     {"TicketNumber":"XL19016133","Latitude":40.84671,"Longitude":-73.88547,"Zip":"10460","ClassificationType":"M","DateReported":"\/Date(1576246983000)\/","LastInspected":"\/Date(1576249500000)\/"},
     {"TicketNumber":"XL19016146","Latitude":40.87875,"Longitude":-73.84629,"Zip":"10469","ClassificationType":"P","DateReported":"\/Date(1576256219000)\/","LastInspected":"\/Date(1576416720000)\/"},
-    {"TicketNumber":"XL19016163","Latitude":40.86402,"Longitude":-73.86327,"Zip":"10467","ClassificationType":"P","DateReported":"\/Date(1576272059000)\/","LastInspected":"\/Date(1576537900000)\/"}
-]
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-RECORD 8: 12/18/19 1:09am 247 entries
-[   {"TicketNumber":"QL18004912","Latitude":40.75644,"Longitude":-73.80735,"Zip":"11358","ClassificationType":"M","DateReported":"\/Date(1530125443000)\/","LastInspected":"\/Date(1573135860000)\/"},
+    {"TicketNumber":"XL19016163","Latitude":40.86402,"Longitude":-73.86327,"Zip":"10467","ClassificationType":"P","DateReported":"\/Date(1576272059000)\/","LastInspected":"\/Date(1576537900000)\/"},
+    {"TicketNumber":"QL18004912","Latitude":40.75644,"Longitude":-73.80735,"Zip":"11358","ClassificationType":"M","DateReported":"\/Date(1530125443000)\/","LastInspected":"\/Date(1573135860000)\/"},
     {"TicketNumber":"WL18009064","Latitude":41.15131,"Longitude":-73.76978,"Zip":"10514","ClassificationType":"M","DateReported":"\/Date(1533908024000)\/","LastInspected":"\/Date(1572626700000)\/"},
     {"TicketNumber":"WL19000217","Latitude":41.02267,"Longitude":-73.87048,"Zip":"10522","ClassificationType":"M","DateReported":"\/Date(1546890629000)\/","LastInspected":"\/Date(1571768400000)\/"},
     {"TicketNumber":"WL19001940","Latitude":41.04208,"Longitude":-73.74286,"Zip":"10604","ClassificationType":"M","DateReported":"\/Date(1549897929000)\/","LastInspected":"\/Date(1571336040000)\/"},
@@ -1954,12 +1923,8 @@ RECORD 8: 12/18/19 1:09am 247 entries
     {"TicketNumber":"WL19014917","Latitude":41.10571,"Longitude":-73.79385,"Zip":"10532","ClassificationType":"M","DateReported":"\/Date(1576271447000)\/","LastInspected":"\/Date(1576275420000)\/"},
     {"TicketNumber":"WL19014921","Latitude":40.9805,"Longitude":-73.83082,"Zip":"10710","ClassificationType":"M","DateReported":"\/Date(1576274541000)\/","LastInspected":"\/Date(1576282980000)\/"},
     {"TicketNumber":"WL19014925","Latitude":41.20606,"Longitude":-73.89231,"Zip":"10520","ClassificationType":"M","DateReported":"\/Date(1576289193000)\/","LastInspected":"\/Date(1576295640000)\/"},
-    {"TicketNumber":"XL19016133","Latitude":40.84671,"Longitude":-73.88547,"Zip":"10460","ClassificationType":"M","DateReported":"\/Date(1576246983000)\/","LastInspected":"\/Date(1576249500000)\/"}
-]
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-RECORD 9: 12/19/19 1:01am 242 entries
-[   {"TicketNumber":"ML19001225","Latitude":40.75402,"Longitude":-73.97419,"Zip":"10017","ClassificationType":"M","DateReported":"\/Date(1548123352000)\/","LastInspected":"\/Date(1548347559000)\/"},
+    {"TicketNumber":"XL19016133","Latitude":40.84671,"Longitude":-73.88547,"Zip":"10460","ClassificationType":"M","DateReported":"\/Date(1576246983000)\/","LastInspected":"\/Date(1576249500000)\/"},
+    {"TicketNumber":"ML19001225","Latitude":40.75402,"Longitude":-73.97419,"Zip":"10017","ClassificationType":"M","DateReported":"\/Date(1548123352000)\/","LastInspected":"\/Date(1548347559000)\/"},
     {"TicketNumber":"ML19003831","Latitude":40.77168,"Longitude":-73.97763,"Zip":"10023","ClassificationType":"M","DateReported":"\/Date(1551966025000)\/","LastInspected":"\/Date(1570796888000)\/"},
     {"TicketNumber":"ML19004663","Latitude":40.75472,"Longitude":-73.97591,"Zip":"10017","ClassificationType":"M","DateReported":"\/Date(1553211480000)\/","LastInspected":"\/Date(1555940700000)\/"},
     {"TicketNumber":"ML19005447","Latitude":40.80325,"Longitude":-73.96749,"Zip":"10025","ClassificationType":"M","DateReported":"\/Date(1554403835000)\/","LastInspected":"\/Date(1566270397000)\/"},
@@ -2200,14 +2165,8 @@ RECORD 9: 12/19/19 1:01am 242 entries
     {"TicketNumber":"XL19016269","Latitude":40.86115,"Longitude":-73.897,"Zip":"10458","ClassificationType":"M","DateReported":"\/Date(1576502505000)\/","LastInspected":"\/Date(1576521060000)\/"},
     {"TicketNumber":"XL19016292","Latitude":40.82188,"Longitude":-73.80963,"Zip":"10465","ClassificationType":"M","DateReported":"\/Date(1576520493000)\/","LastInspected":"\/Date(1576526040000)\/"},
     {"TicketNumber":"XL19016295","Latitude":40.90378,"Longitude":-73.89929,"Zip":"10471","ClassificationType":"P","DateReported":"\/Date(1576522713000)\/","LastInspected":"\/Date(1576687260000)\/"},
-    {"TicketNumber":"XL19016314","Latitude":40.89674,"Longitude":-73.84227,"Zip":"10466","ClassificationType":"M","DateReported":"\/Date(1576538363000)\/","LastInspected":"\/Date(1576545120000)\/"}
-]
-
-----turns all above json to csv unique sheet----
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-RECORD 10: 12/20/19 1:01am 241 entries
-[   {"TicketNumber":"QL18004912","Latitude":40.75644,"Longitude":-73.80735,"Zip":"11358","ClassificationType":"M","DateReported":"\/Date(1530125443000)\/","LastInspected":"\/Date(1573135860000)\/"},
+    {"TicketNumber":"XL19016314","Latitude":40.89674,"Longitude":-73.84227,"Zip":"10466","ClassificationType":"M","DateReported":"\/Date(1576538363000)\/","LastInspected":"\/Date(1576545120000)\/"},
+    {"TicketNumber":"QL18004912","Latitude":40.75644,"Longitude":-73.80735,"Zip":"11358","ClassificationType":"M","DateReported":"\/Date(1530125443000)\/","LastInspected":"\/Date(1573135860000)\/"},
     {"TicketNumber":"WL18009064","Latitude":41.15131,"Longitude":-73.76978,"Zip":"10514","ClassificationType":"M","DateReported":"\/Date(1533908024000)\/","LastInspected":"\/Date(1572626700000)\/"},
     {"TicketNumber":"WL19000217","Latitude":41.02267,"Longitude":-73.87048,"Zip":"10522","ClassificationType":"M","DateReported":"\/Date(1546890629000)\/","LastInspected":"\/Date(1571768400000)\/"},
     {"TicketNumber":"WL19001940","Latitude":41.04208,"Longitude":-73.74286,"Zip":"10604","ClassificationType":"M","DateReported":"\/Date(1549897929000)\/","LastInspected":"\/Date(1571336040000)\/"},
@@ -2447,12 +2406,8 @@ RECORD 10: 12/20/19 1:01am 241 entries
     {"TicketNumber":"WL19014917","Latitude":41.10571,"Longitude":-73.79385,"Zip":"10532","ClassificationType":"M","DateReported":"\/Date(1576271447000)\/","LastInspected":"\/Date(1576275420000)\/"},
     {"TicketNumber":"WL19014921","Latitude":40.9805,"Longitude":-73.83082,"Zip":"10710","ClassificationType":"M","DateReported":"\/Date(1576274541000)\/","LastInspected":"\/Date(1576282980000)\/"},
     {"TicketNumber":"WL19014925","Latitude":41.20606,"Longitude":-73.89231,"Zip":"10520","ClassificationType":"M","DateReported":"\/Date(1576289193000)\/","LastInspected":"\/Date(1576295640000)\/"},
-    {"TicketNumber":"XL19016133","Latitude":40.84671,"Longitude":-73.88547,"Zip":"10460","ClassificationType":"M","DateReported":"\/Date(1576246983000)\/","LastInspected":"\/Date(1576249500000)\/"}
-]
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-RECORD 11: 12/21/19 2:12am 230 entries
-[   {"TicketNumber":"ML19001225","Latitude":40.75402,"Longitude":-73.97419,"Zip":"10017","ClassificationType":"M","DateReported":"\/Date(1548123352000)\/","LastInspected":"\/Date(1548347559000)\/"},
+    {"TicketNumber":"XL19016133","Latitude":40.84671,"Longitude":-73.88547,"Zip":"10460","ClassificationType":"M","DateReported":"\/Date(1576246983000)\/","LastInspected":"\/Date(1576249500000)\/"},
+    {"TicketNumber":"ML19001225","Latitude":40.75402,"Longitude":-73.97419,"Zip":"10017","ClassificationType":"M","DateReported":"\/Date(1548123352000)\/","LastInspected":"\/Date(1548347559000)\/"},
     {"TicketNumber":"ML19003831","Latitude":40.77168,"Longitude":-73.97763,"Zip":"10023","ClassificationType":"M","DateReported":"\/Date(1551966025000)\/","LastInspected":"\/Date(1570796888000)\/"},
     {"TicketNumber":"ML19004663","Latitude":40.75472,"Longitude":-73.97591,"Zip":"10017","ClassificationType":"M","DateReported":"\/Date(1553211480000)\/","LastInspected":"\/Date(1555940700000)\/"},
     {"TicketNumber":"ML19005447","Latitude":40.80325,"Longitude":-73.96749,"Zip":"10025","ClassificationType":"M","DateReported":"\/Date(1554403835000)\/","LastInspected":"\/Date(1566270397000)\/"},
@@ -2681,12 +2636,8 @@ RECORD 11: 12/21/19 2:12am 230 entries
     {"TicketNumber":"XL19015986","Latitude":40.83082,"Longitude":-73.8172,"Zip":"10465","ClassificationType":"P","DateReported":"\/Date(1575986463000)\/","LastInspected":"\/Date(1576000800000)\/"},
     {"TicketNumber":"XL19016133","Latitude":40.84671,"Longitude":-73.88547,"Zip":"10460","ClassificationType":"M","DateReported":"\/Date(1576246983000)\/","LastInspected":"\/Date(1576249500000)\/"},
     {"TicketNumber":"XL19016292","Latitude":40.82188,"Longitude":-73.80963,"Zip":"10465","ClassificationType":"M","DateReported":"\/Date(1576520493000)\/","LastInspected":"\/Date(1576526040000)\/"},
-    {"TicketNumber":"XL19016314","Latitude":40.89674,"Longitude":-73.84227,"Zip":"10466","ClassificationType":"M","DateReported":"\/Date(1576538363000)\/","LastInspected":"\/Date(1576545120000)\/"}
-]
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-RECORD 12: 12/22/19 1:22am 239 entries
-[   {"TicketNumber":"ML19001225","Latitude":40.75402,"Longitude":-73.97419,"Zip":"10017","ClassificationType":"M","DateReported":"\/Date(1548123352000)\/","LastInspected":"\/Date(1548347559000)\/"},
+    {"TicketNumber":"XL19016314","Latitude":40.89674,"Longitude":-73.84227,"Zip":"10466","ClassificationType":"M","DateReported":"\/Date(1576538363000)\/","LastInspected":"\/Date(1576545120000)\/"},
+    {"TicketNumber":"ML19001225","Latitude":40.75402,"Longitude":-73.97419,"Zip":"10017","ClassificationType":"M","DateReported":"\/Date(1548123352000)\/","LastInspected":"\/Date(1548347559000)\/"},
     {"TicketNumber":"ML19003831","Latitude":40.77168,"Longitude":-73.97763,"Zip":"10023","ClassificationType":"M","DateReported":"\/Date(1551966025000)\/","LastInspected":"\/Date(1570796888000)\/"},
     {"TicketNumber":"ML19004663","Latitude":40.75472,"Longitude":-73.97591,"Zip":"10017","ClassificationType":"M","DateReported":"\/Date(1553211480000)\/","LastInspected":"\/Date(1555940700000)\/"},
     {"TicketNumber":"ML19005447","Latitude":40.80325,"Longitude":-73.96749,"Zip":"10025","ClassificationType":"M","DateReported":"\/Date(1554403835000)\/","LastInspected":"\/Date(1566270397000)\/"},
@@ -2924,11 +2875,8 @@ RECORD 12: 12/22/19 1:22am 239 entries
     {"TicketNumber":"XL19016292","Latitude":40.82188,"Longitude":-73.80963,"Zip":"10465","ClassificationType":"M","DateReported":"\/Date(1576520493000)\/","LastInspected":"\/Date(1576526040000)\/"},
     {"TicketNumber":"XL19016314","Latitude":40.89674,"Longitude":-73.84227,"Zip":"10466","ClassificationType":"M","DateReported":"\/Date(1576538363000)\/","LastInspected":"\/Date(1576545120000)\/"},
     {"TicketNumber":"ML19019998","Latitude":40.74104,"Longitude":-73.97865,"Zip":"10016","ClassificationType":"P","DateReported":"\/Date(1576908002000)\/","LastInspected":"\/Date(1576941900000)\/"},
-    {"TicketNumber":"XL19015986","Latitude":40.83082,"Longitude":-73.8172,"Zip":"10465","ClassificationType":"P","DateReported":"\/Date(1575986463000)\/","LastInspected":"\/Date(1576000800000)\/"}
-]
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-RECORD 13: 12/23/19 2:00am 258entries
-[   {"TicketNumber":"ML19001225","Latitude":40.75402,"Longitude":-73.97419,"Zip":"10017","ClassificationType":"M","DateReported":"\/Date(1548123352000)\/","LastInspected":"\/Date(1548347559000)\/"},
+    {"TicketNumber":"XL19015986","Latitude":40.83082,"Longitude":-73.8172,"Zip":"10465","ClassificationType":"P","DateReported":"\/Date(1575986463000)\/","LastInspected":"\/Date(1576000800000)\/"},
+    {"TicketNumber":"ML19001225","Latitude":40.75402,"Longitude":-73.97419,"Zip":"10017","ClassificationType":"M","DateReported":"\/Date(1548123352000)\/","LastInspected":"\/Date(1548347559000)\/"},
     {"TicketNumber":"ML19003831","Latitude":40.77168,"Longitude":-73.97763,"Zip":"10023","ClassificationType":"M","DateReported":"\/Date(1551966025000)\/","LastInspected":"\/Date(1570796888000)\/"},
     {"TicketNumber":"ML19004663","Latitude":40.75472,"Longitude":-73.97591,"Zip":"10017","ClassificationType":"M","DateReported":"\/Date(1553211480000)\/","LastInspected":"\/Date(1555940700000)\/"},
     {"TicketNumber":"ML19005447","Latitude":40.80325,"Longitude":-73.96749,"Zip":"10025","ClassificationType":"M","DateReported":"\/Date(1554403835000)\/","LastInspected":"\/Date(1566270397000)\/"},
@@ -3185,12 +3133,8 @@ RECORD 13: 12/23/19 2:00am 258entries
     {"TicketNumber":"XL19016545","Latitude":40.88585,"Longitude":-73.85691,"Zip":"10466","ClassificationType":"P","DateReported":"\/Date(1576942004000)\/","LastInspected":"\/Date(1577029291000)\/"},
     {"TicketNumber":"XL19016547","Latitude":40.81352,"Longitude":-73.88479,"Zip":"10474","ClassificationType":"M","DateReported":"\/Date(1576944300000)\/","LastInspected":"\/Date(1576949993000)\/"},
     {"TicketNumber":"XL19016563","Latitude":40.82995,"Longitude":-73.86026,"Zip":"10472","ClassificationType":"P","DateReported":"\/Date(1576968359000)\/","LastInspected":"\/Date(1577001649000)\/"},
-    {"TicketNumber":"XL19016569","Latitude":40.82996,"Longitude":-73.86015,"Zip":"10472","ClassificationType":"P","DateReported":"\/Date(1576982107000)\/","LastInspected":"\/Date(1576997340000)\/"}
-]
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-RECORD 14: 12/24/19 12:15am 241entries
-[   {"TicketNumber":"QL18004912","Latitude":40.75644,"Longitude":-73.80735,"Zip":"11358","ClassificationType":"M","DateReported":"\/Date(1530125443000)\/","LastInspected":"\/Date(1573135860000)\/"},
+    {"TicketNumber":"XL19016569","Latitude":40.82996,"Longitude":-73.86015,"Zip":"10472","ClassificationType":"P","DateReported":"\/Date(1576982107000)\/","LastInspected":"\/Date(1576997340000)\/"},
+    {"TicketNumber":"QL18004912","Latitude":40.75644,"Longitude":-73.80735,"Zip":"11358","ClassificationType":"M","DateReported":"\/Date(1530125443000)\/","LastInspected":"\/Date(1573135860000)\/"},
     {"TicketNumber":"WL18009064","Latitude":41.15131,"Longitude":-73.76978,"Zip":"10514","ClassificationType":"M","DateReported":"\/Date(1533908024000)\/","LastInspected":"\/Date(1572626700000)\/"},
     {"TicketNumber":"WL19000217","Latitude":41.02267,"Longitude":-73.87048,"Zip":"10522","ClassificationType":"M","DateReported":"\/Date(1546890629000)\/","LastInspected":"\/Date(1571768400000)\/"},
     {"TicketNumber":"WL19001940","Latitude":41.04208,"Longitude":-73.74286,"Zip":"10604","ClassificationType":"M","DateReported":"\/Date(1549897929000)\/","LastInspected":"\/Date(1571336040000)\/"},
@@ -3432,5 +3376,3 @@ RECORD 14: 12/24/19 12:15am 241entries
     {"TicketNumber":"WL19014925","Latitude":41.20606,"Longitude":-73.89231,"Zip":"10520","ClassificationType":"M","DateReported":"\/Date(1576289193000)\/","LastInspected":"\/Date(1576295640000)\/"},
     {"TicketNumber":"XL19016133","Latitude":40.84671,"Longitude":-73.88547,"Zip":"10460","ClassificationType":"M","DateReported":"\/Date(1576246983000)\/","LastInspected":"\/Date(1576249500000)\/"}
 ]
-
-----union^^^
