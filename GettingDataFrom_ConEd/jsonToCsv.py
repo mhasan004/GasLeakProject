@@ -19,12 +19,12 @@ def turnToDatetime(microsoftDate):
     return str(date.strftime('%m/%d/20%y %I:%M %p')) # mm/dd/yyyy time am/pm
 
 # Setting up variables:
-jsonFile = "ConEdGasLeakList_ManualRecords_UNION.json" # constantly reading from this file and adding new tickets to csv and txt files (will scrape from json web site)
-csvFile = "UNION.csv"                       # add new tickets to the end of the csv file
-ticketListFile = "ticketList.txt"           # add to end (just for me to see what i got)
-ticketSet = set()                           # need to add what i got in the csv atm
-jsonDict  = []                              # json file to dict: #jsonDict["TicketNumber/Long/lat/etc"][int index of the dot]) 
-dotp= [                                     # Need this to acces the dot properties
+jsonFile = "ConEdGasLeakList_ManualRecords_UNION.json"      # constantly reading from this file and adding new tickets to csv and txt files (will scrape from json web site)
+csvFile = "UNION.csv"                                       # add new tickets to the end of the csv file
+ticketListFile = "ticketList.txt"                           # add to end (just for me to see what i got)
+ticketSet = set()                                           # need to add what i got in the csv atm
+jsonDict  = []                                              # json file to dict: #jsonDict["TicketNumber/Long/lat/etc"][int index of the dot]) 
+properties= [                                                     # Need this to acces the dot properties
     "TicketNumber",
     "Latitude",
     "Longitude",
@@ -45,7 +45,7 @@ with open(csvFile, 'r') as csvfile:
             writer.writerow(csvHeader)
 
 # 2) Add the new JSON data from a JSON file to the JSON Dictionary: 
-jsonDict = pd.read_json(jsonFile, orient='records')         # ***jsonDict[dotp[i]/colStr(dot properties)][j/rowsnumber(dots)]
+jsonDict = pd.read_json(jsonFile, orient='records')         # ***jsonDict[properties[i]/colStr(dot properties)][j/rowsnumber(dots)]
 
 # 3) Read the csv file and add "TicketNumbers" to the "ticketSet" and print ticketNumber to ticketList.txt" for storage: 
 csvData = pd.read_csv(csvFile)                              # ***csvData[colStr][rowNumber]
@@ -63,12 +63,12 @@ for row in range(0, len(jsonDict)):
         outTXT.write(jsonDict["TicketNumber"][row]+"\n")    # add new ticket to txt file  
         with open(csvFile,'a') as outCSV:                   # Write the new Ticket object to csv file
             s=""
-            for col in range(0, len(dotp)-1):               # go through each column/dot property
-                if dotp[col] == "DateReported":             # Need to change the Microsoft time to mm/dd/yyyy
-                    s+=turnToDatetime(str(jsonDict[dotp[col]][row]))
+            for col in range(0, len(properties)-1):               # go through each column/dot property
+                if properties[col] == "DateReported":             # Need to change the Microsoft time to mm/dd/yyyy
+                    s+=turnToDatetime(str(jsonDict[properties[col]][row]))
                 else: 
-                    s+=str(jsonDict[dotp[col]][row])
-                if col != len(dotp)-2:
+                    s+=str(jsonDict[properties[col]][row])
+                if col != len(properties)-2:
                     s+=',' 
             s+="\n"
             outCSV.write(s)                                 # add new ticket obj to csv file  

@@ -1,4 +1,6 @@
 https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&
+M = Green Threat (no threat)
+P = Blue threat  (immediately inspected and made safe)
 
 RECORD 1: 12/09/2019  1:41am: 260 entries
 [ {"TicketNumber":"ML19001225","Latitude":40.75402,"Longitude":-73.97419,"Zip":"10017","ClassificationType":"M","DateReported":"\/Date(1548123352000)\/","LastInspected":"\/Date(1548347559000)\/"},
