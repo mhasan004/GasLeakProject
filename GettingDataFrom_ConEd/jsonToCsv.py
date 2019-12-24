@@ -20,7 +20,7 @@ with open('test.csv', 'r') as csvfile:
         outf = csv.writer(open("test.csv","w", newline='')) 
         outf.writerow(csvHeader)  
 
-#append the other stuff
+# Append the other stuff
 pd.read_json('test.json').drop(columns=['LastInspected']).to_csv("test.csv", mode='a', header=False) #append to csvuse ("test.csv", mode='a', header=False)
 
 
