@@ -6,7 +6,15 @@
         #b)
 import json
 import csv
-import pandas as pd
+import pandas as pd     # to read the json data
+import datetime         # to turn Microsoft JSON date /Date()/ to normal date
+import re               # to turn Microsoft JSON date /Date()/ to normal date
+def turnToDatetime(microsoftDate):          # Function to turn Microsoft JSOn date to mm/dd/yy and time
+    TimestampUtc = str(microsoftDate)
+    TimestampUtc = re.split('\(|\)', TimestampUtc)[1][:10]
+    date = datetime.datetime.fromtimestamp(int(TimestampUtc))
+    return str(date.strftime('%m/%d/20%y %I:%M %p')) # mm/dd/yyyy time am/pm
+
 
 csvFileName = "test.csv"                    # add to the end
 jsonFileName = "test.json"                  # constant read (json web site)
@@ -30,7 +38,7 @@ dotp= [                                     # Need this to acces the dot propert
 with open('test.csv', 'r') as csvfile:
     csv_dict = [row for row in csv.DictReader(csvfile)]
     if len(csv_dict) == 0:
-        csvHeader = ["Ticket Number","Longitude","Latitude","Zipcode","Classification","Date Reported"]
+        csvHeader = ["TicketNumber","Longitude","Latitude","Zipcode","Classification","DateReported"]
         with open('test.csv', 'w', newline='') as outf:
             writer = csv.writer(outf)
             writer.writerow(csvHeader)
@@ -46,18 +54,18 @@ jsonDict = pd.read_json('test.json', orient='records')
 # 3) read the csv file and add ticket Nubers to the ticketSet
 
 
-datetime.strftime(Format_String)
 
-
-
-# 4) See if jsonDict Ticket is in ticketDict. If so, skip this row since we have this info already. If not add to ticketDic and txt and csv add
+# 4) See if the ticket in "jsonDict" is in "ticketDict". If dont got add to "ticketDic", txt and csv. If got, skip this row since we have this info already. 
 for dotN in range(0, len(jsonDict)):
     if jsonDict["TicketNumber"][dotN] not in ticketSet: # If we DONT have this ticket add it
         ticketSet.add(jsonDict["TicketNumber"][dotN])
         with open('test.csv','a') as out:
             s=""
-            for col in range(0, len(dotp)-1):         # go through each column/dot property
-                s+=str(jsonDict[dotp[col]][dotN])
+            for col in range(0, len(dotp)-1):            # go through each column/dot property
+                if dotp[col] == "DateReported":         # Need to change the Microsoft time to mm/dd/yyyy
+                    s+=turnToDatetime(str(jsonDict[dotp[col]][dotN]))
+                else: 
+                    s+=str(jsonDict[dotp[col]][dotN])
                 if col != len(dotp)-2:
                     s+=',' 
             s+="\n"
