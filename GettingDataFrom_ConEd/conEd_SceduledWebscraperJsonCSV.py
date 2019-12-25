@@ -34,6 +34,18 @@ properties= [                                                   # Need this to a
     "DateReported",
     "LastInspected"
 ]
+# Setting up method to automatically push changes to git hub so i can access the new tickets
+PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'  # the path to the .git file
+COMMIT_MESSAGE = 'Automated Push - New Ticket Update'
+def git_push():
+    try:
+        repo = Repo(PATH_OF_GIT_REPO)
+        repo.git.add(update=True)
+        repo.index.commit(COMMIT_MESSAGE)
+        origin = repo.remote(name='origin')
+        origin.push()
+    except:
+        print('Some error occured while pushing the code')    
 
 # Function to turn Microsoft JSON date to mm/dd/yy and time:
 def turnToDatetime(microsoftDate):         
@@ -75,7 +87,7 @@ def WebscraperJsonToCSV():
         ticketSet.add(str(csvData["TicketNumber"][row]))    
         outTXT.write(str(csvData["TicketNumber"][row])+"\n")
 
-    # 4) See if the ticket in "jsonDict" is in "ticketDict". If dont got add to "ticketDic", and .txt and .csv file for stoage. If got, skip this row since we have this info already. 
+    # 4) CHECK IF NEW TICKET: See if the tickets in "jsonDict" are in "ticketDict". If we have have it, add to "ticketDic", and .txt and .csv file for stoage. If we have it, skip this row since we have this info already. 
     for row in range(0, len(jsonDict)):
         if jsonDict["TicketNumber"][row] not in ticketSet:              # If we DONT have this ticket add it
             print(str(jsonDict["TicketNumber"][row])+ " not in set so adding it")
@@ -92,7 +104,8 @@ def WebscraperJsonToCSV():
                         s+=',' 
                 s+="\n"
                 outCSV.write(s)                                         # add new ticket obj to csv file  
-                
+        git_push()
+
     # 5) print the web scraping run that was done for debugging purposes
     global scrapingCount                                                # Indicate that im using the global value
     scrapingCount = scrapingCount + 1 
@@ -100,7 +113,7 @@ def WebscraperJsonToCSV():
 
 # Running the function every x seconds/minutes/hours
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=1)
+scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=30)
 scheduler.start()
 
 
