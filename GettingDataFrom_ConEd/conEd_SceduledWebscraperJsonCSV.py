@@ -37,7 +37,6 @@ properties= [                                                   # Need this to a
 # Setting up method to automatically push changes to git hub so i can access the new tickets
 PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'  # the path to the .git file
 COMMIT_MESSAGE = 'Automated Push - New Ticket Update'
-isNewTicket = False
 def git_push():
     global scrapingCount                                                # Indicate that im using the global value
     try:
@@ -63,6 +62,7 @@ def WebscraperJsonToCSV():
     # Set up the web scraping iteration counter for debugging purposes
     global scrapingCount                                                # Indicate that im using the global value
     scrapingCount = scrapingCount + 1 
+    isNewTicket = False
 
     # 1) If the csv is empty, print the header
     with open(csvFile, 'r') as csvfile:
@@ -97,6 +97,7 @@ def WebscraperJsonToCSV():
     # 4) CHECK IF NEW TICKET: See if the tickets in "jsonDict" are in "ticketDict". If we have have it, add to "ticketDic", and .txt and .csv file for stoage. If we have it, skip this row since we have this info already. 
     for row in range(0, len(jsonDict)):
         if jsonDict["TicketNumber"][row] not in ticketSet:              # If we DONT have this ticket add it
+            isNewTicket = True
             print(str(jsonDict["TicketNumber"][row])+ " not in set so adding it")
             ticketSet.add(jsonDict["TicketNumber"][row])
             outTXT.write(jsonDict["TicketNumber"][row]+"\n")            # add new ticket to txt file  
@@ -111,8 +112,8 @@ def WebscraperJsonToCSV():
                         s+=',' 
                 s+="\n"
                 outCSV.write(s)                                         # add new ticket obj to csv file  
-
-        git_push()
+        if isNewTicket = True:
+            git_push()
     print("Run Done " + str(scrapingCount))
 
 # Running the function every x seconds/minutes/hours
