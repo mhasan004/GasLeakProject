@@ -98,7 +98,7 @@ def WebscraperJsonToCSV():
 
 # Running the function every x seconds/minutes/hours
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minute=10)
+scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=5)
 scheduler.start()
 
 
