@@ -115,6 +115,7 @@ def WebscraperJsonToCSV():
                 outCSV.write(s)                                         # add new ticket obj to csv file  
         if isNewTicket == True:
             git_push()
+            isNewTicket == False
             print("***************** PUSHED for scrapingCount = " + str(scrapingCount))
     print("Run Done " + str(scrapingCount))
 
