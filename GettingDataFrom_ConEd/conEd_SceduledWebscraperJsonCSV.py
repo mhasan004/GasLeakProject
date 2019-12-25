@@ -38,7 +38,6 @@ properties= [                                                   # Need this to a
 PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'  # the path to the .git file
 COMMIT_MESSAGE = 'Testing Automated Push - New Ticket Update'
 def git_push():
-    global scrapingCount                                                # Indicate that im using the global value
     try:
         repo = Repo(PATH_OF_GIT_REPO)
         repo.git.add(update=True)
@@ -113,9 +112,9 @@ def WebscraperJsonToCSV():
                         s+=',' 
                 s+="\n"
                 outCSV.write(s)                                         # add new ticket obj to csv file  
-        if isNewTicket == True:
+        if (isNewTicket == True):
             git_push()
-            isNewTicket == False
+            isNewTicket = False
             print("***************** PUSHED for scrapingCount = " + str(scrapingCount))
     print("Run Done " + str(scrapingCount))
 
