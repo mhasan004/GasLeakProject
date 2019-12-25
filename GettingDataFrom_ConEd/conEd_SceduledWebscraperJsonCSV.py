@@ -118,14 +118,14 @@ def WebscraperJsonToCSV():
                 s+="\n"
                 outCSV.write(s)                                         # add new ticket obj to csv file  
         
-        if (isNewTicket == True):
-            git_push()
-            isNewTicket == False
+    if (isNewTicket == True):
+        git_push()
+        isNewTicket == False
     print("Run Done " + str(scrapingCount))
 
 # 5) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=30)
+scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=30)
 scheduler.start()
 
 #421 tickets atm 12/25/19 1:16am
