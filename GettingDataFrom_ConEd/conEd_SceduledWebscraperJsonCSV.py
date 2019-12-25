@@ -37,6 +37,7 @@ properties= [                                                   # Need this to a
 # Setting up method to automatically push changes to git hub so i can access the new tickets
 PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'  # the path to the .git file
 COMMIT_MESSAGE = 'Automated Push - New Ticket Update'
+isNewTicket = False
 def git_push():
     global scrapingCount                                                # Indicate that im using the global value
     try:
@@ -110,6 +111,7 @@ def WebscraperJsonToCSV():
                         s+=',' 
                 s+="\n"
                 outCSV.write(s)                                         # add new ticket obj to csv file  
+
         git_push()
     print("Run Done " + str(scrapingCount))
 
