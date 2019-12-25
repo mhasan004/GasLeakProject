@@ -37,8 +37,7 @@ properties= [                                                   # Need this to a
 
 # Setting up function to automatically push changes to github when there is a new ticket so that I can have access to the latest chnages
 #PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'          # the path to the .git file
-PATH_OF_GIT_REPO = '/home/hasan/repositories/gh/GasLeakProject'        # the path to the .git file
-COMMIT_MESSAGE = 'Automated Push - New Ticket Update'
+PATH_OF_GIT_REPO = '/home/hasan/repositories/gh/GasLeakProject'        # the path to the .git fileCOMMIT_MESSAGE = 'Automated Push - New Ticket Update'
 def git_push():
     try:
         repo = Repo(PATH_OF_GIT_REPO)
@@ -76,13 +75,13 @@ def WebscraperJsonToCSV():
                 writer.writerow(csvHeader)
 
     # 2) GET JSON DATA: from a JSON file and add to the JSON Dictionary: 
-    # jsonDict = pd.read_json(jsonFile, orient='records')           # ***jsonDict[properties[i]/colStr(dot properties)][j/rowsnumber(dots)]
+    jsonDict = pd.read_json(jsonFile, orient='records')           # ***jsonDict[properties[i]/colStr(dot properties)][j/rowsnumber(dots)]
     
     # 2) GET JSON DATA: Webscrape JSON data from the url and add to the JSON Dictionary: 
-    res = requests.get(url)
-    html_data = res.content                                             # Getting the HTML JSOn data 
-    soup = BeautifulSoup(html_data, 'html.parser')                      # the HTML data to parse
-    text = soup.find_all(text=True)
+    # res = requests.get(url)
+    # html_data = res.content                                             # Getting the HTML JSOn data 
+    # soup = BeautifulSoup(html_data, 'html.parser')                      # the HTML data to parse
+    # text = soup.find_all(text=True)
 
     jsonStr = ''                                                        # turning text to string from so i can use pandas to turn it to dictionary
     for t in text:
@@ -127,9 +126,9 @@ def WebscraperJsonToCSV():
     print("Run Done " + str(scrapingCount))
 
 # 5) RESCAN FOR TICKETS every x time using sceduler
-scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=30)
-scheduler.start()
+# scheduler = BlockingScheduler()
+# scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=30)
+# scheduler.start()
 
 
 
