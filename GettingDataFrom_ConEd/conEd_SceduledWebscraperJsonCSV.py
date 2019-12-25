@@ -14,6 +14,8 @@ import re                           # to turn Microsoft JSON date /Date()/ to no
 import requests                     # Getting html data
 from bs4 import BeautifulSoup       # Parse the HTML data
 from apscheduler.schedulers.blocking import BlockingScheduler #Sceduler. Will run a function every x seconds/minutes/hours
+from git import Repo                # To push chnages to gh
+
 
 # Setting up variables:
 jsonFile = "ConEdGasLeakList_ManualRecords_UNION.json"          # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
@@ -98,7 +100,7 @@ def WebscraperJsonToCSV():
 
 # Running the function every x seconds/minutes/hours
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=5)
+scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=1)
 scheduler.start()
 
 
