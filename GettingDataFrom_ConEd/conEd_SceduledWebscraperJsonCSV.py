@@ -34,8 +34,9 @@ properties= [                                                   # Need this to a
     "DateReported",
     "LastInspected"
 ]
-# Setting up method to automatically push changes to git hub so i can access the new tickets
-PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'  # the path to the .git file
+
+# Setting up function to automatically push changes to github when there is a new ticket so that I can have access to the latest chnages
+PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'        # the path to the .git file
 COMMIT_MESSAGE = 'Automated Push - New Ticket Update'
 def git_push():
     try:
@@ -44,7 +45,7 @@ def git_push():
         repo.index.commit(COMMIT_MESSAGE)
         origin = repo.remote(name='origin')
         origin.push()
-        print("***************** PUSHED for scrapingCount = " + str(scrapingCount))
+        print("******** PUSHED TO GITHUB for Run " + str(scrapingCount)+"********")
     except:
         print('Some error occured while pushing the code')  
   
@@ -54,7 +55,7 @@ def turnToDatetime(microsoftDate):
     TimestampUtc = str(microsoftDate)
     TimestampUtc = re.split('\(|\)', TimestampUtc)[1][:10]
     date = datetime.datetime.fromtimestamp(int(TimestampUtc))
-    return str(date.strftime('%m/%d/20%y %I:%M %p'))            # mm/dd/yyyy time am/pm
+    return str(date.strftime('%m/%d/20%y %I:%M %p'))                    # mm/dd/yyyy time am/pm
 
 
 # The sceduler will run this main funtion ever x seconds/minutes/hours
@@ -73,10 +74,10 @@ def WebscraperJsonToCSV():
                 writer = csv.writer(outf)
                 writer.writerow(csvHeader)
 
-    # 2) Get JSON data from a JSON file and add to the JSON Dictionary: 
+    # 2) GET JSON DATA: from a JSON file and add to the JSON Dictionary: 
         # jsonDict = pd.read_json(jsonFile, orient='records')           # ***jsonDict[properties[i]/colStr(dot properties)][j/rowsnumber(dots)]
-
-    # 2) Webscrape JSON data from the url and add to the JSON Dictionary: 
+    
+    # 2) GET JSON DATA: Webscrape JSON data from the url and add to the JSON Dictionary: 
     res = requests.get(url)
     html_data = res.content                                             # Getting the HTML JSOn data 
     soup = BeautifulSoup(html_data, 'html.parser')                      # the HTML data to parse
@@ -87,7 +88,7 @@ def WebscraperJsonToCSV():
         jsonStr += '{} '.format(t)
     jsonDict = pd.read_json(jsonStr, orient='records')                  # Turning the json string to a dictionary
 
-    # 3) Read the csv file and add "TicketNumbers" to the "ticketSet" and print ticketNumber to ticketList.txt" for storage: 
+    # 3) CHECK WHAT TICKETS WE ALREADY GOT FROM THE .CSV FILE: Read the csv file and add "TicketNumbers" to the "ticketSet" and print ticketNumber to ticketList.txt" for storage: 
     csvData = pd.read_csv(csvFile)                                      # ***csvData[colStr][rowNumber]
     outTXT = open(ticketListFile,"w+")                                  # Settign up to write to txt file
     for row in range(0,len(csvData)):
@@ -116,9 +117,9 @@ def WebscraperJsonToCSV():
             git_push()
     print("Run Done " + str(scrapingCount))
 
-# Running the function every x seconds/minutes/hours
+# 5) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=1)
+scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=10)
 scheduler.start()
 
 
