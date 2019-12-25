@@ -96,7 +96,7 @@ def WebscraperJsonToCSV():
 
     # 4) CHECK IF NEW TICKET: See if the tickets in "jsonDict" are in "ticketDict". If we have have it, add to "ticketDic", and .txt and .csv file for stoage. If we have it, skip this row since we have this info already. 
     for row in range(0, len(jsonDict)):
-
+        isNewTicket = True;
         if jsonDict["TicketNumber"][row] not in ticketSet:              # If we DONT have this ticket add it
             isNewTicket = True                                          # This is a new ticket so push the new files
             print(str(jsonDict["TicketNumber"][row])+ " not in set so adding it")
