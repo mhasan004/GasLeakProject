@@ -56,7 +56,11 @@ def turnToDatetime(microsoftDate):
 
 
 # The sceduler will run this main funtion ever x seconds/minutes/hours
-def WebscraperJsonToCSV():                                  
+def WebscraperJsonToCSV():    
+    # Set up the web scraping iteration counter for debugging purposes
+    global scrapingCount                                                # Indicate that im using the global value
+    scrapingCount = scrapingCount + 1 
+
     # 1) If the csv is empty, print the header
     with open(csvFile, 'r') as csvfile:
         csv_dict = [row for row in csv.DictReader(csvfile)]
@@ -106,9 +110,6 @@ def WebscraperJsonToCSV():
                 outCSV.write(s)                                         # add new ticket obj to csv file  
         git_push()
 
-    # 5) print the web scraping run that was done for debugging purposes
-    global scrapingCount                                                # Indicate that im using the global value
-    scrapingCount = scrapingCount + 1 
     print("Run Done " + str(scrapingCount))
 
 # Running the function every x seconds/minutes/hours
