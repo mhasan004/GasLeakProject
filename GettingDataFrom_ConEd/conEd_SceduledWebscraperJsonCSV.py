@@ -40,11 +40,12 @@ COMMIT_MESSAGE = 'Automated Push - New Ticket Update'
 def git_push():
     global scrapingCount                                                # Indicate that im using the global value
     try:
-        repo = Repo(PATH_OF_GIT_REPO)
-        repo.git.add(update=True)
-        repo.index.commit(COMMIT_MESSAGE)
-        origin = repo.remote(name='origin')
-        origin.push()
+        # repo = Repo(PATH_OF_GIT_REPO)
+        # repo.git.add(update=True)
+        # repo.index.commit(COMMIT_MESSAGE)
+        # origin = repo.remote(name='origin')
+        # origin.push()
+        print(scrapingCount)
         #print("***************** PUSHED for scrapingCount = "+scrapingCount)
     except:
         print('Some error occured while pushing the code')    
