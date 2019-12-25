@@ -36,7 +36,7 @@ properties= [                                                   # Need this to a
 ]
 # Setting up method to automatically push changes to git hub so i can access the new tickets
 PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'  # the path to the .git file
-COMMIT_MESSAGE = 'Automated Push - New Ticket Update'
+COMMIT_MESSAGE = 'Testing Automated Push - New Ticket Update'
 def git_push():
     global scrapingCount                                                # Indicate that im using the global value
     try:
@@ -45,9 +45,10 @@ def git_push():
         repo.index.commit(COMMIT_MESSAGE)
         origin = repo.remote(name='origin')
         origin.push()
-        print("***************** PUSHED for scrapingCount = " + str(scrapingCount))
     except:
-        print('Some error occured while pushing the code')    
+        print('Some error occured while pushing the code')  
+    print("***************** PUSHED for scrapingCount = " + str(scrapingCount))
+  
 
 # Function to turn Microsoft JSON date to mm/dd/yy and time:
 def turnToDatetime(microsoftDate):         
