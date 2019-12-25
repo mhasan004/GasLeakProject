@@ -36,7 +36,7 @@ properties= [                                                   # Need this to a
 ]
 
 # Setting up function to automatically push changes to github when there is a new ticket so that I can have access to the latest chnages
-PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'        # the path to the .git file
+PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'#'/home/hasan/repositories/gh/GasLeakProject'        # the path to the .git file
 COMMIT_MESSAGE = 'Automated Push - New Ticket Update'
 def git_push():
     try:
@@ -89,7 +89,9 @@ def WebscraperJsonToCSV():
     try:
         jsonDict = pd.read_json(jsonStr, orient='records')                  # Turning the json string to a dictionary
     except:
-        print("Couldnt get the json data so will re-run function. Ending Run "+ str(scrapingCount))
+        print("Couldnt get the json data so will re-run function. This is Run "+ str(scrapingCount))
+        print("***printing error jsonStr\n"+jsonStr)
+        print("***printing error jsonDict "+ str(jsonDict))
         WebscraperJsonToCSV()
 
     # 3) CHECK WHAT TICKETS WE ALREADY GOT FROM THE .CSV FILE: Read the csv file and add "TicketNumbers" to the "ticketSet" and print ticketNumber to ticketList.txt" for storage: 
@@ -117,36 +119,19 @@ def WebscraperJsonToCSV():
                         s+=',' 
                 s+="\n"
                 outCSV.write(s)                                         # add new ticket obj to csv file  
-        if (isNewTicket == True):
-            git_push()
+        
+    if (isNewTicket == True):
+        git_push()
+        isNewTicket == False
     print("Run Done " + str(scrapingCount))
 
 # 5) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=5)
+
+scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=30)
 scheduler.start()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#431 dec 25 2 18apm
 #421 tickets atm 12/25/19 1:16am
 
 
