@@ -47,7 +47,6 @@ def git_push():
         origin.push()
     except:
         print('Some error occured while pushing the code')  
-    print("***************** PUSHED for scrapingCount = " + str(scrapingCount))
   
 
 # Function to turn Microsoft JSON date to mm/dd/yy and time:
@@ -116,6 +115,7 @@ def WebscraperJsonToCSV():
                 outCSV.write(s)                                         # add new ticket obj to csv file  
         if isNewTicket == True:
             git_push()
+            print("***************** PUSHED for scrapingCount = " + str(scrapingCount))
     print("Run Done " + str(scrapingCount))
 
 # Running the function every x seconds/minutes/hours
