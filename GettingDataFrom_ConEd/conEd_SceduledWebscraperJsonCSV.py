@@ -40,13 +40,12 @@ COMMIT_MESSAGE = 'Automated Push - New Ticket Update'
 def git_push():
     global scrapingCount                                                # Indicate that im using the global value
     try:
-        # repo = Repo(PATH_OF_GIT_REPO)
-        # repo.git.add(update=True)
-        # repo.index.commit(COMMIT_MESSAGE)
-        # origin = repo.remote(name='origin')
-        # origin.push()
-        print(scrapingCount)
-        #print("***************** PUSHED for scrapingCount = "+scrapingCount)
+        repo = Repo(PATH_OF_GIT_REPO)
+        repo.git.add(update=True)
+        repo.index.commit(COMMIT_MESSAGE)
+        origin = repo.remote(name='origin')
+        origin.push()
+        print("***************** PUSHED for scrapingCount = " + str(scrapingCount))
     except:
         print('Some error occured while pushing the code')    
 
@@ -120,7 +119,7 @@ def WebscraperJsonToCSV():
 
 # Running the function every x seconds/minutes/hours
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=30)
+scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=9)
 scheduler.start()
 
 
