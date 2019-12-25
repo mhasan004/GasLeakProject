@@ -14,7 +14,7 @@ import re                           # to turn Microsoft JSON date /Date()/ to no
 import requests                     # Getting html data
 from bs4 import BeautifulSoup       # Parse the HTML data
 from apscheduler.schedulers.blocking import BlockingScheduler #Sceduler. Will run a function every x seconds/minutes/hours
-from git import Repo                # To push chnages to gh
+from git import Repo                # (GitPython) To push chnages to gh
 
 
 # Setting up variables:
@@ -75,7 +75,7 @@ def WebscraperJsonToCSV():
                 writer.writerow(csvHeader)
 
     # 2) GET JSON DATA: from a JSON file and add to the JSON Dictionary: 
-        # jsonDict = pd.read_json(jsonFile, orient='records')           # ***jsonDict[properties[i]/colStr(dot properties)][j/rowsnumber(dots)]
+    # jsonDict = pd.read_json(jsonFile, orient='records')           # ***jsonDict[properties[i]/colStr(dot properties)][j/rowsnumber(dots)]
     
     # 2) GET JSON DATA: Webscrape JSON data from the url and add to the JSON Dictionary: 
     res = requests.get(url)
@@ -89,7 +89,7 @@ def WebscraperJsonToCSV():
     try:
         jsonDict = pd.read_json(jsonStr, orient='records')                  # Turning the json string to a dictionary
     except:
-        print("Couldnt get the json data so will re-run function. This is Run "+ str(scrapingCount))
+        print("Couldnt get the json data so will re-run function. Ending Run "+ str(scrapingCount))
         WebscraperJsonToCSV()
 
     # 3) CHECK WHAT TICKETS WE ALREADY GOT FROM THE .CSV FILE: Read the csv file and add "TicketNumbers" to the "ticketSet" and print ticketNumber to ticketList.txt" for storage: 
@@ -123,8 +123,29 @@ def WebscraperJsonToCSV():
 
 # 5) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=10)
+scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=5)
 scheduler.start()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #421 tickets atm 12/25/19 1:16am
 
