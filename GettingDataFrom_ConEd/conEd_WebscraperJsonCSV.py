@@ -1,5 +1,5 @@
 # Mahmudul Hasan. Script to scrape JSON Gas Leak Data points from ConEdison everyday and put them into a csv file for further use
-# File not with web scraper
+# File with web scraper
 
 # 1) What tickets do we have? read the ticket col of csv of ticket txt file and add tickets to ticketList.txt
 # 2) jsonDict = contents of json file
@@ -9,9 +9,11 @@
 
 import json
 import csv
-import pandas as pd     # to read the json and csv data
+import pandas as pd     # to read the json and csv data and put into dictionary form
 import datetime         # to turn Microsoft JSON date /Date()/ to normal date
 import re               # to turn Microsoft JSON date /Date()/ to normal date
+import requests                     # Getting html data
+from bs4 import BeautifulSoup       # Parse the HTML data
 
 # Function to turn Microsoft JSON date to mm/dd/yy and time:
 def turnToDatetime(microsoftDate):         
@@ -46,8 +48,27 @@ with open(csvFile, 'r') as csvfile:
             writer = csv.writer(outf)
             writer.writerow(csvHeader)
 
-# 2) Add the new JSON data from a JSON file to the JSON Dictionary: 
-jsonDict = pd.read_json(jsonFile, orient='records')         # ***jsonDict[properties[i]/colStr(dot properties)][j/rowsnumber(dots)]
+# 2) Get JSON data from the JSON file and add to the JSON Dictionary: 
+    # jsonDict = pd.read_json(jsonFile, orient='records')         # ***jsonDict[properties[i]/colStr(dot properties)][j/rowsnumber(dots)]
+
+# 2) Webscrape JSON data from the url and add to the JSON Dictionary: 
+url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&'
+res = requests.get(url)
+html_data = res.content                                         # Getting the HTML JSOn data 
+soup = BeautifulSoup(html_data, 'html.parser')                  # the HTML data to parse
+text = soup.find_all(text=True)
+
+jsonStr = ''                                                    # turning text to string from so i can use pandas to turn it to dictionary
+for t in text:
+	jsonStr += '{} '.format(t)
+
+jsonDict = pd.read_json(jsonStr, orient='records')              # Turning the json string to a dictionary
+
+
+
+
+
+
 
 # 3) Read the csv file and add "TicketNumbers" to the "ticketSet" and print ticketNumber to ticketList.txt" for storage: 
 csvData = pd.read_csv(csvFile)                              # ***csvData[colStr][rowNumber]
@@ -60,7 +81,7 @@ for row in range(0,len(csvData)):
 # 4) See if the ticket in "jsonDict" is in "ticketDict". If dont got add to "ticketDic", and .txt and .csv file for stoage. If got, skip this row since we have this info already. 
 for row in range(0, len(jsonDict)):
     if jsonDict["TicketNumber"][row] not in ticketSet:      # If we DONT have this ticket add it
-        print("not in it do adding it")
+        print(str(jsonDict["TicketNumber"][row])+ " not in set so adding it")
         ticketSet.add(jsonDict["TicketNumber"][row])
         outTXT.write(jsonDict["TicketNumber"][row]+"\n")    # add new ticket to txt file  
         with open(csvFile,'a') as outCSV:                   # Write the new Ticket object to csv file
