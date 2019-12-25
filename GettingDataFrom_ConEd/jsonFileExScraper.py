@@ -17,15 +17,12 @@ from apscheduler.schedulers.blocking import BlockingScheduler #Sceduler. Will ru
 from git import Repo                # (GitPython) To push chnages to gh
 
 
-# Setting up variables:
+# Setting up variables: NEED TO CHANGE THE FIRST FIVE VARIABLES BELOW
 jsonFile = "ConEdGasLeakList_ManualRecords_UNION.json"          # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
 url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&' # Url to scrape JSOn data from
 csvFile = "UNION.csv"                                           # add new tickets to the end of the csv file
 ticketListFile = "ticketList.txt"                               # add to end (just for me to see what i got)
-ticketSet = set()                                               # need to add what i got in the csv atm
-jsonDict  = []                                                  # json file to dict: #jsonDict["TicketNumber/Long/lat/etc"][int index of the dot]) 
-scrapingCount = 0                                               # Just counting how many times i have scraped the website while this was running
-properties= [                                                   # Need this to acces the dot properties
+properties= [                                                   # The JSON dot properties
     "TicketNumber",
     "Latitude",
     "Longitude",
@@ -34,6 +31,9 @@ properties= [                                                   # Need this to a
     "DateReported",
     "LastInspected"
 ]
+ticketSet = set()                                               # need to add what i got in the csv atm
+jsonDict  = []                                                  # json file to dict: #jsonDict["TicketNumber/Long/lat/etc"][int index of the dot]) 
+scrapingCount = 0                                               # Just counting how many times i have scraped the website while this was running
 
 # Setting up function to automatically push changes to github when there is a new ticket so that I can have access to the latest chnages
 #PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'          # the path to the .git file
