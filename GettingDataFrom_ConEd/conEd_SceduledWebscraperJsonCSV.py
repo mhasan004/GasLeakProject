@@ -36,7 +36,7 @@ properties= [                                                   # Need this to a
 ]
 # Setting up method to automatically push changes to git hub so i can access the new tickets
 PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'  # the path to the .git file
-COMMIT_MESSAGE = 'Testing Automated Push - New Ticket Update'
+COMMIT_MESSAGE = 'Automated Push - New Ticket Update'
 def git_push():
     try:
         repo = Repo(PATH_OF_GIT_REPO)
@@ -44,6 +44,7 @@ def git_push():
         repo.index.commit(COMMIT_MESSAGE)
         origin = repo.remote(name='origin')
         origin.push()
+        print("***************** PUSHED for scrapingCount = " + str(scrapingCount))
     except:
         print('Some error occured while pushing the code')  
   
@@ -95,8 +96,6 @@ def WebscraperJsonToCSV():
 
     # 4) CHECK IF NEW TICKET: See if the tickets in "jsonDict" are in "ticketDict". If we have have it, add to "ticketDic", and .txt and .csv file for stoage. If we have it, skip this row since we have this info already. 
     for row in range(0, len(jsonDict)):
-        isNewTicket = True
-        print("***************** WILL PUSH for scrapingCount = " + str(scrapingCount))
         if jsonDict["TicketNumber"][row] not in ticketSet:              # If we DONT have this ticket add it
             isNewTicket = True                                          # This is a new ticket so push the new files
             print(str(jsonDict["TicketNumber"][row])+ " not in set so adding it")
@@ -119,7 +118,7 @@ def WebscraperJsonToCSV():
 
 # Running the function every x seconds/minutes/hours
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=9)
+scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=30)
 scheduler.start()
 
 
