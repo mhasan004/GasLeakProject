@@ -120,7 +120,7 @@ def WebscraperJsonToCSV():
         
         if (isNewTicket == True):
             git_push()
-            isNewTicket == True
+            isNewTicket == False
     print("Run Done " + str(scrapingCount))
 
 # 5) RESCAN FOR TICKETS every x time using sceduler
