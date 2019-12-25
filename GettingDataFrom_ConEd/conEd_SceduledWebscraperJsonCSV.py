@@ -17,15 +17,12 @@ from apscheduler.schedulers.blocking import BlockingScheduler #Sceduler. Will ru
 from git import Repo                # (GitPython) To push chnages to gh
 
 
-# Setting up variables:
+# SETTING UP GLOBAL VARIABLES: need to change the first seven variables below
 jsonFile = "ConEdGasLeakList_ManualRecords_UNION.json"          # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
 url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&' # Url to scrape JSOn data from
 csvFile = "UNION.csv"                                           # add new tickets to the end of the csv file
 ticketListFile = "ticketList.txt"                               # add to end (just for me to see what i got)
-ticketSet = set()                                               # need to add what i got in the csv atm
-jsonDict  = []                                                  # json file to dict: #jsonDict["TicketNumber/Long/lat/etc"][int index of the dot]) 
-scrapingCount = 0                                               # Just counting how many times i have scraped the website while this was running
-properties= [                                                   # Need this to acces the dot properties
+properties= [                                                   # The JSON dot properties
     "TicketNumber",
     "Latitude",
     "Longitude",
@@ -34,11 +31,14 @@ properties= [                                                   # Need this to a
     "DateReported",
     "LastInspected"
 ]
+#PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'  # the path to the .git file (this is the location on my raspberry pi)
+PATH_OF_GIT_REPO = '/home/hasan/repositories/gh/GasLeakProject' # the path to the .git file (this is the location on my Laptop)
+COMMIT_MESSAGE = 'Automated Push - New Ticket Update'           # the commmit message when it is pushed
+ticketSet = set()                                               # need to add what i got in the csv atm
+jsonDict  = []                                                  # json file to dict: #jsonDict["TicketNumber/Long/lat/etc"][int index of the dot]) 
+scrapingCount = 0                                               # Just counting how many times i have scraped the website while this was running
 
-# Setting up function to automatically push changes to github when there is a new ticket so that I can have access to the latest chnages
-#PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'          # the path to the .git file
-PATH_OF_GIT_REPO = '/home/hasan/repositories/gh/GasLeakProject'        # the path to the .git file
-COMMIT_MESSAGE = 'Automated Push - New Ticket Update'
+# GIT PUSH FUNCTION: Setting up function to automatically push changes to github when there is a new ticket so that I can have access to the latest chnages
 def git_push():
     try:
         repo = Repo(PATH_OF_GIT_REPO)
@@ -120,20 +120,27 @@ def WebscraperJsonToCSV():
                         s+=',' 
                 s+="\n"
                 outCSV.write(s)                                         # add new ticket obj to csv file  
-        
+    # 5) Push to Github if we have a new ticket
     if (isNewTicket == True):
         git_push()
         isNewTicket == False
     print("Run Done " + str(scrapingCount))
 
-# 5) RESCAN FOR TICKETS every x time using sceduler
+# 6) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=1)
+scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=30)
 scheduler.start()
 
 
 
-# ******************NEEED TO SANATZE THE INPUT JSON DATA !
+
+
+
+
+
+
+
+
 
 
 
