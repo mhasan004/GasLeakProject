@@ -119,6 +119,7 @@ def WebscraperJsonToCSV():
                 outCSV.write(s)                                         # add new ticket obj to csv file  
         if (isNewTicket == True):
             git_push()
+            isNewTicket == True
     print("Run Done " + str(scrapingCount))
 
 # 5) RESCAN FOR TICKETS every x time using sceduler
