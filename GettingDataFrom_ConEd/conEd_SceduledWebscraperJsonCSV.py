@@ -90,15 +90,15 @@ def WebscraperJsonToCSV():
                         s+=',' 
                 s+="\n"
                 outCSV.write(s)                                         # add new ticket obj to csv file  
-
+                
     # 5) print the web scraping run that was done for debugging purposes
     global scrapingCount                                                # Indicate that im using the global value
-    scrapingCount = scrapingCount +1 
+    scrapingCount = scrapingCount + 1 
     print("Run Done " + str(scrapingCount))
 
 # Running the function every x seconds/minutes/hours
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=5)
+scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=5)
 scheduler.start()
 
 
