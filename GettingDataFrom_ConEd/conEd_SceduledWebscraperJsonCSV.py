@@ -96,6 +96,7 @@ def WebscraperJsonToCSV():
     # 4) CHECK IF NEW TICKET: See if the tickets in "jsonDict" are in "ticketDict". If we have have it, add to "ticketDic", and .txt and .csv file for stoage. If we have it, skip this row since we have this info already. 
     for row in range(0, len(jsonDict)):
         isNewTicket = True
+        print("***************** WILL PUSH for scrapingCount = " + str(scrapingCount))
         if jsonDict["TicketNumber"][row] not in ticketSet:              # If we DONT have this ticket add it
             isNewTicket = True                                          # This is a new ticket so push the new files
             print(str(jsonDict["TicketNumber"][row])+ " not in set so adding it")
@@ -114,7 +115,6 @@ def WebscraperJsonToCSV():
                 outCSV.write(s)                                         # add new ticket obj to csv file  
         if (isNewTicket == True):
             git_push()
-        print("***************** PUSHED for scrapingCount = " + str(scrapingCount))
     print("Run Done " + str(scrapingCount))
 
 # Running the function every x seconds/minutes/hours
