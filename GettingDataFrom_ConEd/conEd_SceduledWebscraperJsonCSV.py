@@ -45,7 +45,7 @@ def git_push():
         repo.index.commit(COMMIT_MESSAGE)
         origin = repo.remote(name='origin')
         origin.push()
-        print("***************** PUSHED for scrapingCount = "+scrapingCount)
+        #print("***************** PUSHED for scrapingCount = "+scrapingCount)
     except:
         print('Some error occured while pushing the code')    
 
