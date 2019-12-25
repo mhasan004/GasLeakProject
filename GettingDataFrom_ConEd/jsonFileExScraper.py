@@ -17,15 +17,12 @@ from apscheduler.schedulers.blocking import BlockingScheduler #Sceduler. Will ru
 from git import Repo                # (GitPython) To push chnages to gh
 
 
-# Setting up variables:
+# Setting up variables: NEED TO CHANGE THE FIRST FIVE VARIABLES BELOW
 jsonFile = "ConEdGasLeakList_ManualRecords_UNION.json"          # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
 url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&' # Url to scrape JSOn data from
 csvFile = "UNION.csv"                                           # add new tickets to the end of the csv file
 ticketListFile = "ticketList.txt"                               # add to end (just for me to see what i got)
-ticketSet = set()                                               # need to add what i got in the csv atm
-jsonDict  = []                                                  # json file to dict: #jsonDict["TicketNumber/Long/lat/etc"][int index of the dot]) 
-scrapingCount = 0                                               # Just counting how many times i have scraped the website while this was running
-properties= [                                                   # Need this to acces the dot properties
+properties= [                                                   # The JSON dot properties
     "TicketNumber",
     "Latitude",
     "Longitude",
@@ -34,11 +31,13 @@ properties= [                                                   # Need this to a
     "DateReported",
     "LastInspected"
 ]
+ticketSet = set()                                               # need to add what i got in the csv atm
+jsonDict  = []                                                  # json file to dict: #jsonDict["TicketNumber/Long/lat/etc"][int index of the dot]) 
+scrapingCount = 0                                               # Just counting how many times i have scraped the website while this was running
 
 # Setting up function to automatically push changes to github when there is a new ticket so that I can have access to the latest chnages
 #PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'          # the path to the .git file
-PATH_OF_GIT_REPO = '/home/hasan/repositories/gh/GasLeakProject'        # the path to the .git file
-COMMIT_MESSAGE = 'Automated Push - New Ticket Update'
+PATH_OF_GIT_REPO = '/home/hasan/repositories/gh/GasLeakProject'        # the path to the .git fileCOMMIT_MESSAGE = 'Automated Push - New Ticket Update'
 def git_push():
     try:
         repo = Repo(PATH_OF_GIT_REPO)
@@ -76,13 +75,13 @@ def WebscraperJsonToCSV():
                 writer.writerow(csvHeader)
 
     # 2) GET JSON DATA: from a JSON file and add to the JSON Dictionary: 
-    # jsonDict = pd.read_json(jsonFile, orient='records')           # ***jsonDict[properties[i]/colStr(dot properties)][j/rowsnumber(dots)]
+    jsonDict = pd.read_json(jsonFile, orient='records')           # ***jsonDict[properties[i]/colStr(dot properties)][j/rowsnumber(dots)]
     
     # 2) GET JSON DATA: Webscrape JSON data from the url and add to the JSON Dictionary: 
-    res = requests.get(url)
-    html_data = res.content                                             # Getting the HTML JSOn data 
-    soup = BeautifulSoup(html_data, 'html.parser')                      # the HTML data to parse
-    text = soup.find_all(text=True)
+    # res = requests.get(url)
+    # html_data = res.content                                             # Getting the HTML JSOn data 
+    # soup = BeautifulSoup(html_data, 'html.parser')                      # the HTML data to parse
+    # text = soup.find_all(text=True)
 
     jsonStr = ''                                                        # turning text to string from so i can use pandas to turn it to dictionary
     for t in text:
@@ -127,13 +126,20 @@ def WebscraperJsonToCSV():
     print("Run Done " + str(scrapingCount))
 
 # 5) RESCAN FOR TICKETS every x time using sceduler
-scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=1)
-scheduler.start()
+# scheduler = BlockingScheduler()
+# scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=30)
+# scheduler.start()
 
 
 
-# ******************NEEED TO SANATZE THE INPUT JSON DATA !
+
+
+
+
+
+
+
+
 
 
 
