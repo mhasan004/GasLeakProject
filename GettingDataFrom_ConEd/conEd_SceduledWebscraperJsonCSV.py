@@ -116,7 +116,7 @@ def WebscraperJsonToCSV():
             git_push()
             isNewTicket = False
             print("***************** PUSHED for scrapingCount = " + str(scrapingCount))
-            break
+            continue
     print("Run Done " + str(scrapingCount))
 
 # Running the function every x seconds/minutes/hours
