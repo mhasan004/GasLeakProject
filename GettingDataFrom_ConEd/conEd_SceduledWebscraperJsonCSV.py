@@ -36,7 +36,7 @@ properties= [                                                   # Need this to a
 ]
 
 # Setting up function to automatically push changes to github when there is a new ticket so that I can have access to the latest chnages
-PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'        # the path to the .git file
+PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'#'/home/hasan/repositories/gh/GasLeakProject'        # the path to the .git file
 COMMIT_MESSAGE = 'Automated Push - New Ticket Update'
 def git_push():
     try:
