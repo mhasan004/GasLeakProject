@@ -86,7 +86,11 @@ def WebscraperJsonToCSV():
     jsonStr = ''                                                        # turning text to string from so i can use pandas to turn it to dictionary
     for t in text:
         jsonStr += '{} '.format(t)
-    jsonDict = pd.read_json(jsonStr, orient='records')                  # Turning the json string to a dictionary
+    try:
+        jsonDict = pd.read_json(jsonStr, orient='records')                  # Turning the json string to a dictionary
+    except:
+        print("Couldnt get the json data so will re-run function. This is Run "+ scrapingCount)
+        WebscraperJsonToCSV()
 
     # 3) CHECK WHAT TICKETS WE ALREADY GOT FROM THE .CSV FILE: Read the csv file and add "TicketNumbers" to the "ticketSet" and print ticketNumber to ticketList.txt" for storage: 
     csvData = pd.read_csv(csvFile)                                      # ***csvData[colStr][rowNumber]
@@ -119,12 +123,33 @@ def WebscraperJsonToCSV():
 
 # 5) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=10)
+scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=1)
 scheduler.start()
+
+#421 tickets atm 12/25/19 1:16am
 
 
        
+# did ten 10 min runs and on run 11 i got this error:
+# Job "WebscraperJsonToCSV (trigger: interval[0:10:00], next run at: 2019-12-25 03:15:50 EST)" raised an exception
+# Traceback (most recent call last):
+#   File "/home/hasan/.local/lib/python3.7/site-packages/apscheduler/executors/base.py", line 125, in run_job
+#     retval = job.func(*job.args, **job.kwargs)
+#   File "conEd_SceduledWebscraperJsonCSV.py", line 89, in WebscraperJsonToCSV
+#     jsonDict = pd.read_json(jsonStr, orient='records')                  # Turning the json string to a dictionary
+#   File "/home/hasan/.local/lib/python3.7/site-packages/pandas/io/json/_json.py", line 592, in read_json
+#     result = json_reader.read()
+#   File "/home/hasan/.local/lib/python3.7/site-packages/pandas/io/json/_json.py", line 717, in read
+#     obj = self._get_object_parser(self.data)
+#   File "/home/hasan/.local/lib/python3.7/site-packages/pandas/io/json/_json.py", line 739, in _get_object_parser
+#     obj = FrameParser(json, **kwargs).parse()
+#   File "/home/hasan/.local/lib/python3.7/site-packages/pandas/io/json/_json.py", line 849, in parse
+#     self._parse_no_numpy()
+#   File "/home/hasan/.local/lib/python3.7/site-packages/pandas/io/json/_json.py", line 1116, in _parse_no_numpy
+#     loads(json, precise_float=self.precise_float), dtype=None
+# ValueError: Trailing data
 
+# i added try except statements
 
 
 
