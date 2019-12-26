@@ -20,7 +20,7 @@ from git import Repo                # (GitPython) To push chnages to gh
 jsonFile = "ConEdGasLeakList_ManualRecords_UNION.json"          # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
 url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&' # Url to scrape JSOn data from
 csvFile = "UNION.csv"                                           # add new tickets to the end of the csv file
-errorFile = "errorRecord.txt"                                # printing errors to this file
+errorFile = "errorRecord.txt"                         # printing errors to this file
 ticketListFile = "ticketList.txt"                               # add to end (just for me to see what i got)
 properties= [                                                   # The JSON dot properties
     "TicketNumber",
@@ -85,102 +85,21 @@ def WebscraperJsonToCSV():
 
     errorTXT = open(errorFile,"w+")                                  # Settign up to write to txt file
     jsonStr = ''                                                        # turning text to string from so i can use pandas to turn it to dictionary
-    try:
-        for t in text:
-            jsonStr += '{} '.format(t)
-        jsonDict = pd.read_json(jsonStr, orient='records')              # Turning the json string to a dictionary
-    except:
-        print("Couldnt get the json data so will re-run function and print errors. This is Run "+ str(scrapingCount))
-        try:
-            errorTXT.write("\n"+str(res))
-            errorTXT.write("\n\n*****THIS IS THE HTML DATA*****\n")
-            errorTXT.write("\n\n*****THIS IS THE HTML DATA*****\n")
-            errorTXT.write(str(html_data))
-            errorTXT.write("\n\n*****THIS IS THE SOUP DATA*****\n")
-            errorTXT.write(str(soup))
-            errorTXT.write("\n\n*****THIS IS THE TEXT DATA*****\n")
-            errorTXT.write(str(text))
-            errorTXT.write("\n\n---------------------------------------------------------------------------------------------------------------------------\n\n")
-        except:
-            print("couldnt print error to text file")
-        WebscraperJsonToCSV()
-        return                                                          #there is an error so cant continue so end this
-
-    # 3) CHECK WHAT TICKETS WE ALREADY GOT FROM THE .CSV FILE AND ADD NEW TICKETS   TO ticketSet and .txt file: Read the csv file and add "TicketNumbers" to the "ticketSet" and print ticketNumber to ticketList.txt" for storage: 
-    csvDict = pd.read_csv(csvFile)                                      # ***csvDict[colStr][rowNumber]
-    outTXT = open(ticketListFile,"w+")                                  # Settign up to write to txt file
-    for row in range(0,len(csvDict)):
-        ticketSet.add(str(csvDict["TicketNumber"][row]))    
-        outTXT.write(str(csvDict["TicketNumber"][row])+"\n")
-
-    # 4) CHECK IF NEW TICKET: See if the tickets in "jsonDict" are in "ticketDict". If we have have it, add to "ticketDic", and .txt and .csv file for stoage. If we have it, skip this row since we have this info already. 
-    for row in range(0, len(jsonDict)):
-        if jsonDict["TicketNumber"][row] not in ticketSet:              # If we DONT have this ticket add it
-            isNewTicket = True                                          # This is a new ticket so push the new files
-            print(str(jsonDict["TicketNumber"][row])+ " not in set so adding it")
-            ticketSet.add(jsonDict["TicketNumber"][row])
-            outTXT.write(jsonDict["TicketNumber"][row]+"\n")            # add new ticket to txt file  
-            with open(csvFile,'a') as outCSV:                           # Write the new Ticket object to csv file
-                s=""
-                for col in range(0, len(properties)-1):                 # go through each column/dot property
-                    if properties[col] == "DateReported":               # Need to change the Microsoft time to mm/dd/yyyy
-                        s+=turnToDatetime(str(jsonDict[properties[col]][row]))
-                    else: 
-                        s+=str(jsonDict[properties[col]][row])
-                    if col != len(properties)-2:
-                        s+=',' 
-                s+="\n"
-                outCSV.write(s)                                         # add new ticket obj to csv file  
-    # 5) Push to Github if we have a new ticket
-    if (isNewTicket == True):
-        git_push()
-        isNewTicket == False
-    print("Run Done " + str(scrapingCount)+ "       Reports Scraped: "+str(len(jsonDict)))
-
-# 6) RESCAN FOR TICKETS every x time using sceduler
-scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=15)
-scheduler.start()
+    # print(html_data)
+    errorTXT.write("\n"+str(res))
+    errorTXT.write("\n\n*****THIS IS THE HTML DATA*****\n")
+    errorTXT.write("\n\n*****THIS IS THE HTML DATA*****\n")
+    errorTXT.write(str(html_data))
+    errorTXT.write("\n\n*****THIS IS THE SOUP DATA*****\n")
+    errorTXT.write(str(soup))
+    errorTXT.write("\n\n*****THIS IS THE TEXT DATA*****\n")
+    errorTXT.write(str(text))
+    errorTXT.write("\n\n---------------------------------------------------------------------------------------------------------------------------\n\n")
 
 
+WebscraperJsonToCSV()
 
 
-
-
-
-
-
-
-
-
-
-
-
-#431 dec 25 2 18apm
-#421 tickets atm 12/25/19 1:16am
-
-
-       
-# did ten 10 min runs and on run 11 i got this error:
-# Job "WebscraperJsonToCSV (trigger: interval[0:10:00], next run at: 2019-12-25 03:15:50 EST)" raised an exception
-# Traceback (most recent call last):
-#   File "/home/hasan/.local/lib/python3.7/site-packages/apscheduler/executors/base.py", line 125, in run_job
-#     retval = job.func(*job.args, **job.kwargs)
-#   File "conEd_SceduledWebscraperJsonCSV.py", line 89, in WebscraperJsonToCSV
-#     jsonDict = pd.read_json(jsonStr, orient='records')                  # Turning the json string to a dictionary
-#   File "/home/hasan/.local/lib/python3.7/site-packages/pandas/io/json/_json.py", line 592, in read_json
-#     result = json_reader.read()
-#   File "/home/hasan/.local/lib/python3.7/site-packages/pandas/io/json/_json.py", line 717, in read
-#     obj = self._get_object_parser(self.data)
-#   File "/home/hasan/.local/lib/python3.7/site-packages/pandas/io/json/_json.py", line 739, in _get_object_parser
-#     obj = FrameParser(json, **kwargs).parse()
-#   File "/home/hasan/.local/lib/python3.7/site-packages/pandas/io/json/_json.py", line 849, in parse
-#     self._parse_no_numpy()
-#   File "/home/hasan/.local/lib/python3.7/site-packages/pandas/io/json/_json.py", line 1116, in _parse_no_numpy
-#     loads(json, precise_float=self.precise_float), dtype=None
-# ValueError: Trailing data
-
-# i added try except statements
 
 
 
