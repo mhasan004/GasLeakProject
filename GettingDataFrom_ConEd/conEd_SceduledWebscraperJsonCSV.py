@@ -85,7 +85,6 @@ def WebscraperJsonToCSV():
 
     errorTXT = open(errorFile,"w+")                                  # Settign up to write to txt file
     jsonStr = ''                                                        # turning text to string from so i can use pandas to turn it to dictionary
-
     try:
         for t in text:
             jsonStr += '{} '.format(t)
@@ -93,13 +92,22 @@ def WebscraperJsonToCSV():
     except:
         print("Couldnt get the json data so will re-run function. This is Run "+ str(scrapingCount))
         try:
-            errorTXT.write("*****res = "+res+"**********")
-            errorTXT.write("*****THIS IS THE HTML DATA*****")
-            errorTXT.write(str(html_data))
-            errorTXT.write("*****THIS IS THE SOUP DATA*****")
-            errorTXT.write(str(soup))
-            errorTXT.write("*****THIS IS THE TEXT DATA*****")
-            errorTXT.write(str(text))
+
+            try:
+                errorTXT.write("*****THIS IS THE HTML DATA*****")
+                errorTXT.write(html_data)
+            except:
+                pass
+            try:
+                errorTXT.write("*****THIS IS THE SOUP DATA*****")
+                errorTXT.write(soup)
+            except:
+                pass
+            try:
+                errorTXT.write("*****THIS IS THE TEXT DATA*****")
+                errorTXT.write(text)
+            except:
+                pass
             errorTXT.write("\n\n---------------------------------------------------------------------------------------------------------------------------\n\n")
         except:
             print("couldnt print error to text file")
@@ -135,7 +143,7 @@ def WebscraperJsonToCSV():
     if (isNewTicket == True):
         git_push()
         isNewTicket == False
-    print("Run Done " + str(scrapingCount))
+    print("Run Done " + str(scrapingCount)+ "       Reports Scraped: "+str(len(jsonDict)))
 
 # 6) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
