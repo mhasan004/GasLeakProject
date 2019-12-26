@@ -80,8 +80,8 @@ def WebscraperJsonToCSV():
     # 2) GET JSON DATA: Webscrape and sanitize the html response which is usually just the JSON data from the url and add to the JSON Dictionary: 
     res = requests.get(url)
     html_data = res.content                                             # Getting the HTML JSOn data 
-    soup = BeautifulSoup(html_data, 'html.parser')                      # the HTML data to parse
-    text = soup.find_all(text=True)
+    soup = BeautifulSoup(html_data, 'html.parser')                      # parsing the html data with html parcer (can do stuuf like soup.title to get the title, soup.div, soup.li etc)
+    text = soup.find_all(text=True)                                     # Getting all the text thats in the soup
 
     jsonStr = ''                                                        # turning text to string from so i can use pandas to turn it to dictionary
     try:

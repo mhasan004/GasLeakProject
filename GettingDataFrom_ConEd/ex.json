@@ -1,4 +1,4 @@
-[
+b'[
     {"TicketNumber":"ML19001225","Latitude":40.75402,"Longitude":-73.97419,"Zip":"10017","ClassificationType":"M","DateReported":"\/Date(1548123352000)\/","LastInspected":"\/Date(1548347559000)\/"},
     {"TicketNumber":"ML19003831","Latitude":40.77168,"Longitude":-73.97763,"Zip":"10023","ClassificationType":"M","DateReported":"\/Date(1551966025000)\/","LastInspected":"\/Date(1570796888000)\/"},
     {"TicketNumber":"ML19004663","Latitude":40.75472,"Longitude":-73.97591,"Zip":"10017","ClassificationType":"M","DateReported":"\/Date(1553211480000)\/","LastInspected":"\/Date(1555940700000)\/"},
@@ -89,3 +89,4 @@ Version Information:  Microsoft .NET Framework Version:4.0.30319; ASP.NET Versi
     
 This error page might contain sensitive information because ASP.NET is configured to show verbose error messages using &lt;customErrors mode="Off"/&gt;. Consider using &lt;customErrors mode="On"/&gt; or &lt;customErrors mode="RemoteOnly"/&gt; in production environments. 
 
+'

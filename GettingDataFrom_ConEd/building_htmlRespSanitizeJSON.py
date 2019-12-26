@@ -75,23 +75,130 @@ def WebscraperJsonToCSV():
                 writer = csv.writer(outf)
                 writer.writerow(csvHeader)
 
-    # 2) GET JSON DATA: from a JSON file and add to the JSON Dictionary: 
-    try:
-        jsonDict = pd.read_json(jsonFile, orient='records')           # ***jsonDict[properties[i]/colStr(dot properties)][j/rowsnumber(dots)]
-    except:
-        print("error")
-        s = str(jsonFile)
-        # print(s)
-        jsonStr = ''                                                        # turning text to string from so i can use pandas to turn it to dictionary
-# for t in text:
-#     jsonStr += '{} '.format(t)
-    
-    # 2) GET JSON DATA: Webscrape and sanitize the html response which is usually just the JSON data from the url and add to the JSON Dictionary: 
+
+
+    # 2) redoint the scraper
     # res = requests.get(url)
     # html_data = res.content                                             # Getting the HTML JSOn data 
-    # soup = BeautifulSoup(html_data, 'html.parser')                      # the HTML data to parse
-    # text = soup.find_all(text=True)
+    html_data = b'[
+        {"TicketNumber":"ML19001225","Latitude":40.75402,"Longitude":-73.97419,"Zip":"10017","ClassificationType":"M","DateReported":"\/Date(1548123352000)\/","LastInspected":"\/Date(1548347559000)\/"},
+        {"TicketNumber":"ML19003831","Latitude":40.77168,"Longitude":-73.97763,"Zip":"10023","ClassificationType":"M","DateReported":"\/Date(1551966025000)\/","LastInspected":"\/Date(1570796888000)\/"},
+        {"TicketNumber":"ML19004663","Latitude":40.75472,"Longitude":-73.97591,"Zip":"10017","ClassificationType":"M","DateReported":"\/Date(1553211480000)\/","LastInspected":"\/Date(1555940700000)\/"},
+        {"TicketNumber":"ML19005447","Latitude":40.80325,"Longitude":-73.96749,"Zip":"10025","ClassificationType":"M","DateReported":"\/Date(1554403835000)\/","LastInspected":"\/Date(1566270397000)\/"},
+        {"TicketNumber":"ML19006608","Latitude":40.78175,"Longitude":-73.96026,"Zip":"10028","ClassificationType":"M","DateReported":"\/Date(1556374519000)\/","LastInspected":"\/Date(1577103600000)\/"}
+        ] 
+        html 
 
+
+        Session state has created a session id, but cannot save it because the response was already flushed by the application. 
+
+
+                body {font-family:"Verdana";font-weight:normal;font-size: .7em;color:black;} 
+                p {font-family:"Verdana";font-weight:normal;color:black;margin-top: -5px}
+                b {font-family:"Verdana";font-weight:bold;color:black;margin-top: -5px}
+                H1 { font-family:"Verdana";font-weight:normal;font-size:18pt;color:red }
+                H2 { font-family:"Verdana";font-weight:normal;font-size:14pt;color:maroon }
+                pre {font-family:"Consolas","Lucida Console",Monospace;font-size:11pt;margin:0;padding:0.5em;line-height:14pt}
+                .marker {font-weight: bold; color: black;text-decoration: none;}
+                .version {color: gray;}
+                .error {margin-bottom: 10px;}
+                .expandable { text-decoration:underline; font-weight:bold; color:navy; cursor:hand; }
+                @media screen and (max-width: 639px) {
+                    pre { width: 440px; overflow: auto; white-space: pre-wrap; word-wrap: break-word; }
+                }
+                @media screen and (max-width: 479px) {
+                    pre { width: 280px; }
+                }
+                
+
+
+        Server Error in '/GasLeakMapWeb' Application. 
+            Session state has created a session id, but cannot save it because the response was already flushed by the application.   
+
+            Description:  An unhandled exception occurred during the execution of the current web request. Please review the stack trace for more information about the error and where it originated in the code.
+
+                    
+            Exception Details:  System.Web.HttpException: Session state has created a session id, but cannot save it because the response was already flushed by the application. 
+        Source Error:   
+
+
+
+
+
+        An unhandled exception was generated during the execution of the current web request. Information regarding the origin and location of the exception can be identified using the exception stack trace below. 
+
+
+
+
+        Stack Trace:   
+
+
+
+
+
+        [HttpException (0x80004005): Session state has created a session id, but cannot save it because the response was already flushed by the application.]
+            System.Web.SessionState.SessionIDManager.SaveSessionID(HttpContext context, String id, Boolean& redirected, Boolean& cookieAdded) +596
+            System.Web.SessionState.SessionStateModule.CreateSessionId() +94
+            System.Web.SessionState.SessionStateModule.DelayedGetSessionId() +106
+            System.Web.SessionState.SessionStateModule.OnReleaseState(Object source, EventArgs eventArgs) +770
+            System.Web.SessionState.SessionStateModule.OnEndRequest(Object source, EventArgs eventArgs) +179
+            System.Web.SyncEventExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute() +194
+            System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step) +213
+            System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously) +91
+
+
+
+
+
+
+        Version Information:  Microsoft .NET Framework Version:4.0.30319; ASP.NET Version:4.7.3429.0
+
+                    
+
+
+            
+        [HttpException]: Session state has created a session id, but cannot save it because the response was already flushed by the application.
+            at System.Web.SessionState.SessionIDManager.SaveSessionID(HttpContext context, String id, Boolean& redirected, Boolean& cookieAdded)
+            at System.Web.SessionState.SessionStateModule.CreateSessionId()
+            at System.Web.SessionState.SessionStateModule.DelayedGetSessionId()
+            at System.Web.SessionState.SessionStateModule.OnReleaseState(Object source, EventArgs eventArgs)
+            at System.Web.SessionState.SessionStateModule.OnEndRequest(Object source, EventArgs eventArgs)
+            at System.Web.HttpApplication.SyncEventExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+            at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+            at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+            
+        This error page might contain sensitive information because ASP.NET is configured to show verbose error messages using &lt;customErrors mode="Off"/&gt;. Consider using &lt;customErrors mode="On"/&gt; or &lt;customErrors mode="RemoteOnly"/&gt; in production environments. 
+    '
+    soup = BeautifulSoup(html_data, 'html.parser')                      # parsing the html data with html parcer (can do stuuf like soup.title to get the title, soup.div, soup.li etc)
+    text = soup.find_all(text=True)                                     
+    print(type(html_data))
+    # jsonStr = ''                                                        # turning text to string from so i can use pandas to turn it to dictionary
+    # try:
+    #     for t in text:
+    #         jsonStr += '{} '.format(t)
+    #     jsonDict = pd.read_json(jsonStr, orient='records')                  # Turning the json string to a dictionary
+    # except:
+    #     print("Couldnt get the jso
+
+
+
+
+    # 2) GET JSON DATA: from a JSON file and add to the JSON Dictionary: 
+    # try:
+    #     jsonDict = pd.read_json(jsonFile, orient='records')           # ***jsonDict[properties[i]/colStr(dot properties)][j/rowsnumber(dots)]
+    # except:
+    #     print("error")
+    #     s = str(jsonFile)
+    #     # print(s)
+    #     jsonStr = ''                                                        # turning text to string from so i can use pandas to turn it to dictionary
+    #     for t in text:
+    #         jsonStr += '{} '.format(t)
+    
+    # # 2) GET JSON DATA: Webscrape and sanitize the html response which is usually just the JSON data from the url and add to the JSON Dictionary: 
+    # res = requests.get(url)
+    # html_data = res.content                                             # Getting the HTML JSOn data 
+    # soup = BeautifulSoup(html_data, 'html.parser')                      # parsing the html data with html parcer (can do stuuf like soup.title to get the title, soup.div, soup.li etc)
+    # text = soup.find_all(text=True)                                     
     # jsonStr = ''                                                        # turning text to string from so i can use pandas to turn it to dictionary
     # try:
     #     for t in text:
