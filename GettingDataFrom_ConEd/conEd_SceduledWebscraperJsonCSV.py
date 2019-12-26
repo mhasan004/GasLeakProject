@@ -8,9 +8,8 @@
 
 import json
 import csv
-import pandas as pd                 # to read the json and csv data and put into dictionary form
-import datetime                     # to turn Microsoft JSON date /Date()/ to normal date
-import re                           # to turn Microsoft JSON date /Date()/ to normal date
+import pandas as pd                 # to trun the json string to a python dictionary and to read fromcsv files and pu the data into python dictionary
+import datetime,re                  # to turn Microsoft JSON date /Date()/ to normal date
 import requests                     # Getting html data
 from bs4 import BeautifulSoup       # Parse the HTML data
 from apscheduler.schedulers.blocking import BlockingScheduler #Sceduler. Will run a function every x seconds/minutes/hours
@@ -85,24 +84,22 @@ def WebscraperJsonToCSV():
     text = soup.find_all(text=True)
 
     jsonStr = ''                                                        # turning text to string from so i can use pandas to turn it to dictionary
-    for t in text:
-        jsonStr += '{} '.format(t)
     try:
+        for t in text:
+            jsonStr += '{} '.format(t)
         jsonDict = pd.read_json(jsonStr, orient='records')                  # Turning the json string to a dictionary
     except:
         print("Couldnt get the json data so will re-run function. This is Run "+ str(scrapingCount))
         print("***printing error jsonStr\n"+jsonStr)
         print("\n***ENDED printing error jsonStr\n")
-        print("***printing error jsonDict "+ str(jsonDict))
-        print("\n***ENDED printing error jsonDict \n")
         WebscraperJsonToCSV()
 
     # 3) CHECK WHAT TICKETS WE ALREADY GOT FROM THE .CSV FILE: Read the csv file and add "TicketNumbers" to the "ticketSet" and print ticketNumber to ticketList.txt" for storage: 
-    csvData = pd.read_csv(csvFile)                                      # ***csvData[colStr][rowNumber]
+    csvDict = pd.read_csv(csvFile)                                      # ***csvDict[colStr][rowNumber]
     outTXT = open(ticketListFile,"w+")                                  # Settign up to write to txt file
-    for row in range(0,len(csvData)):
-        ticketSet.add(str(csvData["TicketNumber"][row]))    
-        outTXT.write(str(csvData["TicketNumber"][row])+"\n")
+    for row in range(0,len(csvDict)):
+        ticketSet.add(str(csvDict["TicketNumber"][row]))    
+        outTXT.write(str(csvDict["TicketNumber"][row])+"\n")
 
     # 4) CHECK IF NEW TICKET: See if the tickets in "jsonDict" are in "ticketDict". If we have have it, add to "ticketDic", and .txt and .csv file for stoage. If we have it, skip this row since we have this info already. 
     for row in range(0, len(jsonDict)):
@@ -130,7 +127,7 @@ def WebscraperJsonToCSV():
 
 # 6) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=10)
+scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=30)
 scheduler.start()
 
 
