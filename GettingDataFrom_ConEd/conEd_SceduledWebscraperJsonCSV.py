@@ -30,8 +30,8 @@ properties= [                                                   # The JSON dot p
     "DateReported",
     "LastInspected"
 ]
-#PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'  # the path to the .git file (.git location on my raspberry pi)
-PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject' # the path to the .git file (.git location on my Laptop)
+PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'  # the path to the .git file (.git location on my raspberry pi)
+#PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject' # the path to the .git file (.git location on my Laptop)
 COMMIT_MESSAGE = 'Automated Push - New Ticket Update'           # the commmit message when it is pushed
 ticketSet = set()                                               # need to add what i got in the csv atm
 jsonDict  = []                                                  # json file to dict: #jsonDict["TicketNumber/Long/lat/etc"][int index of the dot]) 
@@ -90,8 +90,8 @@ def WebscraperJsonToCSV():
         jsonDict = pd.read_json(jsonStr, orient='records')                  # Turning the json string to a dictionary
     except:
         print("Couldnt get the json data so will re-run function. This is Run "+ str(scrapingCount))
-        print("***printing error jsonStr\n"+jsonStr)
-        print("\n***ENDED printing error jsonStr\n")
+        #print("***printing error jsonStr\n"+jsonStr)
+        #print("\n***ENDED printing error jsonStr\n")
         WebscraperJsonToCSV()
 
     # 3) CHECK WHAT TICKETS WE ALREADY GOT FROM THE .CSV FILE: Read the csv file and add "TicketNumbers" to the "ticketSet" and print ticketNumber to ticketList.txt" for storage: 
