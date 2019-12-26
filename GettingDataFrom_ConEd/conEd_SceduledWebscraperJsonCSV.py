@@ -92,13 +92,16 @@ def WebscraperJsonToCSV():
         jsonDict = pd.read_json(jsonStr, orient='records')              # Turning the json string to a dictionary
     except:
         print("Couldnt get the json data so will re-run function. This is Run "+ str(scrapingCount))
-        errorTXT.write("*****THIS IS THE HTML DATA*****")
-        errorTXT.write(html_data)
-        errorTXT.write("*****THIS IS THE SOUP DATA*****")
-        errorTXT.write(soup)
-        errorTXT.write("*****THIS IS THE TEXT DATA*****")
-        errorTXT.write(text)
-        errorTXT.write("\n\n---------------------------------------------------------------------------------------------------------------------------\n\n")
+        try:
+            errorTXT.write("*****THIS IS THE HTML DATA*****")
+            errorTXT.write(html_data)
+            errorTXT.write("*****THIS IS THE SOUP DATA*****")
+            errorTXT.write(soup)
+            errorTXT.write("*****THIS IS THE TEXT DATA*****")
+            errorTXT.write(text)
+            errorTXT.write("\n\n---------------------------------------------------------------------------------------------------------------------------\n\n")
+        except:
+            print("couldnt print error to text file")
         return                                                          #there is an error so cant continue so end this
 
     # 3) CHECK WHAT TICKETS WE ALREADY GOT FROM THE .CSV FILE AND ADD NEW TICKETS   TO ticketSet and .txt file: Read the csv file and add "TicketNumbers" to the "ticketSet" and print ticketNumber to ticketList.txt" for storage: 
