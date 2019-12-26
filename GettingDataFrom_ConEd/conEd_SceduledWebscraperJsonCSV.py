@@ -90,27 +90,31 @@ def WebscraperJsonToCSV():
             jsonStr += '{} '.format(t)
         jsonDict = pd.read_json(jsonStr, orient='records')              # Turning the json string to a dictionary
     except:
-        print("Couldnt get the json data so will re-run function. This is Run "+ str(scrapingCount))
+        print("Couldnt get the json data so will re-run function and try to print errors. This is Run "+ str(scrapingCount))
         try:
-
+            errort = 'PRINTING ERRORS:'
             try:
+                errort+=" html_data"
                 errorTXT.write("*****THIS IS THE HTML DATA*****")
                 errorTXT.write(html_data)
             except:
                 pass
             try:
+                errort+=" soup"
                 errorTXT.write("*****THIS IS THE SOUP DATA*****")
                 errorTXT.write(soup)
             except:
                 pass
             try:
+                errort+=" text"
                 errorTXT.write("*****THIS IS THE TEXT DATA*****")
                 errorTXT.write(text)
             except:
                 pass
+            print(errort)
             errorTXT.write("\n\n---------------------------------------------------------------------------------------------------------------------------\n\n")
         except:
-            print("couldnt print error to text file")
+            print("Couldnt print error to text file")
         WebscraperJsonToCSV()
         return                                                          #there is an error so cant continue so end this
 
