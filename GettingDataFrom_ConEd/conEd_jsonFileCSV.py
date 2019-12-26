@@ -18,7 +18,7 @@ from git import Repo                # (GitPython) To push chnages to gh
 
 
 # SETTING UP GLOBAL VARIABLES: need to change the first seven variables below
-jsonFile = "ConEdGasLeakList_ManualRecords_UNION.json"          # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
+jsonFile = 'ex2.json'#"ConEdGasLeakList_ManualRecords_UNION.json"          # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
 url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&' # Url to scrape JSOn data from
 csvFile = "UNION.csv"                                           # add new tickets to the end of the csv file
 ticketListFile = "ticketList.txt"                               # add to end (just for me to see what i got)
@@ -77,7 +77,7 @@ def WebscraperJsonToCSV():
 
     # 2) GET JSON DATA: from a JSON file and add to the JSON Dictionary: 
     jsonDict = pd.read_json(jsonFile, orient='records')           # ***jsonDict[properties[i]/colStr(dot properties)][j/rowsnumber(dots)]
-    
+
     # 2) GET JSON DATA: Webscrape JSON data from the url and add to the JSON Dictionary: 
     # res = requests.get(url)
     # html_data = res.content                                             # Getting the HTML JSOn data 
@@ -130,6 +130,11 @@ def WebscraperJsonToCSV():
 # scheduler = BlockingScheduler()
 # scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=30)
 # scheduler.start()
+x=1
+while x == 1:
+    WebscraperJsonToCSV()
+    x=2
+
 
 
 
