@@ -102,6 +102,7 @@ def WebscraperJsonToCSV():
             errorTXT.write("\n\n---------------------------------------------------------------------------------------------------------------------------\n\n")
         except:
             print("couldnt print error to text file")
+        WebscraperJsonToCSV()
         return                                                          #there is an error so cant continue so end this
 
     # 3) CHECK WHAT TICKETS WE ALREADY GOT FROM THE .CSV FILE AND ADD NEW TICKETS   TO ticketSet and .txt file: Read the csv file and add "TicketNumbers" to the "ticketSet" and print ticketNumber to ticketList.txt" for storage: 
