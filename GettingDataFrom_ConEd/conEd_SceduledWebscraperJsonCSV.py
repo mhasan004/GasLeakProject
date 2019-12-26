@@ -20,7 +20,7 @@ from git import Repo                # (GitPython) To push chnages to gh
 jsonFile = "ConEdGasLeakList_ManualRecords_UNION.json"          # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
 url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&' # Url to scrape JSOn data from
 csvFile = "UNION.csv"                                           # add new tickets to the end of the csv file
-csvErrorFile = "jsonStrErrorRecord.txt"                         # printing errors to this file
+errorFile = "jsonStrErrorRecord.txt"                         # printing errors to this file
 ticketListFile = "ticketList.txt"                               # add to end (just for me to see what i got)
 properties= [                                                   # The JSON dot properties
     "TicketNumber",
@@ -83,7 +83,7 @@ def WebscraperJsonToCSV():
     soup = BeautifulSoup(html_data, 'html.parser')                      # parsing the html data with html parcer (can do stuuf like soup.title to get the title, soup.div, soup.li etc)
     text = soup.find_all(text=True)                                     # Getting all the text thats in the soup
 
-    errorTXT = open(csvErrorFile,"w+")                                  # Settign up to write to txt file
+    errorTXT = open(errorFile,"w+")                                  # Settign up to write to txt file
     jsonStr = ''                                                        # turning text to string from so i can use pandas to turn it to dictionary
 
     try:
@@ -95,11 +95,11 @@ def WebscraperJsonToCSV():
         try:
             errorTXT.write("*****res = "+res+"**********")
             errorTXT.write("*****THIS IS THE HTML DATA*****")
-            errorTXT.write(html_data)
+            errorTXT.write(str(html_data))
             errorTXT.write("*****THIS IS THE SOUP DATA*****")
-            errorTXT.write(soup)
+            errorTXT.write(str(soup))
             errorTXT.write("*****THIS IS THE TEXT DATA*****")
-            errorTXT.write(text)
+            errorTXT.write(str(text))
             errorTXT.write("\n\n---------------------------------------------------------------------------------------------------------------------------\n\n")
         except:
             print("couldnt print error to text file")
