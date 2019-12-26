@@ -31,8 +31,8 @@ properties= [                                                   # The JSON dot p
     "DateReported",
     "LastInspected"
 ]
-PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'  # the path to the .git file (.git location on my raspberry pi)
-#PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject' # the path to the .git file (.git location on my Laptop)
+#PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'  # the path to the .git file (.git location on my raspberry pi)
+PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject' # the path to the .git file (.git location on my Laptop)
 COMMIT_MESSAGE = 'Automated Push - New Ticket Update'           # the commmit message when it is pushed
 ticketSet = set()                                               # need to add what i got in the csv atm
 jsonDict  = []                                                  # json file to dict: #jsonDict["TicketNumber/Long/lat/etc"][int index of the dot]) 
@@ -93,6 +93,7 @@ def WebscraperJsonToCSV():
     except:
         print("Couldnt get the json data so will re-run function. This is Run "+ str(scrapingCount))
         try:
+            errorTXT.write("*****res = "+res+"**********")
             errorTXT.write("*****THIS IS THE HTML DATA*****")
             errorTXT.write(html_data)
             errorTXT.write("*****THIS IS THE SOUP DATA*****")
@@ -138,7 +139,7 @@ def WebscraperJsonToCSV():
 
 # 6) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=15)
+scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=5)
 scheduler.start()
 
 
