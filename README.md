@@ -3,4 +3,4 @@ An interactive web application that will visualize the locations of all reported
 
 
 **GettingDataFrom_ConEd/conEd_SceduledWebscraperJsonCSV.py:**
-This Python script periodically scrapes gas leak report from the ConEdison website and appends the data of new gas leak reports to the UNION.csv and ticketList.txt files and pushes the changes to GitHub so that I can have the latest history.
+This Python script periodically scrapes gas leak report from the ConEdison website and appends the data of new gas leak reports to UNION.csv and ticketList.txt files and pushes the changes to GitHub so that I can have the latest history.
