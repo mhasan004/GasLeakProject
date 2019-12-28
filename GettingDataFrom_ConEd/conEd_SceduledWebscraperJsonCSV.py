@@ -40,12 +40,16 @@ scrapingCount = 0                                               # Just counting 
 
 # GIT PUSH FUNCTION: Setting up function to automatically push changes to github when there is a new ticket so that I can have access to the latest chnages
 def git_push():
+    repo = Repo(PATH_OF_GIT_REPO)
     try:
-        repo = Repo(PATH_OF_GIT_REPO)
-        repo.git.add(update=True)
-        repo.index.commit(COMMIT_MESSAGE)
-        origin = repo.remote(name='origin')
-        origin.push()
+        repo.remotes.origin.pull()                               # try pulling new changes from the github repo (if there are any) so i can push changes
+    except:
+        print("Couldnt pull from repo")
+    repo.git.add(update=True)
+    repo.index.commit(COMMIT_MESSAGE)
+    origin = repo.remote(name='origin')
+    try:
+        origin.push()                           # try pushing the chnages to github
         print("******** PUSHED TO GITHUB for Run " + str(scrapingCount)+"********")
     except:
         print('Some error occured while pushing the code')  
