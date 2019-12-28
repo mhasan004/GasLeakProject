@@ -6,7 +6,7 @@ This Python script periodically scrapes gas leak report from the ConEdison websi
 
 Run GettingDataFrom_ConEd/requirements.txt using bash requirements.txt to install the required packages to run this script.
 
-USES: 
+**USES:** 
 * Can get JSON data from a url and convert the objects into a csv file. Will need to change the url, csvFile, and properties variables to fit the specific needs.
 * Can get JSON data from a JSOn file and store objects into a csv file. Will need to change the url, csvFile, jsonFile, and properties variables.
 * To push chnages to github, the PATH_OF_GIT_REPO (where the .git file is located) and COMMIT_MESSAGE needs to be changed
