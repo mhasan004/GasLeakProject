@@ -8,7 +8,7 @@ An interactive web application that will visualize the locations of all reported
 This Python script periodically scrapes gas leak report from the ConEdison website and appends the data of new gas leak reports to *UNION.csv* and *ticketList.txt* files and pushes the changes to GitHub so that I can have the latest gas leak report history.
 
 **Installing Required Packages**
-Run the *requirements.txt* file in *GettingDataFrom_ConEd*. Run the file using the command **bash requirements.txt** to install the required packages.
+Run the *requirements.txt* file in *GettingDataFrom_ConEd*. Run the file using the command *bash requirements.txt* to install the required packages.
 
 **USES:** 
 * Can get JSON data from a url and convert the objects into a csv file. Will need to change the *url*, *csvFile*, and *properties* variables to fit the specific needs.
