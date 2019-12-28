@@ -16,7 +16,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler #Sceduler. Will ru
 from git import Repo                # (GitPython) To push chnages to gh
 
 
-# SETTING UP GLOBAL VARIABLES: need to change the first seven variables below
+# SETTING UP GLOBAL VARIABLES: need to change the first eight variables below
 jsonFile = "ConEdGasLeakList_ManualRecords_UNION.json"          # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
 url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&' # Url to scrape JSOn data from
 csvFile = "UNION.csv"                                           # add new tickets to the end of the csv file
@@ -31,8 +31,8 @@ properties= [                                                   # The JSON dot p
     "DateReported",
     "LastInspected"
 ]
-PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'  # the path to the .git file (.git location on my raspberry pi)
-#PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject' # the path to the .git file (.git location on my Laptop)
+#PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'  # the path to the .git file (.git location on my raspberry pi)
+PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject' # the path to the .git file (.git location on my Laptop)
 COMMIT_MESSAGE = 'Automated Push - New Ticket Update'           # the commmit message when it is pushed
 ticketSet = set()                                               # need to add what i got in the csv atm
 jsonDict  = []                                                  # json file to dict: #jsonDict["TicketNumber/Long/lat/etc"][int index of the dot]) 
