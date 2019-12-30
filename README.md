@@ -10,7 +10,7 @@ This Python script periodically scrapes gas leak report from the ConEdison websi
 **Installing Required Packages**
 Run the *requirements.txt* file in *GettingDataFrom_ConEd* using the command *bash requirements.txt* to install the required packages.
 
-**USES:** 
+**Uses:** 
 * Get JSON data from a url and convert the objects into a csv file. Will need to change the *url*, *csvFile*, and *properties* variables to fit the specific needs.
 * Get JSON data from a JSOn file and store objects into a csv file. Will need to change the *url*, *csvFile*, *jsonFile* , and *properties* variables.
 * Automatically push changes to github when script finds new JSON objects. Change the *PATH_OF_GIT_REPO* (where the *.git* file is located) and *COMMIT_MESSAGE* variables.
