@@ -1,10 +1,9 @@
 # Mahmudul Hasan. Script to scrape JSON Gas Leak Data points from ConEdison everyday and put them into a csv file for further use
-
-# 1) What tickets do we have? read the ticket col of csv of ticket txt file and add tickets to ticketList.txt
-# 2) jsonDict = contents of json file
-# 3) Loop through the ticketNumber dictionary key and compare it to tickets in the ticketList.txt
-    # 4) if the ticket exists, ignore it. If it dont exist 
-        #a) add the ticket to the ticketList.txt and .csv files for storage and also add new ticket to the tickeSet
+# In the ConEdison Gas Leak Report Map, each dot in the map represents a gas leak report. Each report has these seven properties: TicketNumber, Latitude, Longitude, Zipcode, Classification Type, Date Reported, Last Inspected.
+# 1) We need to constantly add new repots to out list so what tickets do we currently have? read the ticket col of the "csvFile" and add the tickets to "ticketSet"
+# 2) Scrape the JSON html response and add it to a python dictionary: "jsonDict" = contents of json response
+# 3) See if there is a new report: Loop through each JSON obbject in "jsonDict" and compare it to the reports are already exists in "ticketSet"
+# 4) If there is a new report, add append the properties of that report into "csvFile", "ticketListFile" and push the latest changes to github
 
 import json
 import csv
@@ -16,11 +15,10 @@ from apscheduler.schedulers.blocking import BlockingScheduler #Sceduler. Will ru
 from git import Repo                # (GitPython) To push chnages to gh
 
 
-# SETTING UP GLOBAL VARIABLES: need to change the first seven variables below
+# SETTING UP GLOBAL VARIABLES: need to change the first eight variables below
 jsonFile = "ConEdGasLeakList_ManualRecords_UNION.json"          # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
 url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&' # Url to scrape JSOn data from
 csvFile = "UNION.csv"                                           # add new tickets to the end of the csv file
-errorFile = "errorRecord.txt"                                   # printing errors to this file
 ticketListFile = "ticketList.txt"                               # add to end (just for me to see what i got)
 properties= [                                                   # The JSON dot properties
     "TicketNumber",
@@ -40,12 +38,16 @@ scrapingCount = 0                                               # Just counting 
 
 # GIT PUSH FUNCTION: Setting up function to automatically push changes to github when there is a new ticket so that I can have access to the latest chnages
 def git_push():
+    repo = Repo(PATH_OF_GIT_REPO)
     try:
-        repo = Repo(PATH_OF_GIT_REPO)
-        repo.git.add(update=True)
-        repo.index.commit(COMMIT_MESSAGE)
-        origin = repo.remote(name='origin')
-        origin.push()
+        repo.remotes.origin.pull()                               # try pulling new changes from the github repo (if there are any) so i can push changes
+    except:
+        print("Couldnt pull from repo")
+    repo.git.add(update=True)
+    repo.index.commit(COMMIT_MESSAGE)
+    origin = repo.remote(name='origin')
+    try:
+        origin.push()                           # try pushing the chnages to github
         print("******** PUSHED TO GITHUB for Run " + str(scrapingCount)+"********")
     except:
         print('Some error occured while pushing the code')  
@@ -74,43 +76,31 @@ def WebscraperJsonToCSV():
                 writer = csv.writer(outf)
                 writer.writerow(csvHeader)
 
-    # 2) GET JSON DATA: from a JSON file and add to the JSON Dictionary: 
+    # 2) CHECK WHAT TICKETS WE ALREADY GOT FROM THE .CSV FILE AND ADD NEW TICKETS TO ticketSet and .txt file: Read the csv file and add "TicketNumbers" to the "ticketSet" and print ticketNumber to ticketList.txt" for storage: 
+    csvDict = pd.read_csv(csvFile)                                      # ***csvDict[colStr][rowNumber]
+    outTXT = open(ticketListFile,"w+")                                  # Settign up to write to txt file
+    for row in range(0,len(csvDict)):
+        ticketSet.add(str(csvDict["TicketNumber"][row]))    
+        outTXT.write(str(csvDict["TicketNumber"][row])+"\n")
+
+    # 3) GET JSON DATA: from a JSON file and add to the JSON Dictionary: 
     # jsonDict = pd.read_json(jsonFile, orient='records')               # ***jsonDict[properties[i]/colStr(dot properties)][j/rowsnumber(dots)]
     
-    # 2) GET JSON DATA: Webscrape and sanitize the html response which is usually just the JSON data from the url and add to the JSON Dictionary: 
+    # 3) GET JSON DATA: Webscrape the html response which is usually just the JSON data from the url and add to the JSON Dictionary: 
     res = requests.get(url)
     html_data = res.content                                             # Getting the HTML JSOn data 
     soup = BeautifulSoup(html_data, 'html.parser')                      # parsing the html data with html parcer (can do stuuf like soup.title to get the title, soup.div, soup.li etc)
     text = soup.find_all(text=True)                                     # Getting all the text thats in the soup
 
-    errorTXT = open(errorFile,"w+")                                     # Settign up to write to txt file
     jsonStr = ''                                                        # turning text to string from so i can use pandas to turn it to dictionary
     try:
         for t in text:
             jsonStr += '{} '.format(t)
         jsonDict = pd.read_json(jsonStr, orient='records')              # Turning the json string to a dictionary
     except:
-        print("Couldnt get the json data so will re-run function and print errors. This is Run "+ str(scrapingCount))
-        try:
-            errorTXT.write("\n"+str(res))
-            errorTXT.write("\n\n*****THIS IS THE HTML DATA*****\n")
-            errorTXT.write(str(html_data))
-            errorTXT.write("\n\n*****THIS IS THE SOUP DATA*****\n")
-            errorTXT.write(str(soup))
-            errorTXT.write("\n\n*****THIS IS THE TEXT DATA*****\n")
-            errorTXT.write(str(text))
-            errorTXT.write("\n\n---------------------------------------------------------------------------------------------------------------------------\n\n")
-        except:
-            print("couldnt print error to text file")
+        print("Couldnt get the json data so will re-run function. This is Run "+ str(scrapingCount))
         WebscraperJsonToCSV()
         return                                                          # there is an error so cant continue so end this
-
-    # 3) CHECK WHAT TICKETS WE ALREADY GOT FROM THE .CSV FILE AND ADD NEW TICKETS   TO ticketSet and .txt file: Read the csv file and add "TicketNumbers" to the "ticketSet" and print ticketNumber to ticketList.txt" for storage: 
-    csvDict = pd.read_csv(csvFile)                                      # ***csvDict[colStr][rowNumber]
-    outTXT = open(ticketListFile,"w+")                                  # Settign up to write to txt file
-    for row in range(0,len(csvDict)):
-        ticketSet.add(str(csvDict["TicketNumber"][row]))    
-        outTXT.write(str(csvDict["TicketNumber"][row])+"\n")
 
     # 4) CHECK IF NEW TICKET: See if the tickets in "jsonDict" are in "ticketDict". If we have have it, add to "ticketDic", and .txt and .csv file for stoage. If we have it, skip this row since we have this info already. 
     for row in range(0, len(jsonDict)):
@@ -138,7 +128,7 @@ def WebscraperJsonToCSV():
 
 # 6) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=15)
+scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=10)
 scheduler.start()
 
 
@@ -157,30 +147,6 @@ scheduler.start()
 
 #431 dec 25 2 18apm
 #421 tickets atm 12/25/19 1:16am
-
-
-       
-# did ten 10 min runs and on run 11 i got this error:
-# Job "WebscraperJsonToCSV (trigger: interval[0:10:00], next run at: 2019-12-25 03:15:50 EST)" raised an exception
-# Traceback (most recent call last):
-#   File "/home/hasan/.local/lib/python3.7/site-packages/apscheduler/executors/base.py", line 125, in run_job
-#     retval = job.func(*job.args, **job.kwargs)
-#   File "conEd_SceduledWebscraperJsonCSV.py", line 89, in WebscraperJsonToCSV
-#     jsonDict = pd.read_json(jsonStr, orient='records')                  # Turning the json string to a dictionary
-#   File "/home/hasan/.local/lib/python3.7/site-packages/pandas/io/json/_json.py", line 592, in read_json
-#     result = json_reader.read()
-#   File "/home/hasan/.local/lib/python3.7/site-packages/pandas/io/json/_json.py", line 717, in read
-#     obj = self._get_object_parser(self.data)
-#   File "/home/hasan/.local/lib/python3.7/site-packages/pandas/io/json/_json.py", line 739, in _get_object_parser
-#     obj = FrameParser(json, **kwargs).parse()
-#   File "/home/hasan/.local/lib/python3.7/site-packages/pandas/io/json/_json.py", line 849, in parse
-#     self._parse_no_numpy()
-#   File "/home/hasan/.local/lib/python3.7/site-packages/pandas/io/json/_json.py", line 1116, in _parse_no_numpy
-#     loads(json, precise_float=self.precise_float), dtype=None
-# ValueError: Trailing data
-
-# i added try except statements
-
 
 
 
