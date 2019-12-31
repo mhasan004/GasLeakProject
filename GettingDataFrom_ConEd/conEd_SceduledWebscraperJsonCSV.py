@@ -20,7 +20,7 @@ from git import Repo                # (GitPython) To push chnages to gh
 jsonFile = "ConEdGasLeakList_ManualRecords_UNION.json"          # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
 url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&' # Url to scrape JSOn data from
 csvFile = "UNION.csv"                                           # add new tickets to the end of the csv file
-errorFile = "errorRecord.txt"                                # printing errors to this file
+errorFile = "errorRecord.txt"                                   # printing errors to this file
 ticketListFile = "ticketList.txt"                               # add to end (just for me to see what i got)
 properties= [                                                   # The JSON dot properties
     "TicketNumber",
@@ -75,7 +75,7 @@ def WebscraperJsonToCSV():
                 writer.writerow(csvHeader)
 
     # 2) GET JSON DATA: from a JSON file and add to the JSON Dictionary: 
-    # jsonDict = pd.read_json(jsonFile, orient='records')           # ***jsonDict[properties[i]/colStr(dot properties)][j/rowsnumber(dots)]
+    # jsonDict = pd.read_json(jsonFile, orient='records')               # ***jsonDict[properties[i]/colStr(dot properties)][j/rowsnumber(dots)]
     
     # 2) GET JSON DATA: Webscrape and sanitize the html response which is usually just the JSON data from the url and add to the JSON Dictionary: 
     res = requests.get(url)
@@ -83,7 +83,7 @@ def WebscraperJsonToCSV():
     soup = BeautifulSoup(html_data, 'html.parser')                      # parsing the html data with html parcer (can do stuuf like soup.title to get the title, soup.div, soup.li etc)
     text = soup.find_all(text=True)                                     # Getting all the text thats in the soup
 
-    errorTXT = open(errorFile,"w+")                                  # Settign up to write to txt file
+    errorTXT = open(errorFile,"w+")                                     # Settign up to write to txt file
     jsonStr = ''                                                        # turning text to string from so i can use pandas to turn it to dictionary
     try:
         for t in text:
@@ -94,7 +94,6 @@ def WebscraperJsonToCSV():
         try:
             errorTXT.write("\n"+str(res))
             errorTXT.write("\n\n*****THIS IS THE HTML DATA*****\n")
-            errorTXT.write("\n\n*****THIS IS THE HTML DATA*****\n")
             errorTXT.write(str(html_data))
             errorTXT.write("\n\n*****THIS IS THE SOUP DATA*****\n")
             errorTXT.write(str(soup))
@@ -104,7 +103,7 @@ def WebscraperJsonToCSV():
         except:
             print("couldnt print error to text file")
         WebscraperJsonToCSV()
-        return                                                          #there is an error so cant continue so end this
+        return                                                          # there is an error so cant continue so end this
 
     # 3) CHECK WHAT TICKETS WE ALREADY GOT FROM THE .CSV FILE AND ADD NEW TICKETS   TO ticketSet and .txt file: Read the csv file and add "TicketNumbers" to the "ticketSet" and print ticketNumber to ticketList.txt" for storage: 
     csvDict = pd.read_csv(csvFile)                                      # ***csvDict[colStr][rowNumber]
