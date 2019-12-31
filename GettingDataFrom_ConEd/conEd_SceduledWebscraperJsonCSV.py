@@ -1,9 +1,9 @@
 # Mahmudul Hasan. Script to scrape JSON Gas Leak Data points from ConEdison everyday and put them into a csv file for further use
 # In the ConEdison Gas Leak Report Map, each dot in the map represents a gas leak report. Each report has these seven properties: TicketNumber, Latitude, Longitude, Zipcode, Classification Type, Date Reported, Last Inspected.
-# 1) We need to constantly add new repots to out list so what tickets do we currently have? read the ticket col of the "csvFile" and add the tickets to "ticketSet"
-# 2) Scrape the JSON html response and add it to a python dictionary: "jsonDict" = contents of json response
-# 3) See if there is a new report: Loop through each JSON obbject in "jsonDict" and compare it to the reports are already exists in "ticketSet"
-# 4) If there is a new report, add append the properties of that report into "csvFile", "ticketListFile" and push the latest changes to github
+# a) We need to constantly add new repots to out list so what tickets do we currently have? read the ticket col of the "csvFile" and add the tickets to "ticketSet"
+# b) Scrape the JSON html response and add it to a python dictionary: "jsonDict" = contents of json response
+# c) See if there is a new report: Loop through each JSON obbject in "jsonDict" and compare it to the reports are already exists in "ticketSet"
+# d) If there is a new report, add append the properties of that report into "csvFile", "ticketListFile" and push the latest changes to github
 
 import json
 import csv
@@ -11,8 +11,8 @@ import pandas as pd                 # to trun the json string to a python dictio
 import datetime,re                  # to turn Microsoft JSON date /Date()/ to normal date
 import requests                     # Getting html data
 from bs4 import BeautifulSoup       # Parse the HTML data
-from apscheduler.schedulers.blocking import BlockingScheduler #Sceduler. Will run a function every x seconds/minutes/hours
-from git import Repo                # (GitPython) To push chnages to gh
+from apscheduler.schedulers.blocking import BlockingScheduler # Sceduler. Will run a function every x seconds/minutes/hours
+from git import Repo                # (GitPython) To push changes to gh
 
 
 # SETTING UP GLOBAL VARIABLES: need to change the first eight variables below
@@ -124,7 +124,7 @@ def WebscraperJsonToCSV():
     if (isNewTicket == True):
         git_push()
         isNewTicket == False
-    print("Run Done " + str(scrapingCount)+ "       Reports Scraped: "+str(len(jsonDict)))
+    print("Run Done " + str(scrapingCount) + "       Reports Scraped: "+str(len(jsonDict)))
 
 # 6) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
