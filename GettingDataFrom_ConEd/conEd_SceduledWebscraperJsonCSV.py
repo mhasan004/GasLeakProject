@@ -29,8 +29,8 @@ properties= [                                                   # The JSON dot p
     "DateReported",
     "LastInspected"
 ]
-#PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'  # the path to the .git file (.git location on my raspberry pi)
-PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject' # the path to the .git file (.git location on my Laptop)
+PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'  # the path to the .git file (.git location on my raspberry pi)
+#PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject' # the path to the .git file (.git location on my Laptop)
 COMMIT_MESSAGE = 'Automated Push - New Ticket Update'           # the commmit message when it is pushed
 ticketSet = set()                                               # need to add what i got in the csv atm
 jsonDict  = []                                                  # json file to dict: #jsonDict["TicketNumber/Long/lat/etc"][int index of the dot]) 
@@ -75,18 +75,11 @@ def WebscraperJsonToCSV():
             with open(csvFile, 'w', newline='') as outf:
                 writer = csv.writer(outf)
                 writer.writerow(csvHeader)
-
-    # 2) CHECK WHAT TICKETS WE ALREADY GOT FROM THE .CSV FILE AND ADD NEW TICKETS TO ticketSet and .txt file: Read the csv file and add "TicketNumbers" to the "ticketSet" and print ticketNumber to ticketList.txt" for storage: 
-    csvDict = pd.read_csv(csvFile)                                      # ***csvDict[colStr][rowNumber]
-    outTXT = open(ticketListFile,"w+")                                  # Settign up to write to txt file
-    for row in range(0,len(csvDict)):
-        ticketSet.add(str(csvDict["TicketNumber"][row]))    
-        outTXT.write(str(csvDict["TicketNumber"][row])+"\n")
-
-    # 3) GET JSON DATA: from a JSON file and add to the JSON Dictionary: 
+    
+    # 2) GET JSON DATA: from a JSON file and add to the JSON Dictionary: 
     # jsonDict = pd.read_json(jsonFile, orient='records')               # ***jsonDict[properties[i]/colStr(dot properties)][j/rowsnumber(dots)]
     
-    # 3) GET JSON DATA: Webscrape the html response which is usually just the JSON data from the url and add to the JSON Dictionary: 
+    # 2) GET JSON DATA: Webscrape the html response which is usually just the JSON data from the url and add to the JSON Dictionary: 
     res = requests.get(url)
     html_data = res.content                                             # Getting the HTML JSOn data 
     soup = BeautifulSoup(html_data, 'html.parser')                      # parsing the html data with html parcer (can do stuuf like soup.title to get the title, soup.div, soup.li etc)
@@ -100,7 +93,14 @@ def WebscraperJsonToCSV():
     except:
         print("Couldnt get the json data so will re-run function. This is Run "+ str(scrapingCount))
         WebscraperJsonToCSV()
-        return                                                          # there is an error so cant continue so end this
+        return
+    
+    # 3) CHECK WHAT TICKETS WE ALREADY GOT FROM THE .CSV FILE AND ADD NEW TICKETS TO ticketSet and .txt file: Read the csv file and add "TicketNumbers" to the "ticketSet" and print ticketNumber to ticketList.txt" for storage: 
+    csvDict = pd.read_csv(csvFile)                                      # ***csvDict[colStr][rowNumber]
+    outTXT = open(ticketListFile,"w+")                                  # Settign up to write to txt file
+    for row in range(0,len(csvDict)):
+        ticketSet.add(str(csvDict["TicketNumber"][row]))    
+        outTXT.write(str(csvDict["TicketNumber"][row])+"\n")                                                       # there is an error so cant continue so end this
 
     # 4) CHECK IF NEW TICKET: See if the tickets in "jsonDict" are in "ticketDict". If we have have it, add to "ticketDic", and .txt and .csv file for stoage. If we have it, skip this row since we have this info already. 
     for row in range(0, len(jsonDict)):
