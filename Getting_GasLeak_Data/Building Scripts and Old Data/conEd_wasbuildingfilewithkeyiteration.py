@@ -3,7 +3,7 @@
 # a) We need to constantly add new repots to out list so what tickets do we currently have? read the ticket col of the "csvFile" and add the tickets to "ticketSet"
 # b) Scrape the JSON html response and add it to a python dictionary: "jsonDict" = contents of json response
 # c) See if there is a new report: Loop through each JSON obbject in "jsonDict" and compare it to the reports are already exists in "ticketSet"
-# d) If there is a new report, add append the properties of that report into "csvFile", "ticketListFile" and push the latest changes to github
+# d) If there is a new report, add append the properties of that report into "csvFile", "ticketList" and push the latest changes to github
 
 import json
 import csv
@@ -16,21 +16,21 @@ from git import Repo                # (GitPython) To push changes to gh
 
 
 # SETTING UP GLOBAL VARIABLES: need to change the first eight variables below
-jsonFile = "ConEdGasLeakList_ManualRecords_UNION.json"          # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
+jsonFile = "SOME_JSON_FILE.json"          # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
 url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&' # Url to scrape JSOn data from
-csvFile = "UNION.csv"                                           # add new tickets to the end of the csv file
-ticketListFile = "ticketList.txt"                               # add to end (just for me to see what i got)
-properties= [                                                   # The JSON dot properties
-    "TicketNumber",
-    "Latitude",
-    "Longitude",
-    "Zip",
-    "ClassificationType",
-    "DateReported",
-    "LastInspected"
-]
-PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'  # the path to the .git file (.git location on my raspberry pi)
-#PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject' # the path to the .git file (.git location on my Laptop)
+csvFile = "conEd_LeakHistory_TEST.csv"                                           # add new tickets to the end of the csv file
+ticketList = "conEd_TicketList_TEST.txt"                               # add to end (just for me to see what i got)
+# properties= [                                                   # The JSON dot properties
+#     "TicketNumber",
+#     "Latitude",
+#     "Longitude",
+#     "Zip",
+#     "ClassificationType",
+#     "DateReported",
+#     "LastInspected"
+# ]
+#PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'  # the path to the .git file (.git location on my raspberry pi)
+PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject' # the path to the .git file (.git location on my Laptop)
 COMMIT_MESSAGE = 'Automated Push - New Ticket Update'           # the commmit message when it is pushed
 ticketSet = set()                                               # need to add what i got in the csv atm
 jsonDict  = []                                                  # json file to dict: #jsonDict["TicketNumber/Long/lat/etc"][int index of the dot]) 
@@ -95,9 +95,9 @@ def WebscraperJsonToCSV():
         WebscraperJsonToCSV()
         return
     
-    # 3) CHECK WHAT TICKETS WE ALREADY GOT FROM THE .CSV FILE AND ADD NEW TICKETS TO ticketSet and .txt file: Read the csv file and add "TicketNumbers" to the "ticketSet" and print ticketNumber to ticketList.txt" for storage: 
+    # 3) CHECK WHAT TICKETS WE ALREADY GOT FROM THE .CSV FILE AND ADD NEW TICKETS TO ticketSet and .txt file: Read the csv file and add "TicketNumbers" to the "ticketSet" and print ticketNumber to conEd_TicketList.txt" for storage: 
     csvDict = pd.read_csv(csvFile)                                      # ***csvDict[colStr][rowNumber]
-    outTXT = open(ticketListFile,"w+")                                  # Settign up to write to txt file
+    outTXT = open(ticketList,"w+")                                  # Settign up to write to txt file
     for row in range(0,len(csvDict)):
         ticketSet.add(str(csvDict["TicketNumber"][row]))    
         outTXT.write(str(csvDict["TicketNumber"][row])+"\n")                                                       # there is an error so cant continue so end this
@@ -111,12 +111,23 @@ def WebscraperJsonToCSV():
             outTXT.write(jsonDict["TicketNumber"][row]+"\n")            # add new ticket to txt file  
             with open(csvFile,'a') as outCSV:                           # Write the new Ticket object to csv file
                 s=""
-                for col in range(0, len(properties)-1):                 # go through each column/dot property
-                    if properties[col] == "DateReported":               # Need to change the Microsoft time to mm/dd/yyyy
-                        s+=turnToDatetime(str(jsonDict[properties[col]][row]))
+                # for col in range(0, len(properties)-1):                 # go through each column/dot property
+                #     if properties[col] == "DateReported":               # Need to change the Microsoft time to mm/dd/yyyy
+                #         s+=turnToDatetime(str(jsonDict[properties[col]][row]))
+                #     else: 
+                #         s+=str(jsonDict[properties[col]][row])
+                #     if col != len(properties)-2:
+                #         s+=',' 
+                colCounter = 0
+                for key in jsonDict:                                    # go through each column/dot property
+                    colCounter+=1
+                    if key == "DateReported":                           # Need to change the Microsoft time to mm/dd/yyyy
+                        s+=turnToDatetime(str(jsonDict[key][row]))
                     else: 
-                        s+=str(jsonDict[properties[col]][row])
-                    if col != len(properties)-2:
+                        s+=str(jsonDict[key][row])
+                    if if key == "DateReported":                        # Need to change the Microsoft time to mm/dd/yyyy
+                        s+=turnToDatetime(str(jsonDict[key][row]))
+                    if colCounter != len(properties)-2:
                         s+=',' 
                 s+="\n"
                 outCSV.write(s)                                         # add new ticket obj to csv file  
