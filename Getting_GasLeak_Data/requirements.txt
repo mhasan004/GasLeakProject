@@ -2,13 +2,10 @@
 pip3 install pandas
 pip3 install bs4
 pip3 install datetime
-#pip3 install re
-#pip3 install apscheduler.schedulers.blocking 
 pip3 install apscheduler
-#pip3 install BlockingScheduler
 pip3 install virtualenv
 sudo apt-get install python3-venv
 pip3 install GitPython
-
+pip3 install sodapy 
 
 
