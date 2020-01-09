@@ -23,7 +23,7 @@ for key in results[0]:
 
 # C) Print data to csv
 # 1) If the csv is empty, print the header
-csvFile = "NYFD_GasHistory.csv"                                       # add new ticketreports to the end of the csv file
+csvFile = "GasHistory_NYFD.csv"                                       # add new ticketreports to the end of the csv file
 with open(csvFile, 'r') as csvfile:
     csv_dict = [row for row in csv.DictReader(csvfile)]
     if len(csv_dict) == 0:

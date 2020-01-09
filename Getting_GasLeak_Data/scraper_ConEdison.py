@@ -18,7 +18,7 @@ from git import Repo                # (GitPython) To push changes to gh
 # SETTING UP GLOBAL VARIABLES: need to change the first eight variables below
 jsonFile = "SOME_JSON_FILE_WITH_SAME_KEYS.json"          # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
 url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&' # Url to scrape JSOn data from
-csvFile = "conEd_GasHistory.csv"                                       # add new tickets to the end of the csv file
+csvFile = "GasHistory_ConEdison.csv"                                       # add new tickets to the end of the csv file
 ticketListFile = "conEd_TicketList.txt"                                 # add to end (just for me to see what i got)
 keys= [                                                                 # The JSON dot keys( better to use key iteration, instead i went through the columns of the dictionary with this)
     "TicketNumber",
