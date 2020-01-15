@@ -13,21 +13,21 @@ import json
 import pandas as pd                                                                     # To read and write csv files
 import time                                                                             # maybe api calls will help if i slow a bit
 
-csvConEdFile  = "FDNY_2018Tract.csv"
+csvConEdFile  = "GasHistory_ConEdison.csv"
 ################################################################################### GETTING CENSUS DATA FROM COORDS AND ADDING TO CSV ####
 # FUNCTION: Get Census Tract from Longitude and Latitude coordintes using the Census Beru's API which returns a JSON file 
 def getCensusTract(longitude, latitude,retryRun=0):                                     # returns an array [CensusTrack, CensusBlock, CountyName]
-    try:
-        url = "https://geocoding.geo.census.gov/geocoder/geographies/coordinates?y={0}&x={1}&benchmark=Public_AR_Current&vintage=Current_Current&format=json".format(longitude,latitude)
-        # response = urlopen(url)
-        # dataJSON = json.loads(response.read())
-        response = requests.get(url)
-        dataJSON = response.json()
-        data = dataJSON["result"]
-    except:
-        print("Couldnt get response, will retry...")
-        time.sleep(10)
-        return getCensusTract(longitude, latitude)
+    # try:
+    url = "https://geocoding.geo.census.gov/geocoder/geographies/coordinates?y={0}&x={1}&benchmark=Public_AR_Current&vintage=Current_Current&format=json".format(longitude,latitude)
+    # response = urlopen(url)
+    # dataJSON = json.loads(response.read())
+    response = requests.get(url)
+    dataJSON = response.json()
+    data = dataJSON["result"]
+    # except:
+    #     print("Couldnt get response, will retry...")
+    #     time.sleep(10)
+    #     return getCensusTract(longitude, latitude)
     if retryRun == 11:                                                                  # Failed to get json data 11 times with this longitude and latitude so need to skip this one
         print("*****Failed 11 times to get geodata so will print insert 'error'*****")
         return [str("error"), str("error"), str("error")]
@@ -49,7 +49,7 @@ df = pd.read_csv(csvConEdFile)                                                  
 for row in range(0,len(df)):
     retryRun = 0
     # b) using the lat and long coords of each entry to find the census data and adding to the respective arrays to add to csv col later
-    returnArray = getCensusTract(float(df.loc[row]["lat"].item()), float(df.loc[row]["lon"].item()))
+    returnArray = getCensusTract(float(df.loc[row]["Longitude"].item()), float(df.loc[row]["Latitude"].item()))
     censusTrack.append(returnArray[0])
     censusBlock.append(returnArray[1])
     countyName.append(returnArray[2])
