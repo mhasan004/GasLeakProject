@@ -15,12 +15,17 @@ csvConEdFile  = "GasHistory_ConEdisonTracks.csv"
 ################################################################################### GETTING CENSUS DATA FROM COORDS AND ADDING TO CSV ####
 # FUNCTION: Get Census Tract from Longitude and Latitude coordintes using the Census Beru's API which returns a JSON file 
 def getCensusTract(longitude, latitude,retryRun=0):                                     # returns an array [CensusTrack, CensusBlock, CountyName]
-    url = "https://geocoding.geo.census.gov/geocoder/geographies/coordinates?y={0}&x={1}&benchmark=Public_AR_Current&vintage=Current_Current&format=json".format(longitude,latitude)
-    response = urlopen(url)
-    dataJSON = json.loads(response.read())
-    data = dataJSON["result"]
+    try:
+        url = "https://geocoding.geo.census.gov/geocoder/geographies/coordinates?y={0}&x={1}&benchmark=Public_AR_Current&vintage=Current_Current&format=json".format(longitude,latitude)
+        response = urlopen(url)
+        dataJSON = json.loads(response.read())
+        data = dataJSON["result"]
+    except:
+        print("Couldnt get response, will retry...")
+        time.sleep(10)
+        return getCensusTract(longitude, latitude)
     if retryRun == 11:                                                                  # Failed to get json data 11 times with this longitude and latitude so need to skip this one
-        print("failed 11 times")
+        print("*****Failed 11 times to get geodata so will print insert 'error'*****")
         return [str("error"), str("error"), str("error")]
     try:
         track = data["geographies"]["Census Tracts"][0]["BASENAME"]
@@ -46,10 +51,10 @@ for row in range(0,len(df)):
     countyName.append(returnArray[2])
 
 # c) Will make 3 new columns and will fill them up using the 3 census arrays
-df['CensusTrack'] = censusTrack          
-df['CensusBlock'] = censusBlock        
-df['CountyName']  = countyName      
-df.to_csv(csvConEdFile)                                
+# df['CensusTrack'] = censusTrack          
+# df['CensusBlock'] = censusBlock        
+# df['CountyName']  = countyName      
+# df.to_csv(csvConEdFile)                                
 
 #########################################################################################################################################
 
