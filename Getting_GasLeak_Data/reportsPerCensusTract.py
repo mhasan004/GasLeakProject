@@ -1,4 +1,5 @@
-# PART 2 CODE AFER CON ED SCRAPER
+# Variables to chnage: csvConEdFile and for returnArray specify the Latitude and Longitude csv column names
+# PART 2 CODE AFER CON EDOSN SCRAPER
 # a) make a new csv that has the: censusTract, date, hour, report count for that tract for that hour
 # Census API doc:         https://geocoding.geo.census.gov/geocoder/Geocoding_Services_API.pdf
 # census api url format:  https://geocoding.geo.census.gov/geocoder/geographies/coordinatesx=latitude&y=longitude&benchmark=&vintage=&format=json
@@ -7,18 +8,21 @@
 
 
 from urllib.request import urlopen                                                      # Getting the json data from the url
+import requests
 import json
 import pandas as pd                                                                     # To read and write csv files
 import time                                                                             # maybe api calls will help if i slow a bit
 
-csvConEdFile  = "GasHistory_ConEdisonTracks.csv"
+csvConEdFile  = "FDNY_2018Tract.csv"
 ################################################################################### GETTING CENSUS DATA FROM COORDS AND ADDING TO CSV ####
 # FUNCTION: Get Census Tract from Longitude and Latitude coordintes using the Census Beru's API which returns a JSON file 
 def getCensusTract(longitude, latitude,retryRun=0):                                     # returns an array [CensusTrack, CensusBlock, CountyName]
     try:
         url = "https://geocoding.geo.census.gov/geocoder/geographies/coordinates?y={0}&x={1}&benchmark=Public_AR_Current&vintage=Current_Current&format=json".format(longitude,latitude)
-        response = urlopen(url)
-        dataJSON = json.loads(response.read())
+        # response = urlopen(url)
+        # dataJSON = json.loads(response.read())
+        response = requests.get(url)
+        dataJSON = response.json()
         data = dataJSON["result"]
     except:
         print("Couldnt get response, will retry...")
@@ -45,16 +49,16 @@ df = pd.read_csv(csvConEdFile)                                                  
 for row in range(0,len(df)):
     retryRun = 0
     # b) using the lat and long coords of each entry to find the census data and adding to the respective arrays to add to csv col later
-    returnArray = getCensusTract(float(df.loc[row]["Longitude"].item()), float(df.loc[row]["Latitude"].item()))
+    returnArray = getCensusTract(float(df.loc[row]["lat"].item()), float(df.loc[row]["lon"].item()))
     censusTrack.append(returnArray[0])
     censusBlock.append(returnArray[1])
     countyName.append(returnArray[2])
 
 # c) Will make 3 new columns and will fill them up using the 3 census arrays
-# df['CensusTrack'] = censusTrack          
-# df['CensusBlock'] = censusBlock        
-# df['CountyName']  = countyName      
-# df.to_csv(csvConEdFile)                                
+df['CensusTrack'] = censusTrack          
+df['CensusBlock'] = censusBlock        
+df['CountyName']  = countyName      
+df.to_csv(csvConEdFile)                                
 
 #########################################################################################################################################
 
