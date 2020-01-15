@@ -5,7 +5,7 @@ An interactive web application that will visualize the locations of all reported
 **File Location:** Getting_GasLeak_Data/scraper_ConEdison.py.py
 
 **Description:**
-This Python script periodically scrapes gas leak report from the ConEdison website and appends the data of new gas leak reports to *GasHistory_ConEdison.csv* and *conEd_TicketList.txt* files and pushes the changes to GitHub so that I can have the latest gas leak report history.
+This python script periodically scrapes gas leak report from the ConEdison website and appends the data of new gas leak reports to *GasHistory_ConEdison.csv* and *conEd_TicketList.txt* files and pushes the changes to GitHub so that I can have the latest gas leak report history.
 
 **Installing Required Packages**
 Run the *requirements.txt* file in *Getting_GasLeak_Data* folder using the command *bash requirements.txt* to install the required packages.
@@ -19,4 +19,10 @@ Run the *requirements.txt* file in *Getting_GasLeak_Data* folder using the comma
 **File Location:** Getting_GasLeak_Data/scraper_NYFD.py
 
 **Description:**
-This Python script uses the NYC Open Data API to store all gas related utility emergency reports into a file called *GasHistory_NYFD.csv* 
+This python script uses the NYC Open Data API to store all gas related utility emergency reports into a file called *GasHistory_NYFD.csv* 
+
+# Plotting Gas Leak Reports per Census Track per Hour
+**File Location:** Getting_GasLeak_Data/
+
+**Description:**
+This python script goes through *GasHistory_ConEdison.csv* and uses the Census Bureau's Geocoding API to find what census tract each report was made in adn creates a new file where is keeps track of the number of gas reports reported in that hour for each census track. This data will then be plotted
