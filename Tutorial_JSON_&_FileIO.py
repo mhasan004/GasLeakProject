@@ -39,17 +39,41 @@ print(dataj["key1"])
 
 ############################################## 3) CSV ###############################
 import pandas as pd
-csvData = pd.read_csv(csvFile)                           # Reading the CSV w Pandas: csvData[colStr][rowNumber]
+csvData = pd.read_csv(csvFile)                           # READING the CSV w Pandas df (panas df makes stuff easier): csvData[colStr][rowNumber]
 
-with open('test.csv', 'r') as csvfile:                   # OLD MAthod Reading
+with open('test.csv', 'r') as csvfile:                   # OLD METHOD Reading
     csv_empty = [row for row in csv.DictReader(csvfile)] # see if csv empty
 
-with open('test.csv', 'w', newline='') as outf:          # Write this string s on the csv
-    writer = csv.writer(outf)
+with open('test.csv', 'w', newline='') as outCSV:        # WRITING: clear the csv and write this string s on the csv
+    writer = csv.writer(outCSV)
     writer.writerow(s)
-with open('test.csv','a') as out:                        # Asppend this string s on a new line
-    out.write(s)
 
+with open('test.csv','a') as outCSV:                     # WRITING: Append this string s on a new line
+    outCSV.write(s)
+
+# add new col to csv:
+df = pd.read_csv("csvFile.csv")                         # WRITING NEW COL: read the csv file and store to df
+color=['red','green', 'blue']                           # 1) adding these data to each row for this col
+df['colors'] = color                                    # 2) adding a new col named "colors" and add the row vals in
+df.to_csv("csvFile.csv")                                # 3) back to csv
+
+############################################# Pandas dataframe access ############
+# ACCESSING ELEMENTS USING loc, iloc, ix:
+    df.iloc[0][1]                               # (can also use loc) access te 0th row, 1st col element
+    df.loc["row1", "row2"]["col1,col2"]         # by name of cols
+    df.iloc[1]["col1"]                          # accessing the index 1 elem of col "col1"
+    df.loc[0,:]                                 # the 0th row
+    #*** these will return numpy datatype to chnage to python add .item(). example below
+# SPECIFICS:
+df["column in focusing on"][rowNumber]          # accesing an elemen of certain col
+df["col1", "col2"]                              # prints these columns only
+
+# FILTERING: only prints entries where the col "sex" is "M"
+    df.sex == "M"                              # 1) BOOLEAN: prints the zipcode col but has only True or False values        
+    df[df.sex == "M" ]                         # 2 only prints the entries where "sex" is "M"                         
+
+# TYPE numpy.float64 to python float
+    df.loc[1]["col1"].item() # if this returns numpy.float64, it is now float
 ############################################# 4) Writing to txt #####################################
 outf = open("file.txt","w+")
 outf.write("This is line %d\r\n" % (i+1))
