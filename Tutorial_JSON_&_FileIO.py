@@ -74,6 +74,11 @@ df["col1", "col2"]                              # prints these columns only
 
 # TYPE numpy.float64 to python float
     df.loc[1]["col1"].item() # if this returns numpy.float64, it is now float
+
+# PRINT COLUMN NAMES:
+    for col in df.columns:                    # method 1:
+        print(col)
+    print(list(df.columns))                   # method 2
 ############################################# 4) Writing to txt #####################################
 outf = open("file.txt","w+")
 outf.write("This is line %d\r\n" % (i+1))

@@ -16,6 +16,11 @@ conda install plotly -y
 conda install geopandas -y
 
 pip3 install requests
+
+
+
+
+
 # didnt use do del
 # pip3 install pygeocoder
 # pip3 install geocoder

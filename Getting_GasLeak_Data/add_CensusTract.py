@@ -1,11 +1,10 @@
 # Variables to chnage: csvConEdFile and for returnArray specify the Latitude and Longitude csv column names
-# PART 2 CODE AFER CON EDOSN SCRAPER
+# PART 2 CODE AFER CON EDOSN SCRAPER. Taking the csv file and then 
 # a) make a new csv that has the: censusTract, date, hour, report count for that tract for that hour
 # Census API doc:         https://geocoding.geo.census.gov/geocoder/Geocoding_Services_API.pdf
 # census api url format:  https://geocoding.geo.census.gov/geocoder/geographies/coordinatesx=latitude&y=longitude&benchmark=&vintage=&format=json
 # census api url example: https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x=-78.8543293&y=41.6567756&benchmark=Public_AR_Current&vintage=Current_Current&format=json
     # json result of the top search given this random lat long coordinate is results: input and geographies. geographics has: 2010 census blocks, states, countries, census tracts
-
 
 from urllib.request import urlopen                                                      # Getting the json data from the url
 import requests
@@ -13,8 +12,8 @@ import json
 import pandas as pd                                                                     # To read and write csv files
 import time                                                                             # maybe api calls will help if i slow a bit
 
-csvConEdFile  = "GasHistory_ConEdison.csv"
-################################################################################### GETTING CENSUS DATA FROM COORDS AND ADDING TO CSV ####
+csvConEdFile  = "GasHistory_ConEdisonTracts.csv"
+################################################################################### GETTING CENSUS DATA FROM COORDS AND ADDING TO CSV ##############################################################
 # FUNCTION: Get Census Tract from Longitude and Latitude coordintes using the Census Beru's API which returns a JSON file 
 def getCensusTract(longitude, latitude,retryRun=0):                                     # returns an array [CensusTrack, CensusBlock, CountyName]
     # try:
@@ -60,5 +59,15 @@ df['CensusBlock'] = censusBlock
 df['CountyName']  = countyName      
 df.to_csv(csvConEdFile)                                
 
-#########################################################################################################################################
+#################################################################################### CHANGING DATETIME COL TO DATE AND TIME COL ####################################################################
+df = pd.read_csv(csvConEdFile)  
+dateArray = []
+timeArray = []                                                        
+for row in range(0,len(df)):
+    dateTime = df["DateReported"][row].split(' ')                       # [mm/dd/yyyy, time, am/pm]
+    dateArray.append(dateTime[0])
+    timeArray.append(dateTime[1]+" "+dateTime[2])
+df['Date'] = dateArray          
+df['Time'] = timeArray        
+df.to_csv(csvConEdFile)  
 
