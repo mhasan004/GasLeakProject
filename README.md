@@ -15,7 +15,7 @@ Run the *requirements.txt* file in *Getting_GasLeak_Data* folder using the comma
 * Get JSON data from a JSON file and store objects into a csv file. Will need to change the *url*, *csvFile*, *jsonFile* , and *properties* variables.
 * Automatically push changes to github when script finds new JSON objects. Change the *PATH_OF_GIT_REPO* (where the *.git* file is located) and *COMMIT_MESSAGE* variables.
 
-# The New york Fire Department Scraper
+# The New York Fire Department Gas Report Scraper
 **File Location:** Getting_GasLeak_Data/scraper_NYFD.py
 
 **Description:**
