@@ -8,4 +8,14 @@ sudo apt-get install python3-venv
 pip3 install GitPython
 pip3 install sodapy 
 
+pip3 install dash
+pip3 install numpy
+conda install plotly -y
+
+# For Longitude Latitude to Census Tract
+conda install geopandas -y
+
+# didnt use do del
+# pip3 install pygeocoder
+# pip3 install geocoder
 
