@@ -36,7 +36,7 @@ for row in range(0,len(df)):
                     if rowTract not in tractToSkip:                                                 # C) Do this Census Tract if i didnt do so already: 
                         tractDF = hourlyDF[hourlyDF.CensusTract == tract]                               # 1) new df = target rows (of those same hours, which were recorded in the same census tract?)                  
                         tractToSkip.extend(hourlyDF.index[hourlyDF["CensusTract"] == tract].tolist())   # 2) adding the index of those targeted rows so can skip when we go down the row for this hour
-                        s += tractDF.iloc[0]["Date"] + "," + str(tractDF.iloc[0]["CensusTract"]) + "," + str(len(tractDF)) + "\n"
+                        s += tractDF.iloc[0]["Date"] + "," + str(tractDF.iloc[0]["Hour"]) + "," + str(tractDF.iloc[0]["CensusTract"]) + "," + str(len(tractDF)) + "\n"
                         # print("###############################################################################")
                         # print(tractDF)
                         # print(
