@@ -71,7 +71,10 @@ df["col1", "col2"]                              # prints these columns only
 # FILTERING: only prints entries where the col "sex" is "M"
     df.sex == "M"                              # 1) BOOLEAN: prints the zipcode col but has only True or False values        
     df[df.sex == "M" ]                         # 2 only prints the entries where "sex" is "M"                         
-
+    # PRINT THE INDEX OF WHAT EVER ROW THAT IS THE VALE OF 'M' IN THE SEX COLUMN
+    print(df.index[df['sex'] == "M"].tolist())                                              
+    # DELETE A ROW OF INDEX 0 AND 1    	
+    newDf = df.drop([df.index[0] , df.index[1]])
 # TYPE numpy.float64 to python float
     df.loc[1]["col1"].item() # if this returns numpy.float64, it is now float
 
@@ -79,6 +82,9 @@ df["col1", "col2"]                              # prints these columns only
     for col in df.columns:                    # method 1:
         print(col)
     print(list(df.columns))                   # method 2
+
+# ITERATE DOWN ROWS:
+    next(df.iterrows())
 ############################################# 4) Writing to txt #####################################
 outf = open("file.txt","w+")
 outf.write("This is line %d\r\n" % (i+1))

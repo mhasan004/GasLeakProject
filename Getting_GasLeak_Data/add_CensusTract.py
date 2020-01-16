@@ -15,7 +15,7 @@ import time                                                                     
 csvConEdFile  = "GasHistory_ConEdisonTracts.csv"
 ################################################################################### GETTING CENSUS DATA FROM COORDS AND ADDING TO CSV ##############################################################
 # FUNCTION: Get Census Tract from Longitude and Latitude coordintes using the Census Beru's API which returns a JSON file 
-def getCensusTract(longitude, latitude,retryRun=0):                                     # returns an array [CensusTrack, CensusBlock, CountyName]
+def getCensusTract(longitude, latitude,retryRun=0):                                     # returns an array [censusTract, CensusBlock, CountyName]
     # try:
     url = "https://geocoding.geo.census.gov/geocoder/geographies/coordinates?y={0}&x={1}&benchmark=Public_AR_Current&vintage=Current_Current&format=json".format(longitude,latitude)
     # response = urlopen(url)
@@ -41,7 +41,7 @@ def getCensusTract(longitude, latitude,retryRun=0):                             
         return getCensusTract(longitude, latitude,retryRun)                             # *****need to return the recursive function
 
 # a) Will modify GasHistory_ConEdison.csv to have the CensusTract, CensusBlock, and CountyName columns
-censusTrack = []
+censusTract = []
 censusBlock = []
 countyName = []
 df = pd.read_csv(csvConEdFile)                                                          # read the csv file and store to df
@@ -49,25 +49,28 @@ for row in range(0,len(df)):
     retryRun = 0
     # b) using the lat and long coords of each entry to find the census data and adding to the respective arrays to add to csv col later
     returnArray = getCensusTract(float(df.loc[row]["Longitude"].item()), float(df.loc[row]["Latitude"].item()))
-    censusTrack.append(returnArray[0])
+    censusTract.append(returnArray[0])
     censusBlock.append(returnArray[1])
     countyName.append(returnArray[2])
 
 # c) Will make 3 new columns and will fill them up using the 3 census arrays
-df['CensusTrack'] = censusTrack          
+df['CensusTract'] = censusTract          
 df['CensusBlock'] = censusBlock        
 df['CountyName']  = countyName      
 df.to_csv(csvConEdFile)                                
 
-#################################################################################### CHANGING DATETIME COL TO DATE AND TIME COL ####################################################################
+#################################################################################### CHANGING DATETIME COL TO DATE AND TIME AND HOUR COL ####################################################################
 df = pd.read_csv(csvConEdFile)  
-dateArray = []
-timeArray = []                                                        
+dateArray = []                                                          # adding new date column:    mm/dd/yyyy
+timeArray = []                                                          # adding new time column:    hh:mm AM/PM
+hourArray = []                                                          # adding new hour column:    h                                   
 for row in range(0,len(df)):
     dateTime = df["DateReported"][row].split(' ')                       # [mm/dd/yyyy, time, am/pm]
     dateArray.append(dateTime[0])
     timeArray.append(dateTime[1]+" "+dateTime[2])
+    hourArray.append(dateTime[1].split(":")[0]+" "+dateTime[2])
 df['Date'] = dateArray          
-df['Time'] = timeArray        
+df['Time'] = timeArray    
+df['Hour'] = hourArray    
 df.to_csv(csvConEdFile)  
 
