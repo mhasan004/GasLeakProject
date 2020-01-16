@@ -65,8 +65,11 @@ df.to_csv("csvFile.csv")                                # 3) back to csv
     df.loc[0,:]                                 # the 0th row
     #*** these will return numpy datatype to chnage to python add .item(). example below
 # SPECIFICS:
-df["column in focusing on"][rowNumber]          # accesing an elemen of certain col
-df["col1", "col2"]                              # prints these columns only
+    df["column in focusing on"][rowNumber]          # accesing an elemen of certain col
+    df["col1", "col2"]                              # prints these columns only
+# CHANGE A VALUE IN THE DF:
+        df.at['rowTag/Num', 'comTagNum'] = 10                    # rcommended way
+        df.set_value('rowTag/Num', 'colTag/Num', "val/num")
 
 # FILTERING: only prints entries where the col "sex" is "M"
     df.sex == "M"                              # 1) BOOLEAN: prints the zipcode col but has only True or False values        

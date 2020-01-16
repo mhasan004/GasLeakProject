@@ -3,8 +3,8 @@ pip3 install pandas
 pip3 install bs4
 pip3 install datetime
 pip3 install apscheduler
-pip3 install virtualenv
-sudo apt-get install python3-venv
+# pip3 install virtualenv
+# sudo apt-get install python3-venv
 pip3 install GitPython
 pip3 install sodapy 
 
@@ -12,11 +12,16 @@ pip3 install dash
 pip3 install numpy
 conda install plotly -y
 
-# For Longitude Latitude to Census Tract
-conda install geopandas -y
-
 pip3 install requests
 
+# For Longitude Latitude to Census Tract
+# pip3 install geopandas
+# conda install --channel conda-forge geopandas
+# conda install -c conda-forge geopandas
+# pip3 install git+git://github.com/geopandas/geopandas.git
+sudo apt-get install python3-geopandas # works finally!
+pip3 install matplotlib     # to plot 
+pip3 install descartes      # to plot
 
 
 

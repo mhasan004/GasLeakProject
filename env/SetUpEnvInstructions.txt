@@ -1,0 +1,5 @@
+To start the enviornment:
+    virtualenv gasdata
+    source gasdata/bin/activate
+to Deactivate:
+    deactivate
