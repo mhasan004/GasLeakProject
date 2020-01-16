@@ -8,12 +8,6 @@ import pandas as pd                                                             
 csvInFile  = "GasHistory_ConEdisonTracts.csv"
 csvOutFile = "reportsPerCensusTract.csv"
 
-dateCol = []
-hourCol = []
-censusTractCol = []
-countCol = []
-indexToSkip = []
-
 noRepeatSet = set()
 df = pd.read_csv(csvInFile) 
 for row in range(0,len(df)):
