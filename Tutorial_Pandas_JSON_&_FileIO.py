@@ -81,6 +81,8 @@ df.to_csv("csvFile.csv")                                # 3) back to csv
 # TYPE numpy.float64 to python float
     df.loc[1]["col1"].item() # if this returns numpy.float64, it is now float
 
+# Copy a df
+    s2 = s1.copy()
 # PRINT COLUMN NAMES:
     for col in df.columns:                    # method 1:
         print(col)
