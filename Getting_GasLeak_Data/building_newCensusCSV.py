@@ -7,7 +7,7 @@ import pandas as pd                                                             
 
 csvInFile  = "GasHistory_ConEdisonTracts.csv"
 csvOutFile = "reportsPerCensusTract.csv"
-
+indexToSkip = []
 noRepeatSet = set()
 df = pd.read_csv(csvInFile) 
 for row in range(0,len(df)):
