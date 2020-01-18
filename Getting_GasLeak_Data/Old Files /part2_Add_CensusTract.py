@@ -10,14 +10,13 @@ from urllib.request import urlopen                                              
 import requests
 import json
 import pandas as pd                                                                     # To read and write csv files
-import time                                                                             # maybe api calls will help if i slow a bit
 
 csvConEdFile  = "GasHistory_ConEdisonTracts.csv"
 ################################################################################### GETTING CENSUS DATA FROM COORDS AND ADDING TO CSV ##############################################################
 # FUNCTION: Get Census Tract from Longitude and Latitude coordintes using the Census Beru's API which returns a JSON file 
 def getCensusTract(longitude, latitude,retryRun=0):                                     # returns an array [censusTract, CensusBlock, CountyName]
     # try:
-    url = "https://geocoding.geo.census.gov/geocoder/geographies/coordinates?y={0}&x={1}&benchmark=Public_AR_Current&vintage=Current_Current&format=json".format(longitude,latitude)
+    url = "https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x={0}&y={1}&benchmark=Public_AR_Current&vintage=Current_Current&format=json".format(longitude,latitude)
     # response = urlopen(url)
     # dataJSON = json.loads(response.read())
     response = requests.get(url)
@@ -57,7 +56,7 @@ for row in range(0,len(df)):
 df['CensusTract'] = censusTract          
 df['CensusBlock'] = censusBlock        
 df['CountyName']  = countyName      
-df.to_csv(csvConEdFile)                                
+df.to_csv(csvConEdFile, index=False))                                
 
 #################################################################################### CHANGING DATETIME COL TO DATE AND TIME AND HOUR COL ####################################################################
 df = pd.read_csv(csvConEdFile)  
@@ -72,5 +71,5 @@ for row in range(0,len(df)):
 df['Date'] = dateArray          
 df['Time'] = timeArray    
 df['Hour'] = hourArray    
-df.to_csv(csvConEdFile)  
+df.to_csv(csvConEdFile, index=False))  
 

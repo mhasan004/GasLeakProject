@@ -1,13 +1,9 @@
-# This is the scraper with Part 2 and Part 3 Code: Will scrape data, add the Census data columns and then make a new csv
-# Part 1: Mahmudul Hasan. Script to scrape JSON Gas Leak Data points from ConEdison everyday and put them into a csv file for further use
-    # In the ConEdison Gas Leak Report Map, each dot in the map represents a gas leak report. Each report has these seven keys: TicketNumber, Latitude, Longitude, Zipcode, Classification Type, Date Reported, Last Inspected.
-    # a) We need to constantly add new repots to out list so what tickets do we currently have? read the ticket col of the "csvFile" and add the tickets to "ticketSet"
-    # b) Scrape the JSON html response and add it to a python dictionary: "jsonDict" = contents of json response
-    # c) See if there is a new report: Loop through each JSON obbject in "jsonDict" and compare it to the reports are already exists in "ticketSet"
-    # d) If there is a new report, add append the keys of that report into "csvFile", "ticketListFile" and push the latest changes to github
-# Part 2:  Will edit the csv to have new columns for the Census Tract, Census Block, County Name and the hour only
-    # Will use the census api to get census data from the lat and lon coords using this url request:  https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x=LONGITUDE&y=LATITUDE&benchmark=Public_AR_Current&vintage=Current_Current&format=json
-# Part 3: Will create a new csv that lists the reports per census tract per hour for that day. Headers: Date, Hour, Census Tract, Number of Reports
+# Mahmudul Hasan. Script to scrape JSON Gas Leak Data points from ConEdison everyday and put them into a csv file for further use
+# In the ConEdison Gas Leak Report Map, each dot in the map represents a gas leak report. Each report has these seven keys: TicketNumber, Latitude, Longitude, Zipcode, Classification Type, Date Reported, Last Inspected.
+# a) We need to constantly add new repots to out list so what tickets do we currently have? read the ticket col of the "csvFile" and add the tickets to "ticketSet"
+# b) Scrape the JSON html response and add it to a python dictionary: "jsonDict" = contents of json response
+# c) See if there is a new report: Loop through each JSON obbject in "jsonDict" and compare it to the reports are already exists in "ticketSet"
+# d) If there is a new report, add append the keys of that report into "csvFile", "ticketListFile" and push the latest changes to github
 
 import json
 import csv
@@ -20,9 +16,9 @@ from git import Repo                # (GitPython) To push changes to gh
 
 
 # SETTING UP GLOBAL VARIABLES: need to change the first eight variables below
-csvFile = "GasHistory_ConEdison.csv"                                       # add new tickets to the end of the csv file
-jsonFile = "SOME_JSON_FILE.json"                                           # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
+jsonFile = "SOME_JSON_FILE_WITH_SAME_KEYS.json"          # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
 url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&' # Url to scrape JSOn data from
+csvFile = "GasHistory_ConEdison.csv"                                       # add new tickets to the end of the csv file
 ticketListFile = "conEd_TicketList.txt"                                 # add to end (just for me to see what i got)
 keys= [                                                                 # The JSON dot keys( better to use key iteration, instead i went through the columns of the dictionary with this)
     "TicketNumber",
@@ -66,6 +62,7 @@ def turnToDatetime(microsoftDate):
 
 # The sceduler will run this main funtion ever x seconds/minutes/hours
 def WebscraperJsonToCSV():  
+    # Set up the web scraping iteration counter for debugging purposes
     global scrapingCount                                                # Indicate that im using the global value
     scrapingCount = scrapingCount + 1 
     isNewTicket = False
@@ -129,25 +126,9 @@ def WebscraperJsonToCSV():
         isNewTicket == False
     print("Run Done " + str(scrapingCount) + "       Reports Scraped: "+str(len(jsonDict)))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # 6) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=1)
+scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=1)
 scheduler.start()
 
 
@@ -157,6 +138,15 @@ scheduler.start()
 
 
 
+
+
+
+
+
+
+
+#431 dec 25 2 18apm
+#421 tickets atm 12/25/19 1:16am
 
 
 

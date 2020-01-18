@@ -38,24 +38,30 @@ with open('test.json',"r") as readf:
 print(dataj["key1"])
 
 ############################################## 3) CSV ###############################
-import pandas as pd
-csvData = pd.read_csv(csvFile)                           # READING the CSV w Pandas df (panas df makes stuff easier): csvData[colStr][rowNumber]
+    import pandas as pd
+# Print pandas dataframe to csv (without index)
+    df = pd.read_csv('file.csv', index_col=0)
+    df.to_csv('file.csv', index=False)
 
-with open('test.csv', 'r') as csvfile:                   # OLD METHOD Reading
-    csv_empty = [row for row in csv.DictReader(csvfile)] # see if csv empty
+# Print/Add new col to csv using pandas:
+    df = pd.read_csv("csvFile.csv")                         # WRITING NEW COL: read the csv file and store to df
+    color=['red','green', 'blue']                           # 1) adding these data to each row for this col
+    df['colors'] = color                                    # 2) adding a new col named "colors" and add the row vals in
+    df.to_csv("csvFile.csv")    
 
-with open('test.csv', 'w', newline='') as outCSV:        # WRITING: clear the csv and write this string s on the csv
-    writer = csv.writer(outCSV)
-    writer.writerow(s)
+# Reading from csv using pandas (with index):
+    csvData = pd.read_csv(csvFile)                           # READING the CSV w Pandas df (panas df makes stuff easier): csvData[colStr][rowNumber]
 
-with open('test.csv','a') as outCSV:                     # WRITING: Append this string s on a new line
-    outCSV.write(s)
+    with open('test.csv', 'r') as csvfile:                   # OLD METHOD Reading
+        csv_empty = [row for row in csv.DictReader(csvfile)] # see if csv empty
+# Writing/appending to csv:
+    with open('test.csv', 'w', newline='') as outCSV:        # WRITING: clear the csv and write this string s on the csv
+        writer = csv.writer(outCSV)
+        writer.writerow(s)
 
-# add new col to csv:
-df = pd.read_csv("csvFile.csv")                         # WRITING NEW COL: read the csv file and store to df
-color=['red','green', 'blue']                           # 1) adding these data to each row for this col
-df['colors'] = color                                    # 2) adding a new col named "colors" and add the row vals in
-df.to_csv("csvFile.csv")                                # 3) back to csv
+    with open('test.csv','a') as outCSV:                     # WRITING: Append this string s on a new line
+        outCSV.write(s)
+                            # 3) back to csv
 
 ############################################# Pandas dataframe access ############
 # ACCESSING ELEMENTS USING loc, iloc, ix:
@@ -67,9 +73,11 @@ df.to_csv("csvFile.csv")                                # 3) back to csv
 # SPECIFICS:
     df["column in focusing on"][rowNumber]          # accesing an elemen of certain col
     df["col1", "col2"]                              # prints these columns only
-# CHANGE A VALUE IN THE DF:
-        df.at['rowTag/Num', 'comTagNum'] = 10                    # rcommended way
-        df.set_value('rowTag/Num', 'colTag/Num', "val/num")
+# CHNAGE a CELL - CHANGE A VALUE IN THE DF:
+    df.at['rowTag/Num', 'comTagNum'] = 10                    # rcommended way
+    df.set_value('rowTag/Num', 'colTag/Num', "val/num")
+
+    df.iloc[row, df.columns.get_loc("Col")] = "newVal"
 
 # FILTERING: only prints entries where the col "sex" is "M"
     df.sex == "M"                              # 1) BOOLEAN: prints the zipcode col but has only True or False values        
@@ -78,6 +86,11 @@ df.to_csv("csvFile.csv")                                # 3) back to csv
     print(df.index[df['sex'] == "M"].tolist())                                              
     # DELETE A ROW OF INDEX 0 AND 1    	
     newDf = df.drop([df.index[0] , df.index[1]])
+# Merging two DF
+    mergedDF = jsonDF.merge(csvDF.drop_duplicates(), on=['TicketNumber'], how='left', indicator=True) # Will take all the keys of jsonDF. Will merge with keys of right DF (wont display) and will keep only the merged keys. Basically, will list all of the keys of left df and will tell it it is merged left_merge or both or none
+    # newTicketDF = mergedDF[mergedDF._merge == "left_only"].drop(columns="_merge")
+    newTicketsArray = list(mergedDF.loc[mergedDF['_merge']=="left_only", "TicketNumber"] )                 # For the merged DF (has cols of both merged dfs), im looking at only the "TickerNumber" col where "_merge" == "Left_only"
+
 # TYPE numpy.float64 to python float
     df.loc[1]["col1"].item() # if this returns numpy.float64, it is now float
 
@@ -90,6 +103,10 @@ df.to_csv("csvFile.csv")                                # 3) back to csv
 
 # ITERATE DOWN ROWS:
     next(df.iterrows())
+# DROP A COL:
+    df.drop(columns=['B', 'C'])
+
+
 ############################################# 4) Writing to txt #####################################
 outf = open("file.txt","w+")
 outf.write("This is line %d\r\n" % (i+1))
