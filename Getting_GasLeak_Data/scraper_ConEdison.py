@@ -20,14 +20,14 @@ from git import Repo                                                            
 
 
 # SETTING UP GLOBAL VARIABLES: need to change the first eight variables below
-csvFile = "GasHistory_ConEdisonTracts.csv"                                         # add new tickets to the end of the csv file
-jsonFile = "SOME_JSON_FILE_WITH_SAME_KEYS.json"                                         # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
+csvFile = "GasHistory_ConEdisonTracts.csv"                                              # add new tickets to the end of the csv file
+jsonFile = "SOME_JSON_FILE.json"                                                        # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
 url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&'              # Url to scrape JSOn data from
 dropCol = True                                                                          # If you want to drop a column, specify which ones in step 2 in WebscraperJsonToCSV()
 replaceColWith = ["Date", "Time", "Hour", "CensusTract", "CensusBlock", "CountyName" ]  # Replacing column DateReported with these "Date", "Time", "Hour and Made 3 more cols for Part 2 Census data
 
-# PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'                           # the path to the .git file (.git location on my raspberry pi)
-PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'                       # the path to the .git file (.git location on my Laptop)
+# PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'                         # the path to the .git file (.git location on my raspberry pi)
+PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'                        # the path to the .git file (.git location on my Laptop)
 COMMIT_MESSAGE = 'Automated Push - New Ticket Update'                                   # the commmit message when it is pushed
 scrapingCount = 0                                                                       # Just counting how many times i have scraped the website while this was running
 
@@ -100,7 +100,7 @@ def WebscraperJsonToCSV():
     for t in text:
         jsonStr += '{} '.format(t)
     jsonDF = pd.read_json(jsonStr, orient='records')                              # Turning the json string to a pandas dataframe
-    
+    print("Run Starting " + str(scrapingCount) + "       Reports Scraped: "+str(len(jsonDF)))
 
     # 2) If the csv is empty, print the header. Else get the header and that is what we will work with. Im also droping columns from json DF and adding new col titles to csvHeader array
     # My csv will not have the "LastInspected" col. Will also break down "DateReported" into three cols for my csv file: "Date,Time,Hour"
@@ -124,7 +124,6 @@ def WebscraperJsonToCSV():
     mergedDF = jsonDF.merge(csvDF.drop_duplicates(), on=['TicketNumber'], how='left', indicator=True) # Will take all the keys of jsonDF. Will merge with keys of right DF (wont display) and will keep only the merged keys 
     newTicketsArray = list(mergedDF.loc[mergedDF['_merge']=="left_only", "TicketNumber"])   # This array holds all the tickets i dont have in my file
     newTicketDF = pd.DataFrame(columns=csvHeader)                                       # Making empty dataframe that has the columns of my csv file. This will be the df that will be modified and pushed to my csv
-    print("Run Starting " + str(scrapingCount) + "       Reports Scraped: "+str(len(newTicketsArray)))
     if len(newTicketsArray) == 0:                                                           # No new Tickets, can end this iteration
         return
 
@@ -155,7 +154,7 @@ def WebscraperJsonToCSV():
 
 # 7) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=5)
+scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=5)
 scheduler.start()
 
 
