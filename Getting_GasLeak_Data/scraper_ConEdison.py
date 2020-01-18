@@ -26,8 +26,8 @@ url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&'      
 dropCol = True                                                                          # If you want to drop a column, specify which ones in step 2 in WebscraperJsonToCSV()
 replaceColWith = ["Date", "Time", "Hour", "CensusTract", "CensusBlock", "CountyName" ]  # Replacing column DateReported with these "Date", "Time", "Hour and Made 3 more cols for Part 2 Census data
 
-PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'                           # the path to the .git file (.git location on my raspberry pi)
-#PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'                       # the path to the .git file (.git location on my Laptop)
+# PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'                           # the path to the .git file (.git location on my raspberry pi)
+PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'                       # the path to the .git file (.git location on my Laptop)
 COMMIT_MESSAGE = 'Automated Push - New Ticket Update'                                   # the commmit message when it is pushed
 scrapingCount = 0                                                                       # Just counting how many times i have scraped the website while this was running
 
@@ -86,7 +86,6 @@ def WebscraperJsonToCSV():
     # Set up the web scraping iteration counter for debugging purposes
     global scrapingCount                                                                # Indicate that im using the global value
     scrapingCount = scrapingCount + 1 
-
     # 1) GET JSON DATA: Webscrape the html response which is usually just the JSON data from the url and add to the JSON Dataframe: 
     # jsonDF = pd.read_json(jsonFile, orient='records')                                # If im getting data from json file, comment out the rest of this section. form: jsonDF[keys[i]/colStr(report keys)][j/rowsnumber(reports)]
     try:
@@ -125,15 +124,14 @@ def WebscraperJsonToCSV():
     mergedDF = jsonDF.merge(csvDF.drop_duplicates(), on=['TicketNumber'], how='left', indicator=True) # Will take all the keys of jsonDF. Will merge with keys of right DF (wont display) and will keep only the merged keys 
     newTicketsArray = list(mergedDF.loc[mergedDF['_merge']=="left_only", "TicketNumber"])   # This array holds all the tickets i dont have in my file
     newTicketDF = pd.DataFrame(columns=csvHeader)                                       # Making empty dataframe that has the columns of my csv file. This will be the df that will be modified and pushed to my csv
-
+    print("Run Starting " + str(scrapingCount) + "       Reports Scraped: "+str(len(newTicketsArray)))
     if len(newTicketsArray) == 0:                                                           # No new Tickets, can end this iteration
         return
 
 
     for row in range(0,len(newTicketsArray)):
-        # print(newTicketsArray[row] + " not in set so adding it-----")
+        print(newTicketsArray[row] + " not in set so adding it-----")
         newTicketDF = newTicketDF.append(jsonDF[jsonDF.TicketNumber == newTicketsArray[row]], sort=False, ignore_index=True)
-
     # 4 &) TURN THE MICROSOFT DATE IN "DateReported" INTO STANDARD FORMAT AND SEPERATE INTO "Date", "Time", "Hour" COLUMNS 
     # 5) WILL USE THE CENSUS BUREAU API TO GET CENSUS DATA BASED ON EACH TICKET'S LONGITUDE AND LATITUDE DATA:             
     for row in range(0, len(newTicketDF)):                                      # Replacing DateReported with Date, Time, Hour columns
@@ -141,7 +139,7 @@ def WebscraperJsonToCSV():
         newTicketDF.iloc[row, newTicketDF.columns.get_loc("Date")] = dateTimeHr[0]  # Adding the Date, Time, Hour values to the appropriate cells
         newTicketDF.iloc[row, newTicketDF.columns.get_loc("Time")] = dateTimeHr[1]
         newTicketDF.iloc[row, newTicketDF.columns.get_loc("Hour")] = dateTimeHr[2]
- 
+        print("Getting Census data...")
         returnArray = getCensusTract(float(newTicketDF.loc[row]["Longitude"].item()), float(newTicketDF.loc[row]["Latitude"].item()))   # returns: [CensusTrack, CensusBlock, CountyName] from Census Beru's API
         newTicketDF.iloc[row, newTicketDF.columns.get_loc("CensusTract")] = returnArray[0] # Adding the CensusTrack, CensusBlock, CountyName values to the appropriate cells
         newTicketDF.iloc[row, newTicketDF.columns.get_loc("CensusBlock")] = returnArray[1]
@@ -154,7 +152,6 @@ def WebscraperJsonToCSV():
 
     # 6) Push to Github if we have a new ticket
     git_push()
-    print("Run Done " + str(scrapingCount) + "       Reports Scraped: "+str(len(jsonDict)))
 
 # 7) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
@@ -162,3 +159,4 @@ scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=5)
 scheduler.start()
 
 
+# WebscraperJsonToCSV()
