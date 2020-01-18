@@ -92,8 +92,8 @@ def WebscraperJsonToCSV():
         jsonDict = pd.read_json(jsonStr, orient='records')              # Turning the json string to a dictionary
     except:
         print("Couldnt get the json data so will re-run function. This is Run "+ str(scrapingCount))
-        WebscraperJsonToCSV()
-        return
+        return WebscraperJsonToCSV()
+        #return
     
     # 3) CHECK WHAT TICKETS WE ALREADY GOT FROM THE .CSV FILE AND ADD NEW TICKETS TO ticketSet and .txt file: Read the csv file and add "TicketNumbers" to the "ticketSet" and print ticketNumber to ticketList.txt" for storage: 
     csvDict = pd.read_csv(csvFile)                                      # ***csvDict[colStr][rowNumber]
