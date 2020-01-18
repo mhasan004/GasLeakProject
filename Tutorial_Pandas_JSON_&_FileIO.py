@@ -96,6 +96,8 @@ print(dataj["key1"])
 
 # ITERATE DOWN ROWS:
     next(df.iterrows())
+# DROP A COL:
+    df.drop(columns=['B', 'C'])
 
 
 ############################################# 4) Writing to txt #####################################
