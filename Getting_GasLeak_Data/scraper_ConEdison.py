@@ -168,3 +168,5 @@ scheduler.start()
 
 
 #Note: If i have data in the csv, enter a new line to it or else it will append to the last line
+#try catch on json read
+#get rid of date reported in my csv
