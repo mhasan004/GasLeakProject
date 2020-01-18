@@ -20,8 +20,7 @@ from git import Repo                                                            
 
 
 # SETTING UP GLOBAL VARIABLES: need to change the first eight variables below
-csvFile = "test.csv"#"GasHistory_ConEdison.csv"                                         # add new tickets to the end of the csv file
-ticketListFile = "test.txt"#"conEd_TicketList.txt"                                      # add to end (just for me to see what i got)
+csvFile = "GasHistory_ConEdisonTracts.csv"                                         # add new tickets to the end of the csv file
 jsonFile = "SOME_JSON_FILE_WITH_SAME_KEYS.json"                                         # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
 url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&'              # Url to scrape JSOn data from
 dropCol = True                                                                          # If you want to drop a column, specify which ones in step 2 in WebscraperJsonToCSV()
