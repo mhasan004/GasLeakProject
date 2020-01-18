@@ -73,9 +73,11 @@ print(dataj["key1"])
 # SPECIFICS:
     df["column in focusing on"][rowNumber]          # accesing an elemen of certain col
     df["col1", "col2"]                              # prints these columns only
-# CHANGE A VALUE IN THE DF:
-        df.at['rowTag/Num', 'comTagNum'] = 10                    # rcommended way
-        df.set_value('rowTag/Num', 'colTag/Num', "val/num")
+# CHNAGE a CELL - CHANGE A VALUE IN THE DF:
+    df.at['rowTag/Num', 'comTagNum'] = 10                    # rcommended way
+    df.set_value('rowTag/Num', 'colTag/Num', "val/num")
+
+    df.iloc[row, df.columns.get_loc("Col")] = "newVal"
 
 # FILTERING: only prints entries where the col "sex" is "M"
     df.sex == "M"                              # 1) BOOLEAN: prints the zipcode col but has only True or False values        
