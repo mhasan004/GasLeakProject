@@ -10,7 +10,6 @@ from urllib.request import urlopen                                              
 import requests
 import json
 import pandas as pd                                                                     # To read and write csv files
-import time                                                                             # maybe api calls will help if i slow a bit
 
 csvConEdFile  = "GasHistory_ConEdisonTracts.csv"
 ################################################################################### GETTING CENSUS DATA FROM COORDS AND ADDING TO CSV ##############################################################
