@@ -145,13 +145,18 @@ def WebscraperJsonToCSV():
         newTicketDF.iloc[row, newTicketDF.columns.get_loc("CountyName")] =  returnArray[2]
     
     newTicketDF = newTicketDF.drop(columns=["DateReported"])                         # Finally dropping the "DateReported" column    
-    newTicketDF.to_csv(csvFile, mode='a', header=False, index=False)                 # Print to csv file
-    file_data = open(csvFile, 'rb').read()
-    open(csvFile, 'wb').write(file_data[:-2])
+    # newTicketDF.to_csv(csvFile, mode='a', header=False, index=False)                 # Print to csv file
+    # file_data = open(csvFile, 'rb').read()
+    # open(csvFile, 'wb').write(file_data[:-2])
+    with open(csvFile,'a') as outCSV:  
+        outCSV.write(newTicketDF.to_csv(header=False, index=False))
+
+
+
+
 
     # 6) Push to Github if we have a new ticket
-    # git_push()
-    print("***************************git push test********************************")
+    git_push()
 
 # 7) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()

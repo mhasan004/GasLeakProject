@@ -116,7 +116,7 @@ def WebscraperJsonToCSV():
                         s+=turnToDatetime(str(jsonDict[keys[col]][row]))# key iteration would be a better implentation :(
                     else: 
                         s+=str(jsonDict[keys[col]][row])
-                    if col != len(keys)-2:
+                    if col != len(keys)-2:                              # trims off the "/n" from the line terminator
                         s+=',' 
                 s+="\n"
                 outCSV.write(s)                                         # add new ticket obj to csv file  
