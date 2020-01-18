@@ -61,8 +61,14 @@ def git_push():
 def turnToDatetime(microsoftDate):         
     TimestampUtc = str(microsoftDate)
     TimestampUtc = re.split('\(|\)', TimestampUtc)[1][:10]
-    date = datetime.datetime.fromtimestamp(int(TimestampUtc))
-    return str(date.strftime('%m/%d/20%y %I:%M %p'))                                    # mm/dd/yyyy time am/pm
+    dateRaw = datetime.datetime.fromtimestamp(int(TimestampUtc))
+    dateFormatted = str(dateRaw.strftime('%m/%d/20%y %I:%M %p'))                        # The datetime is of form: "mm/dd/tt hh:mm AM/PM"
+    dateTimeSplit = dateFormatted.split(" ")                                            # ["mm/dd/yyyy", "hh:mm", "AM/PM"]
+    date = dateTimeSplit[0]                                                             # Isolated the date string: "mm/dd/yyyy"
+    time = dateTimeSplit[1] + " " + dateTimeSplit[2]                                    # Isolated the time string: "hh:mm AM/PM"
+    hour = time.split(" ")[0].split(":")[0] + " " + dateTimeSplit[2]                    # Isolated the hour string: "hh AM/PM"   (will need for part 2)
+    dateTimeHr = [date, time, hour]                                                     # ["mm/dd/yyyy", "hh:mm AM/PM", "hh AM/PM"]
+    return (dateTimeHr)                                                                
 
 # THE SCHEDULER WILL RUN THIS MAIN FUNCTION EVER X SECONDS/MINUTES/HOURS
 def WebscraperJsonToCSV():  
@@ -79,11 +85,9 @@ def WebscraperJsonToCSV():
             with open(csvFile, 'w', newline='') as outf:
                 writer = csv.writer(outf)
                 writer.writerow(csvHeader)
-    
-    # 2a) GET JSON DATA: from a JSON file and add to the JSON Dictionary: 
-    # jsonDict = pd.read_json(jsonFile, orient='records')                               # ***jsonDict[keys[i]/colStr(dot keys)][j/rowsnumber(dots)]
-    
-    # 2b) GET JSON DATA: Webscrape the html response which is usually just the JSON data from the url and add to the JSON Dictionary: 
+        
+    # 2) GET JSON DATA: Webscrape the html response which is usually just the JSON data from the url and add to the JSON Dictionary: 
+    # jsonDict = pd.read_json(jsonFile, orient='records')                               # If im getting data from json file, comment out the rest of this section. form: jsonDict[keys[i]/colStr(dot keys)][j/rowsnumber(dots)]
     res = requests.get(url)
     html_data = res.content                                                             # Getting the HTML JSOn data 
     soup = BeautifulSoup(html_data, 'html.parser')                                      # parsing the html data with html parcer (can do stuuf like soup.title to get the title, soup.div, soup.li etc)
@@ -96,8 +100,7 @@ def WebscraperJsonToCSV():
         jsonDict = pd.read_json(jsonStr, orient='records')                              # Turning the json string to a dictionary
     except:
         print("Couldnt get the json data so will re-run function. This is Run "+ str(scrapingCount))
-        WebscraperJsonToCSV()
-        return
+        return WebscraperJsonToCSV()
     
     # 3) CHECK WHAT TICKETS WE ALREADY GOT FROM THE .CSV FILE AND ADD NEW TICKETS TO ticketSet and .txt file: Read the csv file and add "TicketNumbers" to the "ticketSet" and print ticketNumber to ticketList.txt" for storage: 
     csvDict = pd.read_csv(csvFile)                                                      # ***csvDict[colStr][rowNumber]
