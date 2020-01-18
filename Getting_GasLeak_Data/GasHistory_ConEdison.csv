@@ -1,4 +1,4 @@
-TicketNumber,Longitude,Latitude,Zipcode,Classification,DateReported
+TicketNumber,Latitude,Longitude,Zipcode,Classification,DateReported
 ML19001225,40.75402,-73.97419,10017,M,01/21/2019 09:15 PM
 ML19003831,40.77168,-73.97763,10023,M,03/07/2019 08:40 AM
 ML19004663,40.75472,-73.97591,10017,M,03/21/2019 07:38 PM

@@ -17,7 +17,7 @@ csvConEdFile  = "GasHistory_ConEdisonTracts.csv"
 # FUNCTION: Get Census Tract from Longitude and Latitude coordintes using the Census Beru's API which returns a JSON file 
 def getCensusTract(longitude, latitude,retryRun=0):                                     # returns an array [censusTract, CensusBlock, CountyName]
     # try:
-    url = "https://geocoding.geo.census.gov/geocoder/geographies/coordinates?y={0}&x={1}&benchmark=Public_AR_Current&vintage=Current_Current&format=json".format(longitude,latitude)
+    url = "https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x={0}&y={1}&benchmark=Public_AR_Current&vintage=Current_Current&format=json".format(longitude,latitude)
     # response = urlopen(url)
     # dataJSON = json.loads(response.read())
     response = requests.get(url)

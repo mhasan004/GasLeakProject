@@ -84,6 +84,11 @@ print(dataj["key1"])
     print(df.index[df['sex'] == "M"].tolist())                                              
     # DELETE A ROW OF INDEX 0 AND 1    	
     newDf = df.drop([df.index[0] , df.index[1]])
+# Merging two DF
+    mergedDF = jsonDF.merge(csvDF.drop_duplicates(), on=['TicketNumber'], how='left', indicator=True) # Will take all the keys of jsonDF. Will merge with keys of right DF (wont display) and will keep only the merged keys. Basically, will list all of the keys of left df and will tell it it is merged left_merge or both or none
+    # newTicketDF = mergedDF[mergedDF._merge == "left_only"].drop(columns="_merge")
+    newTicketsArray = list(mergedDF.loc[mergedDF['_merge']=="left_only", "TicketNumber"] )                 # For the merged DF (has cols of both merged dfs), im looking at only the "TickerNumber" col where "_merge" == "Left_only"
+
 # TYPE numpy.float64 to python float
     df.loc[1]["col1"].item() # if this returns numpy.float64, it is now float
 
