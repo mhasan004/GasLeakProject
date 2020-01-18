@@ -157,4 +157,9 @@ def WebscraperJsonToCSV():
     git_push()
     print("Run Done " + str(scrapingCount) + "       Reports Scraped: "+str(len(jsonDict)))
 
-WebscraperJsonToCSV()
+# 7) RESCAN FOR TICKETS every x time using sceduler
+scheduler = BlockingScheduler()
+scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=5)
+scheduler.start()
+
+
