@@ -2,7 +2,7 @@
 # PART 2 CODE AFER CON EDOSN SCRAPER. Taking the csv file and then 
 # a) make a new csv that has the: censusTract, date, hour, report count for that tract for that hour
 # Census API doc:         https://geocoding.geo.census.gov/geocoder/Geocoding_Services_API.pdf
-# census api url format:  https://geocoding.geo.census.gov/geocoder/geographies/coordinatesx=latitude&y=longitude&benchmark=&vintage=&format=json
+# census api url format:  https://geocoding.geo.census.gov/geocoder/geographies/coordinatesx=longitude&y=latitude&benchmark=&vintage=&format=json
 # census api url example: https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x=-78.8543293&y=41.6567756&benchmark=Public_AR_Current&vintage=Current_Current&format=json
     # json result of the top search given this random lat long coordinate is results: input and geographies. geographics has: 2010 census blocks, states, countries, census tracts
 

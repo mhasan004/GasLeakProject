@@ -6,7 +6,17 @@
 import pandas as pd    
 
 csvInFile  = "GasHistory_ConEdisonTracts.csv"
-csvOutFile = "reportsPerCensusTract.csv"
+csvOutFile = "GasHistory_reportsPerCensusTract.csv"
+
+# The new csv file is empty so will add the headers:
+with open(csvOutFile, 'r') as csvOutFile:
+        csv_dict = [row for row in csv.DictReader(csvOutFile)]
+        if len(csv_dict) == 0:
+            csvHeader = ["Date,Hour,CensusTract,NumberOfReports"]
+            with open(csvOutFile, 'w', newline='') as outf:
+                writer = csv.writer(outf)
+                writer.writerow(csvHeader)
+
 indexToSkip = []
 noRepeatSet = set()
 df = pd.read_csv(csvInFile) 
