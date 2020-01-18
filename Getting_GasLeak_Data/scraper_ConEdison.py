@@ -26,8 +26,8 @@ url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&'      
 dropCol = True                                                                          # If you want to drop a column, specify which ones in step 2 in WebscraperJsonToCSV()
 replaceColWith = ["Date", "Time", "Hour", "CensusTract", "CensusBlock", "CountyName" ]  # Replacing column DateReported with these "Date", "Time", "Hour and Made 3 more cols for Part 2 Census data
 
-# PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'                         # the path to the .git file (.git location on my raspberry pi)
-PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'                        # the path to the .git file (.git location on my Laptop)
+PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'                         # the path to the .git file (.git location on my raspberry pi)
+# PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'                        # the path to the .git file (.git location on my Laptop)
 COMMIT_MESSAGE = 'Automated Push - New Ticket Update'                                   # the commmit message when it is pushed
 scrapingCount = 0                                                                       # Just counting how many times i have scraped the website while this was running
 
@@ -146,9 +146,15 @@ def WebscraperJsonToCSV():
         newTicketDF.iloc[row, newTicketDF.columns.get_loc("CountyName")] =  returnArray[2]
     
     newTicketDF = newTicketDF.drop(columns=["DateReported"])                         # Finally dropping the "DateReported" column    
-    newTicketDF.to_csv(csvFile, mode='a', header=False, index=False)                 # Print to csv file
-    file_data = open(csvFile, 'rb').read()
-    open(csvFile, 'wb').write(file_data[:-2])
+    # newTicketDF.to_csv(csvFile, mode='a', header=False, index=False)                 # Print to csv file
+    # file_data = open(csvFile, 'rb').read()
+    # open(csvFile, 'wb').write(file_data[:-2])
+    with open(csvFile,'a') as outCSV:  
+        outCSV.write(newTicketDF.to_csv(header=False, index=False))
+
+
+
+
 
     # 6) Push to Github if we have a new ticket
     git_push()
