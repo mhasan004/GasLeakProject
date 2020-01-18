@@ -20,7 +20,7 @@ from git import Repo                                                            
 
 
 # SETTING UP GLOBAL VARIABLES: need to change the first eight variables below
-csvFile = "GasHistory_ConEdisonTracts.csv"                                              # add new tickets to the end of the csv file
+csvFile = "test.csv"#"GasHistory_ConEdisonTracts.csv"                                              # add new tickets to the end of the csv file
 jsonFile = "SOME_JSON_FILE.json"                                                        # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
 url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&'              # Url to scrape JSOn data from
 dropCol = True                                                                          # If you want to drop a column, specify which ones in step 2 in WebscraperJsonToCSV()
@@ -148,6 +148,8 @@ def WebscraperJsonToCSV():
     # newTicketDF.to_csv(csvFile, mode='a', header=False, index=False)                 # Print to csv file
     # file_data = open(csvFile, 'rb').read()
     # open(csvFile, 'wb').write(file_data[:-2])
+
+
     with open(csvFile,'a') as outCSV:  
         outCSV.write(newTicketDF.to_csv(header=False, index=False))
 
@@ -156,7 +158,8 @@ def WebscraperJsonToCSV():
 
 
     # 6) Push to Github if we have a new ticket
-    git_push()
+    # git_push()
+    print("**************pushed****************")
 
 # 7) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
