@@ -1,5 +1,5 @@
-# This is the scraper with Part 2 and Part 3 Code: Will scrape data, add the Census data columns and then make a new csv
-# Part 1 (section 1 to 4): Mahmudul Hasan. Script to scrape JSON Gas Leak Data points from ConEdison everyday and put them into a csv file for further use
+# Scraper v3: Will scrape data, add the Census data columns and then make a new csv
+# Part 1 (section 1 to 4, 6): Mahmudul Hasan. Script to scrape JSON Gas Leak Data points from ConEdison everyday and put them into a csv file for further use
     # In the ConEdison Gas Leak Report Map, each report in the map represents a gas leak report. Each report has these seven keys: TicketNumber, Latitude, Longitude, Zipcode, Classification Type, Date Reported, Last Inspected.
     # a) We need to constantly add new repots to out list so what tickets do we currently have? read the ticket col of the "csvConEdFile" and add the tickets to "ticketSet"
     # b) Scrape the JSON html response and using pandas to put the contents into a dataframe called "jsonDF"
@@ -87,8 +87,7 @@ def WebscraperJsonToCSV():
     # Set up the web scraping iteration counter for debugging purposes
     global scrapingCount                                                                # Indicate that im using the global value
     scrapingCount = scrapingCount + 1 
-    isNewTicket = False
-        
+
     # 1) GET JSON DATA: Webscrape the html response which is usually just the JSON data from the url and add to the JSON Dataframe: 
     # jsonDF = pd.read_json(jsonFile, orient='records')                                # If im getting data from json file, comment out the rest of this section. form: jsonDF[keys[i]/colStr(report keys)][j/rowsnumber(reports)]
     try:
@@ -127,24 +126,14 @@ def WebscraperJsonToCSV():
     mergedDF = jsonDF.merge(csvDF.drop_duplicates(), on=['TicketNumber'], how='left', indicator=True) # Will take all the keys of jsonDF. Will merge with keys of right DF (wont display) and will keep only the merged keys 
     newTicketsArray = list(mergedDF.loc[mergedDF['_merge']=="left_only", "TicketNumber"])   # This array holds all the tickets i dont have in my file
     newTicketDF = pd.DataFrame(columns=csvHeader)                                       # Making empty dataframe that has the columns of my csv file. This will be the df that will be modified and pushed to my csv
-    
-    print("----------------------csv----------------")
-    print(csvDF)
-    print("----------------------json----------------")
-    print(jsonDF)
-    print("----------------------merged----------------")
-    print(mergedDF)
+
     if len(newTicketsArray) == 0:                                                           # No new Tickets, can end this iteration
-        print("********************8888nothing")
         return
-    print("----------------------new----------------")
-    print(newTicketDF)
 
 
     for row in range(0,len(newTicketsArray)):
         # print(newTicketsArray[row] + " not in set so adding it-----")
         newTicketDF = newTicketDF.append(jsonDF[jsonDF.TicketNumber == newTicketsArray[row]], sort=False, ignore_index=True)
-    print(newTicketDF)
 
     # 4 &) TURN THE MICROSOFT DATE IN "DateReported" INTO STANDARD FORMAT AND SEPERATE INTO "Date", "Time", "Hour" COLUMNS 
     # 5) WILL USE THE CENSUS BUREAU API TO GET CENSUS DATA BASED ON EACH TICKET'S LONGITUDE AND LATITUDE DATA:             
@@ -164,37 +153,8 @@ def WebscraperJsonToCSV():
     file_data = open(csvFile, 'rb').read()
     open(csvFile, 'wb').write(file_data[:-2])
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # # c) Will make 3 new columns and will fill them up using the 3 census arrays
-    # newTicketDF['CensusTract'] = censusTract          
-    # newTicketDF['CensusBlock'] = censusBlock        
-    # newTicketDF['CountyName']  = countyName      
-    # # newTicketDF.to_csv(csvFile, index=False))   
-    
-    # "CensusTract", "CensusBlock", "CountyName"
-
-
-    # print(newTicketDF.to_csv(header=False, index=False))
+    # 6) Push to Github if we have a new ticket
+    git_push()
+    print("Run Done " + str(scrapingCount) + "       Reports Scraped: "+str(len(jsonDict)))
 
 WebscraperJsonToCSV()
-
-# XL20000511,40.83477,-73.92309,10452,P,01/10/2020,02:42 PM,02 PM,63.02,1000,Bronx County
-# XL20000680,40.83163,-73.90051,10456,M,01/13/2020,06:55 PM,06 PM,149,2001,Bronx County
-# XL20000708,40.89098,-73.83109,10466,M,01/14/2020,10:12 AM,10 AM,456,2003,Bronx County
-# XL20000787,40.84491,-73.86764,10462,P,01/15/2020,02:50 PM,02 PM,236,1001,Bronx County
-# XL20000862,40.82,-73.916,10455,P,01/16/2020,04:40 PM,04 PM,67,6000,Bronx County
-# XL20000880,40.83723,-73.88807,10460,M,01/17/2020,01:17 AM,01 AM,155,1000,Bronx Count
