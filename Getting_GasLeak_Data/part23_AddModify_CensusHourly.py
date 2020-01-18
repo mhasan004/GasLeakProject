@@ -50,7 +50,7 @@ for row in range(0,len(df)):
 df['CensusTract'] = censusTract          
 df['CensusBlock'] = censusBlock        
 df['CountyName']  = countyName      
-df.to_csv(csvConEdFile)                                
+df.to_csv(csvConEdFile, index=False)                                
 
 #################################################################################### CHANGING DATETIME COL TO DATE AND TIME AND HOUR COL ####################################################################
 df = pd.read_csv(csvConEdFile)  
@@ -65,7 +65,7 @@ for row in range(0,len(df)):
 df['Date'] = dateArray          
 df['Time'] = timeArray    
 df['Hour'] = hourArray    
-df.to_csv(csvConEdFile)  
+df.to_csv(csvConEdFile, index=False))  
 
 ################################################################################### Part 3: Make new file based on hour and census tract and num of reps ###########################
 # The new csv file is empty so will add the headers:
