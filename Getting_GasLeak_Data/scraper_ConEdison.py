@@ -20,7 +20,7 @@ from git import Repo                                                            
 
 
 # SETTING UP GLOBAL VARIABLES: need to change the first eight variables below
-csvFile = "test.csv"#"GasHistory_ConEdisonTracts.csv"                                              # add new tickets to the end of the csv file
+csvFile = "GasHistory_ConEdisonTracts.csv"                                              # add new tickets to the end of the csv file
 jsonFile = "SOME_JSON_FILE.json"                                                        # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
 url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&'              # Url to scrape JSOn data from
 dropCol = True                                                                          # If you want to drop a column, specify which ones in step 2 in WebscraperJsonToCSV()
@@ -96,6 +96,7 @@ def WebscraperJsonToCSV():
     except:
         print("Couldnt get the json data so will re-run function. This is Run "+ str(scrapingCount))
         return WebscraperJsonToCSV()
+
     jsonStr = ''                                                                    # turning text to string from so i can use pandas to turn it to a dataframe
     for t in text:
         jsonStr += '{} '.format(t)
@@ -126,11 +127,13 @@ def WebscraperJsonToCSV():
     newTicketDF = pd.DataFrame(columns=csvHeader)                                       # Making empty dataframe that has the columns of my csv file. This will be the df that will be modified and pushed to my csv
     if len(newTicketsArray) == 0:                                                           # No new Tickets, can end this iteration
         return
+    print(newTicketDF)
 
 
-    for row in range(0,len(newTicketsArray)):
+    for row in range(0,len(newTicketsArray)):                                               # Going through the array of new ticket number and adding only their rows to th new data frame
         print(newTicketsArray[row] + " not in set so adding it-----")
         newTicketDF = newTicketDF.append(jsonDF[jsonDF.TicketNumber == newTicketsArray[row]], sort=False, ignore_index=True)
+
     # 4 &) TURN THE MICROSOFT DATE IN "DateReported" INTO STANDARD FORMAT AND SEPERATE INTO "Date", "Time", "Hour" COLUMNS 
     # 5) WILL USE THE CENSUS BUREAU API TO GET CENSUS DATA BASED ON EACH TICKET'S LONGITUDE AND LATITUDE DATA:             
     for row in range(0, len(newTicketDF)):                                      # Replacing DateReported with Date, Time, Hour columns
@@ -145,26 +148,23 @@ def WebscraperJsonToCSV():
         newTicketDF.iloc[row, newTicketDF.columns.get_loc("CountyName")] =  returnArray[2]
     
     newTicketDF = newTicketDF.drop(columns=["DateReported"])                         # Finally dropping the "DateReported" column    
-    # newTicketDF.to_csv(csvFile, mode='a', header=False, index=False)                 # Print to csv file
-    # file_data = open(csvFile, 'rb').read()
-    # open(csvFile, 'wb').write(file_data[:-2])
-
-
+                        # newTicketDF.to_csv(csvFile, mode='a', header=False, index=False)                 # Print to csv file
+                        # file_data = open(csvFile, 'rb').read()
+                        # open(csvFile, 'wb').write(file_data[:-2])
     with open(csvFile,'a') as outCSV:  
         outCSV.write(newTicketDF.to_csv(header=False, index=False))
-
-
-
-
-
-    # 6) Push to Github if we have a new ticket
-    # git_push()
-    print("**************pushed****************")
+    # # 6) Push to Github if we have a new ticket
+    git_push()
 
 # 7) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=5)
+scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=5)
 scheduler.start()
 
 
 # WebscraperJsonToCSV()
+
+
+
+
+#Note: If i have data in the csv, enter a new line to it or else it will append to the last line
