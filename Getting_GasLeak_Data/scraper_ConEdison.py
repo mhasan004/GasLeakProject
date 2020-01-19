@@ -25,7 +25,7 @@ from git import Repo                                                            
 
 # SETTING UP GLOBAL VARIABLES: need to change the first eight variables below
 csvFile = "GasHistory_ConEdisonTracts.csv"                                                          # add new tickets to the end of the csv file
-csvHourylFile = "GasHistory_reportsPerCensusTract.csv"                                              # In PART C we will turn the ticket history data to hourly data
+csvHourlyFile = "GasHistory_reportsPerCensusTract.csv"                                              # In PART C we will turn the ticket history data to hourly data
 jsonFile = "SOME_JSON_FILE.json"                                                                    # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
 url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&'                          # Url to scrape JSOn data from
 dropCol = True                                                                                      # If you want to drop a column, specify which ones in step 2 in WebscraperJsonToCSV()
@@ -88,23 +88,23 @@ def getCensusTract(longitude, latitude,retryRun=0):                             
 # PART C FUNCTION: Make Hourly reports from the gas leak history csv file
 def turnTicketHistoryToHourlyReport():
     global csvFile
-    global csvHourylFile
+    global csvHourlyFile
     csvOutHasData = False                                                                               # Does the out file have data already? if so can get it and use it and modify it
     inDF = pd.read_csv(csvFile)                                                                       # Read Tracts file
     csvHeader = ["Date","Hour","CensusTract","NumberOfReports"]                                         # My new csv need these headers        
     
-    csvOutClear = open(csvHourylFile, "w")
+    csvOutClear = open(csvHourlyFile, "w")
     csvOutClear.truncate()                                                                              # deleting everything in the file (will delete this code once i figure out how to update existing file)
 
-    with open(csvHourylFile, 'r') as csvFile:                                                              # Open the csv File so we can read it
+    with open(csvHourlyFile, 'r') as csvFile:                                                              # Open the csv File so we can read it
         csvTable = [row for row in csv.DictReader(csvFile)]
         if len(csvTable) == 0:                                                                          # a) csv is empty so add my header: ['Date', 'Hour', 'CensusTract', 'NumberOfReports']
-            with open(csvHourylFile, 'w', newline='') as outf:
+            with open(csvHourlyFile, 'w', newline='') as outf:
                 writer = csv.writer(outf)
                 writer.writerow(csvHeader)
                 print("Added Header: "+str(csvHeader))
         else:
-            csvHeader=list(pd.read_csv(csvHourylFile).columns)                                             # b) Since the csv already had data, it means i will append new data to it so just use the header of that csv file.
+            csvHeader=list(pd.read_csv(csvHourlyFile).columns)                                             # b) Since the csv already had data, it means i will append new data to it so just use the header of that csv file.
             csvOutHasData = True                                                                        # There is data here, after i make a new DF using the tract csv i have, will go through the other csv and increment or keep the report counts
 
     outDF = pd.DataFrame(columns=csvHeader)                                                             # making newDF with the cols i want. This will be appended to the other csv
@@ -139,7 +139,7 @@ def turnTicketHistoryToHourlyReport():
     # # Find there is data see if they need to be updated
     # if csvOutHasData == True:
     #     print("i am deleting the csv make sure to delete that code")
-    #     csvOutDF = pd.read_csv(csvHourylFile)   
+    #     csvOutDF = pd.read_csv(csvHourlyFile)   
     #     differencesDF = outDF.merge(csvOutDF.drop_duplicates(), on=["Date","Hour","CensusTract"], how='outer', indicator=True) 
     #     print("----------------------------a")
     #     newDataDF = differencesDF.loc[differencesDF['_merge']=="left_only"]
@@ -147,8 +147,8 @@ def turnTicketHistoryToHourlyReport():
     #     print("----------------------------b")
     #     print(differencesDF.loc[differencesDF['_merge']=="right_only"])
 
-    print("Printing hourly report to "+csvHourylFile+"...")
-    with open(csvHourylFile,'a') as outCSV:                                                               # Turning the DF into csv and appending the new data to the file
+    print("Printing hourly report to "+csvHourlyFile+"...")
+    with open(csvHourlyFile,'a') as outCSV:                                                               # Turning the DF into csv and appending the new data to the file
         outCSV.write(outDF.to_csv(header=False, index=False))
 
 
