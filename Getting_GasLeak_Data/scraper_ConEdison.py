@@ -88,7 +88,7 @@ def getCensusTract(longitude, latitude,retryRun=0):                             
 # PART C FUNCTION: Make Hourly reports from the gas leak history csv file
 def turnTicketHistoryToHourlyReport():
     csvOutHasData = False                                                                               # Does the out file have data already? if so can get it and use it and modify it
-    inDF = pd.read_csv(csvInFile)                                                                       # Read Tracts file
+    inDF = pd.read_csv(csvFile)                                                                       # Read Tracts file
     csvHeader = ["Date","Hour","CensusTract","NumberOfReports"]                                         # My new csv need these headers        
     
     csvOutClear = open(csvHourylFile, "w")
@@ -219,7 +219,7 @@ def WebscraperJsonToCSV():
         outCSV.write(newTicketDF.to_csv(header=False, index=False))
     
     # 7) WRITING NEW HOURLY FILE BASED ON GAS LEAK HISTORY FILE AND PUSHING TO GH
-    turnTicketHistoryToHourlyReport
+    turnTicketHistoryToHourlyReport()
     git_push()
 
 
