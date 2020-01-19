@@ -1,13 +1,17 @@
-# Scraper v3: Will scrape data, add the Census data columns and then make a new csv
-# Part 1 (section 1 to 4, 6, 7): Mahmudul Hasan. Script to scrape JSON Gas Leak Data points from ConEdison everyday and put them into a csv file for further use
+# Scraper v3: Will periodicly scrape the con edison website to find new gas leak reports, then use the Census Bureau API to find Census Data of those locations and append to my csv file. Will then read the file and make a new csv file to trck reports per hour per Census Tract per day and create a map.
+# Part A (section 1 to 4, 6, 7): Mahmudul Hasan. Script to scrape JSON Gas Leak Data points from ConEdison everyday and put them into a csv file for further use
     # In the ConEdison Gas Leak Report Map, each report in the map represents a gas leak report. Each report has these seven keys: TicketNumber, Latitude, Longitude, Zipcode, Classification Type, Date Reported, Last Inspected.
     # a) We need to constantly add new repots to out list so what tickets do we currently have? read the ticket col of the "csvConEdFile" and add the tickets to "ticketSet"
     # b) Scrape the JSON html response and using pandas to put the contents into a dataframe called "jsonDF"
-    # c) See if there is a new report: Loop through each JSON obbject in "jsonDF" and compare it to the reports are already exists in "ticketSet"
-    # d) If there is a new report, add append the keys of that report into "csvConEdFile", "ticketListFile" and push the latest changes to github
-# Part 2 (section 5):  Will edit the csv to have new columns for the Census Tract, Census Block, County Name and the hour only
+    # c) See if there is a new report, if there is create a new DF that stores info for those new tickets: 
+        # Read the csv file and make a dataframe with pandas. Now compare the "TicketNumber" columns of both the "csvDF" and "jsonDF" using left merge and store it as a new DF - "mergedDF" -  which has the info of all the tickets and has a new column called "_merged" which shows what ticket are in both DF and what tickets are in only json response. 
+        # Filter "mergedDF" where "_merged" col = ""left_only" (new tickets not in file) and print the list of ticket names to an array - "newTicketsArray" 
+        # Create a new DF - "newTicketDF" - which will have the columns of my current csv file. Will use "newTicketArray" to go through the "jsonDf" and add the rows to "newTicketDF" so i have a DF that has all the new tickets
+    # d) If there is a new report, add append the keys of that report into "csvConEdFile" and push the latest changes to github
+# Part B (section 5):  Will edit the csv to have new columns for the Census Tract, Census Block, County Name and the hour only
     # Will use the census bureau api to get census data from the lat and lon coords using this url request:  https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x=LONGITUDE&y=LATITUDE&benchmark=Public_AR_Current&vintage=Current_Current&format=json
-# Part 3: Will create a new csv that lists the reports per census tract per hour for that day. Headers: Date, Hour, Census Tract, Number of Reports
+# Part C: Will create a new csv that lists the reports per census tract per hour for that day. Headers: Date, Hour, Census Tract, Number of Reports
+
 
 import json
 import csv
@@ -61,7 +65,7 @@ def turnToDateTimeHr(microsoftDate):
     dateTimeHr = [date, time, hour]                                                                 # ["mm/dd/yyyy", "hh:mm AM/PM", "hh AM/PM"]
     return (dateTimeHr)                                                                
 
-# PART 2 FUNCTION: Get [CensusTrack, CensusBlock, CountyName] from Longitude and Latitude coordintes using the Census Beru's API which returns a JSON file 
+# PART B FUNCTION: Get [CensusTrack, CensusBlock, CountyName] from Longitude and Latitude coordintes using the Census Beru's API which returns a JSON file 
 def getCensusTract(longitude, latitude,retryRun=0):                                                 # returns an array [censusTract, CensusBlock, CountyName]
     url = "https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x={0}&y={1}&benchmark=Public_AR_Current&vintage=Current_Current&format=json".format(longitude,latitude)
     if retryRun == 11:                                                                              # Failed to get json data 11 times with this longitude and latitude so need to skip this one
@@ -131,7 +135,7 @@ def WebscraperJsonToCSV():
         print(newTicketsArray[row] + " not in set so adding it-----")
         newTicketDF = newTicketDF.append(jsonDF[jsonDF.TicketNumber == newTicketsArray[row]], sort=False, ignore_index=True)
 
-    # 4 &) TURN THE MICROSOFT DATE IN "DateReported" INTO STANDARD FORMAT AND SEPERATE INTO "Date", "Time", "Hour" COLUMNS 
+    # 4 &) TURN THE MICROSOFT DATE IN "DateReported" INTO STANDARD FORMAT AND SEPERATE INTO "Date", "Time", "Hour" COLUMNS AND THEN DROP COLUMN "DateReported" :
     # 5) WILL USE THE CENSUS BUREAU API TO GET CENSUS DATA BASED ON EACH TICKET'S LONGITUDE AND LATITUDE DATA:             
     for row in range(0, len(newTicketDF)):                                                          # Replacing DateReported with Date, Time, Hour columns
         dateTimeHr = turnToDateTimeHr(str(newTicketDF["DateReported"][row]))                        # Takes the microsoft date and returns: ["mm/dd/yyyy", "hh:mm AM/PM", "hh AM/PM"]
@@ -146,10 +150,9 @@ def WebscraperJsonToCSV():
     
     newTicketDF = newTicketDF.drop(columns=["DateReported"])                                        # Finally dropping the "DateReported" column    
 
+    # 6) WRITE TO CSV FILE AND PUSH TO GITHUB:
     with open(csvFile,'a') as outCSV:                                                               # Turning the DF into csv and appending the new data to the file
         outCSV.write(newTicketDF.to_csv(header=False, index=False))
-    
-    # 6) Push to Github if we have a new ticket
     git_push()
 
 # 7) RESCAN FOR TICKETS every x time using sceduler
