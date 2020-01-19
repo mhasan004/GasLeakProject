@@ -228,7 +228,7 @@ def WebscraperJsonToCSV():
 
 # 8) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=5)
+scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=5) # need to give enough time to go the entire process
 scheduler.start()
 
 # a
