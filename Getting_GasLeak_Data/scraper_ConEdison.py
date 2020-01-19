@@ -30,8 +30,8 @@ url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&'      
 dropCol = True                                                                                      # If you want to drop a column, specify which ones in step 2 in WebscraperJsonToCSV()
 replaceColWith = ["Date", "Time", "Hour", "CensusTract", "CensusBlock", "CountyName" ]              # Replacing column DateReported with these "Date", "Time", "Hour and Made 3 more cols for Part 2 Census data
 
-PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'                                       # the path to the .git file (.git location on my raspberry pi)
-# PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'                                  # the path to the .git file (.git location on my Laptop)
+# PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'                                       # the path to the .git file (.git location on my raspberry pi)
+PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'                                  # the path to the .git file (.git location on my Laptop)
 COMMIT_MESSAGE = 'Automated Push - New Ticket Update'                                               # the commmit message when it is pushed
 scrapingCount = 0                                                                                   # Just counting how many times i have scraped the website while this was running
 
@@ -96,10 +96,10 @@ def WebscraperJsonToCSV():
         html_data = res.content                                                                     # Getting the HTML JSON data from the url 
         soup = BeautifulSoup(html_data, 'html.parser')                                              # parsing the html data with html parcer (can do stuuf like soup.title to get the title, soup.div, soup.li etc)
         text = soup.find_all(text=True)                                                             # Getting all the text thats in the soup
-        jsonStr = ''                                                                                    # turning text to string from so i can use pandas to turn it to a dataframe
+        jsonStr = ''                                                                                # turning text to string from so i can use pandas to turn it to a dataframe
         for t in text:
             jsonStr += '{} '.format(t)
-        jsonDF = pd.read_json(jsonStr, orient='records')                                                # Turning the json string to a pandas dataframe
+        jsonDF = pd.read_json(jsonStr, orient='records')                                            # Turning the json string to a pandas dataframe
         print("Run Starting " + str(scrapingCount) + "       Reports Scraped: "+str(len(jsonDF)))
     except:
         print("Couldnt get the json data so will re-run function. This is Run "+ str(scrapingCount))
@@ -111,7 +111,6 @@ def WebscraperJsonToCSV():
     jsonDF = jsonDF.drop(columns=["LastInspected"])                                                 # Dropping this col fom the jsonDF                         
     csvHeader = list(jsonDF.drop(columns=["DateReported"]).columns.values)                          # (this change will be replced is csv has header) Title: "DateReported" Will be replaced by "Date,Time,Hour" So will now 
     csvHeader.extend(replaceColWith)                                                                # (this change will be replced is csv has header) Title: Adding the "Date,Time,Hour" to the title
-    
     with open(csvFile, 'r') as csvfile:                                                             # Open the csv File so we can read it
         csvTable = [row for row in csv.DictReader(csvfile)]
         if len(csvTable) == 0:                                                                      # a) csv is empty so add my header: [TicketNumber,Latitude,Longitude,Zip,ClassificationTyp,Date,Time,Hour
@@ -154,16 +153,10 @@ def WebscraperJsonToCSV():
         outCSV.write(newTicketDF.to_csv(header=False, index=False))
     git_push()
 
+
 # 7) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=5)
+scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=5)
 scheduler.start()
 
-
-
-
-
-
-#Note: If i have data in the csv, enter a new line to it or else it will append to the last line
-#try catch on json read
-#get rid of date reported in my csv#get rid of date reported in my csv#get rid of date reported in my csv#get rid of date reported in my csv
+# a
