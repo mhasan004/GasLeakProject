@@ -1,5 +1,5 @@
 # Scraper v3: Will periodicly scrape the con edison website to find new gas leak reports, then use the Census Bureau API to find Census Data of those locations and append to my csv file. Will then read the file and make a new csv file to trck reports per hour per Census Tract per day and create a map.
-# Part A (section 1 to 4, 6, 7): Mahmudul Hasan. Script to scrape JSON Gas Leak Data points from ConEdison everyday and put them into a csv file for further use
+# Part A (section 1 to 4, 6, 8): Mahmudul Hasan. Script to scrape JSON Gas Leak Data points from ConEdison everyday and put them into a csv file for further use
     # In the ConEdison Gas Leak Report Map, each report in the map represents a gas leak report. Each report has these seven keys: TicketNumber, Latitude, Longitude, Zipcode, Classification Type, Date Reported, Last Inspected.
     # a) We need to constantly add new repots to out list so what tickets do we currently have? read the ticket col of the "csvConEdFile" and add the tickets to "ticketSet"
     # b) Scrape the JSON html response and using pandas to put the contents into a dataframe called "jsonDF"
@@ -10,7 +10,7 @@
     # d) If there is a new report, add append the keys of that report into "csvConEdFile" and push the latest changes to github
 # Part B (section 5):  Will edit the csv to have new columns for the Census Tract, Census Block, County Name and the hour only
     # Will use the census bureau api to get census data from the lat and lon coords using this url request:  https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x=LONGITUDE&y=LATITUDE&benchmark=Public_AR_Current&vintage=Current_Current&format=json
-# Part C: Will create a new csv that lists the reports per census tract per hour for that day. Headers: Date, Hour, Census Tract, Number of Reports
+# Part C (section 7): Will create a new csv that lists the reports per census tract per hour for that day. Headers: Date, Hour, CensusTract, NumberOfReports
 
 
 import json
@@ -87,6 +87,8 @@ def getCensusTract(longitude, latitude,retryRun=0):                             
 
 # PART C FUNCTION: Make Hourly reports from the gas leak history csv file
 def turnTicketHistoryToHourlyReport():
+    global csvFile
+    global csvHourylFile
     csvOutHasData = False                                                                               # Does the out file have data already? if so can get it and use it and modify it
     inDF = pd.read_csv(csvFile)                                                                       # Read Tracts file
     csvHeader = ["Date","Hour","CensusTract","NumberOfReports"]                                         # My new csv need these headers        
@@ -224,7 +226,7 @@ def WebscraperJsonToCSV():
 
 
 
-# 7) RESCAN FOR TICKETS every x time using sceduler
+# 8) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
 scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=5)
 scheduler.start()
