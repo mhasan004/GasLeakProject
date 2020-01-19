@@ -96,15 +96,15 @@ def WebscraperJsonToCSV():
         html_data = res.content                                                                     # Getting the HTML JSON data from the url 
         soup = BeautifulSoup(html_data, 'html.parser')                                              # parsing the html data with html parcer (can do stuuf like soup.title to get the title, soup.div, soup.li etc)
         text = soup.find_all(text=True)                                                             # Getting all the text thats in the soup
+        jsonStr = ''                                                                                    # turning text to string from so i can use pandas to turn it to a dataframe
+        for t in text:
+            jsonStr += '{} '.format(t)
+        jsonDF = pd.read_json(jsonStr, orient='records')                                                # Turning the json string to a pandas dataframe
+        print("Run Starting " + str(scrapingCount) + "       Reports Scraped: "+str(len(jsonDF)))
     except:
         print("Couldnt get the json data so will re-run function. This is Run "+ str(scrapingCount))
         return WebscraperJsonToCSV()
 
-    jsonStr = ''                                                                                    # turning text to string from so i can use pandas to turn it to a dataframe
-    for t in text:
-        jsonStr += '{} '.format(t)
-    jsonDF = pd.read_json(jsonStr, orient='records')                                                # Turning the json string to a pandas dataframe
-    print("Run Starting " + str(scrapingCount) + "       Reports Scraped: "+str(len(jsonDF)))
 
     # 2) MODIFY CSV FILE: a) CSV IS EMPTY: print the the headers I want. b) CSV NOT EMPTY: Get the header and that is what we will work with. Im also droping columns from json DF and adding new col titles to csvHeader array
     # My csv will not have the "LastInspected" and "DateReported" cols. Will drop "LastInspeccted" but will keep "DateReported" as we will break it down into three cols for my csv file: "Date,Time,Hour" and then will drop it at the end
@@ -147,7 +147,6 @@ def WebscraperJsonToCSV():
         newTicketDF.iloc[row, newTicketDF.columns.get_loc("CensusTract")] = returnArray[0]          # Adding the CensusTrack, CensusBlock, CountyName values to the appropriate cells
         newTicketDF.iloc[row, newTicketDF.columns.get_loc("CensusBlock")] = returnArray[1]
         newTicketDF.iloc[row, newTicketDF.columns.get_loc("CountyName")] =  returnArray[2]
-    
     newTicketDF = newTicketDF.drop(columns=["DateReported"])                                        # Finally dropping the "DateReported" column    
 
     # 6) WRITE TO CSV FILE AND PUSH TO GITHUB:
