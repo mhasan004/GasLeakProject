@@ -219,7 +219,7 @@ def WebscraperJsonToCSV():
         outCSV.write(newTicketDF.to_csv(header=False, index=False))
     
     # 7) WRITING NEW HOURLY FILE BASED ON GAS LEAK HISTORY FILE AND PUSHING TO GH
-    turnTicketHistoryToHourlyReport
+    turnTicketHistoryToHourlyReport()
     git_push()
 
 
