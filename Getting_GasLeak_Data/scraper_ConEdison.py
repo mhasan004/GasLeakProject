@@ -69,7 +69,7 @@ def turnToDateTimeHr(microsoftDate):
 def getCensusTract(longitude, latitude,retryRun=0):                                                 # returns an array [censusTract, CensusBlock, CountyName]
     url = "https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x={0}&y={1}&benchmark=Public_AR_Current&vintage=Current_Current&format=json".format(longitude,latitude)
     if retryRun == 11:                                                                              # Failed to get json data 11 times with this longitude and latitude so need to skip this one
-        print("*****Failed 11 times to get geodata so will print insert 'error'*****")
+        print("*****Failed 11 times to get geodata so will insert 'error'*****")
         return [str("error"), str("error"), str("error")]
     try:
         response = requests.get(url)
