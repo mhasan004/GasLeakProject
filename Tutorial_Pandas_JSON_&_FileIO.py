@@ -82,6 +82,9 @@ print(dataj["key1"])
 # FILTERING: only prints entries where the col "sex" is "M"
     df.sex == "M"                              # 1) BOOLEAN: prints the zipcode col but has only True or False values        
     df[df.sex == "M" ]                         # 2 only prints the entries where "sex" is "M"                         
+    # MULTIPLE QUERY LIKE SQL: put in parenthesis
+    df.loc[  (df['column_name'] >= A)   &   (df['column_name'] <= B)  ]
+
     # PRINT THE INDEX OF WHAT EVER ROW THAT IS THE VALE OF 'M' IN THE SEX COLUMN
     print(df.index[df['sex'] == "M"].tolist())                                              
     # DELETE A ROW OF INDEX 0 AND 1    	
