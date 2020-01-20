@@ -231,4 +231,5 @@ scheduler = BlockingScheduler()
 scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=30) # need to give enough time to go the entire process
 scheduler.start()
 
-# a
+
+# Notes: Turning the Gas Leak Report data into hourly reports...) process took forever, need to make it do it faster
