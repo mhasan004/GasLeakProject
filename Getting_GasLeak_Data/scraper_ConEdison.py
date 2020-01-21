@@ -31,7 +31,7 @@ dropCol = True                                                                  
 replaceColWith = ["Date", "Time", "Hour", "CensusTract", "CensusBlock", "CountyName" ]                              # Replacing column DateReported with these "Date", "Time", "Hour and Made 3 more cols for Part 2 Census data
 
 PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'                                                       # the path to the .git file (.git location on my raspberry pi)
-#PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'                                                  # the path to the .git file (.git location on my Laptop)
+# PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'                                                  # the path to the .git file (.git location on my Laptop)
 COMMIT_MESSAGE = 'Automated Push - New Ticket Update'                                                               # the commmit message when it is pushed
 scrapingCount = 0                                                                                                   # Just counting how many times i have scraped the website while this was running
 
