@@ -34,6 +34,7 @@ replaceColWith = ["Date", "Time", "Hour", "CensusTract", "CensusBlock", "CountyN
 PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'                                                  # the path to the .git file (.git location on my Laptop)
 COMMIT_MESSAGE = 'Automated Push - New Ticket Update'                                                               # the commmit message when it is pushed
 scrapingCount = 0                                                                                                   # Just counting how many times i have scraped the website while this was running
+scriptRunning = False
 
 # GIT PUSH FUNCTION: Setting up function to automatically push changes to github when there is a new ticket so that I can have access to the latest chnages
 def git_push():
@@ -154,6 +155,7 @@ def turnHourly_toMonthlyReport():
     # Going through the hourly DF and creating new DF that holds the reports for each month. Added them to an array for easy access
     skipIndex = []                                                                                                  # Array that stores the indexes i will skip. Will query for reports in the same month, the resulting rows will be appeneded to be skipped
     monthlyDFArray = []                                                                                             # For each month, there will be a dataframe of reports, will store each month's dataframe to this index
+    print("Turning Hourly Freq csv to Monthly Csv...")
     for row in range(0,len(hourlyDF)):
         if row in skipIndex:
             continue
@@ -264,9 +266,10 @@ def WebscraperJsonToCSV():
     git_push()
 
 # 8) RESCAN FOR TICKETS every x time using sceduler
-scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=10) # need to give enough time to go the entire process
-scheduler.start()
-
+# scheduler = BlockingScheduler()
+# turnHourly_toMonthlyReport()
+# scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=) # need to give enough time to go the entire process
+# scheduler.start()
+WebscraperJsonToCSV()
 
 # Notes: Turning the Gas Leak Report data into hourly reports...) process took forever, need to make it do it faster
