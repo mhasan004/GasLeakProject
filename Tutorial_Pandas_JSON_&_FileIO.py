@@ -80,22 +80,38 @@ print(dataj["key1"])
     df.iloc[row, df.columns.get_loc("Col")] = "newVal"
 
 # FILTERING: only prints entries where the col "sex" is "M"
-    df.sex == "M"                              # 1) BOOLEAN: prints the zipcode col but has only True or False values        
-    df[df.sex == "M" ]                         # 2 only prints the entries where "sex" is "M"                         
+    # ex: Print all rows where "sex" col = "M":
+        df.sex == "M"                              # 1) BOOLEAN: prints the "sex" cols only but they are True or False        
+        df[df.sex == "M" ]                         # 2) only prints the entries where "sex" is "M"     
+    
     # MULTIPLE QUERY LIKE SQL: put in parenthesis
-    df.loc[  (df['column_name'] >= A)   &   (df['column_name'] <= B)  ]
+        df.loc[  (df['column_name'] >= A)   &   (df['column_name'] <= B)  ]
 
+    # (success) SPLIT ONE COLUMN INTO MULTIPLE:
+        hourlyDF[['Month','Day', 'Year']] = hourlyDF.Date.str.split("/",expand=True) # turning mm/dd/yyyy to own cols
+        # (failure) SPLIT A COL INTO MORE USING ARRAY: Col will have an array you can pick
+            hourlyDF["Team"]= hourlyDF["Team"].str.split("_", n = 1, expand = True)  # split with the 1st occurance (n=1) of "_"
+        
+        # (failure) SPLIT COL AND COMPARE: ex: Print all rows where the "Date" is 2019. Sat "Date" is in form mm/dd/yyyy. I need to strip out the yyyy 
+            hourlyDF['Date'].str.split("/")                   # Prints the "Date" col with the indexes. but the date is in form [mm, dd, yyyy]
+            hourlyDF['Date'].str.split("/")[row]              # ["mm", "dd", "yyyy"]
+            hourlyDF['Date'].str.split("/")[row][2]           # 1) yyyy <---------------------------WHAT WE WANT
+            hourlyDF['Date'].str.split("/")[row][2] == "2019" # 2) Will return True or False only (no DF) for each row i iterarate down
+    
     # PRINT THE INDEX OF WHAT EVER ROW THAT IS THE VALE OF 'M' IN THE SEX COLUMN
-    print(df.index[df['sex'] == "M"].tolist())                                              
+        print(df.index[df['sex'] == "M"].tolist())                                              
+    
     # DELETE A ROW OF INDEX 0 AND 1    	
-    newDf = df.drop([df.index[0] , df.index[1]])
+        newDf = df.drop([df.index[0] , df.index[1]])
 # Merging two DF
     mergedDF = jsonDF.merge(csvDF.drop_duplicates(), on=['TicketNumber'], how='left', indicator=True) # Will take all the keys of jsonDF. Will merge with keys of right DF (wont display) and will keep only the merged keys. Basically, will list all of the keys of left df and will tell it it is merged left_merge or both or none
     # newTicketDF = mergedDF[mergedDF._merge == "left_only"].drop(columns="_merge")
     newTicketsArray = list(mergedDF.loc[mergedDF['_merge']=="left_only", "TicketNumber"] )                 # For the merged DF (has cols of both merged dfs), im looking at only the "TickerNumber" col where "_merge" == "Left_only"
 
-# TYPE numpy.float64 to python float
-    df.loc[1]["col1"].item() # if this returns numpy.float64, it is now float
+# CHANGING THE TYPE OF A CEL/COL 
+    df.loc[1]["col1"].item()                             # if this returns numpy.float64, it is now float
+
+    df[["a", "b"]] = df[["a", "b"]].apply(pd.to_numeric) # Turning cols a and b to numbeic numbers, not string
 
 # Copy a df
     s2 = s1.copy()
@@ -108,6 +124,8 @@ print(dataj["key1"])
     next(df.iterrows())
 # DROP A COL:
     df.drop(columns=['B', 'C'])
+# RESET INDEX COUNT
+    df = df.reset_index(drop=True)                                         # rsetting the index
 
 
 ############################################# 4) Writing to txt #####################################

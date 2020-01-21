@@ -25,7 +25,7 @@ from git import Repo                                                            
 
 # SETTING UP GLOBAL VARIABLES: need to change the first eight variables below
 csvFile = "GasHistory_ConEdisonTracts.csv"                                                          # add new tickets to the end of the csv file
-csvHourlyFile = "GasHistory_reportsPerCensusTract.csv"                                              # In PART C we will turn the ticket history data to hourly data
+csvHourlyFile = "GasHistory_ReportFrequency_Hourly.csv"                                              # In PART C we will turn the ticket history data to hourly data
 jsonFile = "SOME_JSON_FILE.json"                                                                    # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
 url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&'                          # Url to scrape JSOn data from
 dropCol = True                                                                                      # If you want to drop a column, specify which ones in step 2 in WebscraperJsonToCSV()
@@ -118,8 +118,17 @@ def turnTicketHistoryToHourlyReport():
         # This part is just to get the index value of the groupedDF so that i can know what index of "inDF" to skip since i already have them in "groupedDF"
         groupedDF_withIndex = pd.DataFrame(columns=csvHeader)
         groupedDF_withIndex = inDF.loc[   (inDF['Date'] == inDF['Date'][row]) & (inDF['Hour'] == inDF['Hour'][row]) & (inDF['CensusTract'] == float(inDF['CensusTract'][row]))    ] 
-        skipIndex.extend(groupedDF_withIndex.index.tolist())              
-        
+        skipIndex.extend(groupedDF_withIndex.index.tolist())    
+              
+        # groupedDF = pd.DataFrame(columns=csvHeader)                                                     # Making a new dataframe and letting it have the columns i want. When i append "inDF" rows, the cols of "inDF" will be added to it. Will finally get rid of unwanted cols with filter().     
+        # groupedDF = groupedDF.append(inDF.loc[                                                          # groupedDF added tickets that have the same Census Tract, Hour, and Date. Will get rid of those unwanted cols from "inDF" next
+        #     (inDF['Date'] == inDF['Date'][row]) & 
+        #     (inDF['Hour'] == inDF['Hour'][row]) & 
+        #     (inDF['CensusTract'] == float(inDF['CensusTract'][row]))    
+        # ] 
+        # skipIndex.extend(groupedDF.index.tolist())                                                      # already did this indexes so will skip them when "row" increments to them  
+        # monthlyDF = monthlyDF.reset_index(drop=True)                                                    # resetting the index to restart from 0
+
         # Will now makw the dataframe with all the tickets with the same Date, Hour, Census track and append to outDF
         groupedDF = pd.DataFrame(columns=csvHeader)                                                     # Making a new dataframe and letting it have the columns i want. When i append "inDF" rows, the cols of "inDF" will be added to it. Will finally get rid of unwanted cols with filter().     
         groupedDF = groupedDF.append(inDF.loc[                                                          # groupedDF added tickets that have the same Census Tract, Hour, and Date. Will get rid of those unwanted cols from "inDF" next
@@ -128,6 +137,8 @@ def turnTicketHistoryToHourlyReport():
             (inDF['CensusTract'] == float(inDF['CensusTract'][row]))    
             ], sort=False, ignore_index=True
         ) 
+
+
         groupedDF = groupedDF.filter(csvHeader)                                                         # Getting rid of those unwanted cols i got from "inDF"
 
         # Appending row to "outDF" by using small trick to get "groupDF" to one row to easily add it. Since all the rows will now have the same vals, will change the "NumberOfReports" cell and drop the other rows by droppping na's
