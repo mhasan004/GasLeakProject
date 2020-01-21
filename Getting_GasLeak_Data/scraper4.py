@@ -146,6 +146,8 @@ def turnTickeyHistory_toHourlyReport():
 def turnHourly_toMonthlyReport():
     global csvFile
     global csvHourlyFile
+    months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
     hourlyDF = pd.read_csv(csvHourlyFile)                                                                           # Read Tracts file
     hourlyDF[['Month','Day', 'Year']] = hourlyDF.Date.str.split("/",expand=True)                                    # Splitng the "Date" column into "Month", "Day", "Year" for easier querying
     hourlyDF[['Month','Day', 'Year']] = hourlyDF[['Month','Day', 'Year']].apply(pd.to_numeric)                      # Turning "Month", "Day", "Year" to numeric values so can query them
@@ -196,7 +198,9 @@ def turnHourly_toMonthlyReport():
 
 # THE SCHEDULER WILL RUN THIS MAIN FUNCTION EVER X SECONDS/MINUTES/HOURS
 def WebscraperJsonToCSV():  
+    global scriptRunning
     global scrapingCount                                                                                            # Setting up the web scraping global iteration counter for debugging purposes
+    scriptRunning = True
     scrapingCount = scrapingCount + 1 
     # 1) GET JSON DATA: Webscrape the html response which is usually just the JSON data from the url and add to the JSON Dataframe: 
     # jsonDF = pd.read_json(jsonFile, orient='records')                                                             # If im getting data from json file, comment out the rest of this section.
@@ -263,12 +267,13 @@ def WebscraperJsonToCSV():
     
     # 7) WRITING NEW HOURLY FILE BASED ON GAS LEAK HISTORY FILE AND PUSHING TO GH
     turnTickeyHistory_toHourlyReport()
+    turnHourly_toMonthlyReport()
     git_push()
+    scriptRunning = False
 
 # 8) RESCAN FOR TICKETS every x time using sceduler
 # scheduler = BlockingScheduler()
-# turnHourly_toMonthlyReport()
-# scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=) # need to give enough time to go the entire process
+# scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=5) # need to give enough time to go the entire process
 # scheduler.start()
 WebscraperJsonToCSV()
 
