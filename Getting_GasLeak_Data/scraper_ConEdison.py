@@ -159,7 +159,7 @@ def turnHourly_toMonthlyReport():
     for row in range(0,len(hourlyDF)):
         if row in skipIndex:
             continue
-        monthlyDF_withIndex = hourlyDF.loc[                                                                                   # Querying for all rows that has took place in the same year and month - aka df of monthly reports
+        monthlyDF = hourlyDF.loc[                                                                                   # Querying for all rows that has took place in the same year and month - aka df of monthly reports
             (hourlyDF['Year']  == hourlyDF['Year'][row]) &
             (hourlyDF['Month'] == hourlyDF['Month'][row])
         ]
@@ -213,7 +213,7 @@ def WebscraperJsonToCSV():
     except:
         print("Couldnt get the json data so will re-run function. This is Run "+ str(scrapingCount))
         return WebscraperJsonToCSV()
-
+    scheduler.pause()           #*****pausing the sceduler
     # 2) MODIFY CSV FILE: 
         # a) CSV IS EMPTY: print the the headers I want. 
         # b) CSV NOT EMPTY: Get the header and that is what we will work with. Im also droping columns from json DF and adding new col titles to csvHeader array
@@ -265,10 +265,10 @@ def WebscraperJsonToCSV():
     turnTickeyHistory_toHourlyReport()
     turnHourly_toMonthlyReport()
     git_push()
-
+    scheduler.resume() #****resuming the job
 # 8) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=30) # need to give enough time to go the entire process
+scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=3) # need to give enough time to go the entire process
 scheduler.start()
 
 
