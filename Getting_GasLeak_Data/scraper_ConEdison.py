@@ -269,7 +269,8 @@ def WebscraperJsonToCSV():
 
 # 8) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=30) # need to give enough time to go the entire process
+scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=3) # need to give enough time to go the entire process
 scheduler.start()
+
 
 # Notes: Turning the Gas Leak Report data into hourly reports...) process took forever, need to make it do it faster
