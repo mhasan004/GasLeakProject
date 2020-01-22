@@ -99,14 +99,13 @@ def turnTickeyHistory_toHourlyReport():
             with open(csvHourlyFile, 'w', newline='') as outf:
                 writer = csv.writer(outf)
                 writer.writerow(csvHeader)
-                print("Added Header: "+str(csvHeader))
         else:
             csvHeader=list(pd.read_csv(csvHourlyFile).columns)                                                      # b) Since the csv already had data, it means i will append new data to it so just use the header of that csv file.
             csvOutHasData = True                                                                                    # There is data here, after i make a new DF using the tract csv i have, will go through the other csv and increment or keep the report counts
 
     outDF = pd.DataFrame(columns=csvHeader)                                                                         # making newDF with the cols i want. This will be appended to the other csv
     skipIndex = [] 
-    print("Turning the Gas Leak Report data into hourly reports...")
+    print("Turning the Gas Leak Report csv into hourly reports DF...")
     for row in range(0,len(inDF)):
         if row in skipIndex:
             continue
@@ -137,7 +136,7 @@ def turnTickeyHistory_toHourlyReport():
         groupedDF.iloc[0, groupedDF.columns.get_loc("NumberOfReports")] = len(groupedDF)
         groupedDF = groupedDF.dropna()
         outDF = outDF.append(groupedDF, ignore_index=True, )
-    print("Printing hourly report to "+csvHourlyFile+"...")
+    print("Printing hourly report DF to "+csvHourlyFile+"...")
     with open(csvHourlyFile,'a') as outCSV:                                                                         # Turning the DF into csv and appending the new data to the file
         outCSV.write(outDF.to_csv(header=False, index=False))
 
@@ -156,7 +155,7 @@ def turnHourly_toMonthlyReport():
     # Going through the hourly DF and creating new DF that holds the reports for each month. Added them to an array for easy access
     skipIndex = []                                                                                                  # Array that stores the indexes i will skip. Will query for reports in the same month, the resulting rows will be appeneded to be skipped
     monthlyDFArray = []                                                                                             # For each month, there will be a dataframe of reports, will store each month's dataframe to this index
-    print("Turning Hourly Freq csv to Monthly Csv...")
+    print("Turning Hourly Freq csv to Monthly DFs...")
     for row in range(0,len(hourlyDF)):
         if row in skipIndex:
             continue
@@ -189,7 +188,7 @@ def turnHourly_toMonthlyReport():
             insertRow = [strMonthYr, monthlyDFArray[dfRow]['CensusTract'][row],reportSum ]                          # Adding the rows for that census Report for this month
             rowsForDF.append(insertRow)
     monthlyTractReportCountDF =  pd.DataFrame(rowsForDF, columns=colsForDF)
-    print("Printing monthly report to "+csvMonthlyFile+"...")
+    print("Printing monthly report DFs to "+csvMonthlyFile+"...")
     csvOutClear = open(csvMonthlyFile, "w")                                                                         # clearing the file
     csvOutClear.truncate()  
     with open(csvMonthlyFile,'a') as outCSV:                                                                        # Turning the DF into csv and appending the new data to the file
@@ -269,7 +268,7 @@ def WebscraperJsonToCSV():
 
 # 8) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=3) # need to give enough time to go the entire process
+scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=30) # need to give enough time to go the entire process
 scheduler.start()
 
 
