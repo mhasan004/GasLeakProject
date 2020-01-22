@@ -61,7 +61,6 @@ print(dataj["key1"])
 
     with open('test.csv','a') as outCSV:                     # WRITING: Append this string s on a new line
         outCSV.write(s)
-                            # 3) back to csv
 
 ############################################# Pandas dataframe access ############
 # ACCESSING ELEMENTS USING loc, iloc, ix:
@@ -108,10 +107,13 @@ print(dataj["key1"])
     # newTicketDF = mergedDF[mergedDF._merge == "left_only"].drop(columns="_merge")
     newTicketsArray = list(mergedDF.loc[mergedDF['_merge']=="left_only", "TicketNumber"] )                 # For the merged DF (has cols of both merged dfs), im looking at only the "TickerNumber" col where "_merge" == "Left_only"
 
-# CHANGING THE TYPE OF A CEL/COL 
-    df.loc[1]["col1"].item()                             # if this returns numpy.float64, it is now float
+# CHANGING THE DATA TYPE OF A CEL/COL 
+    df[['A', 'B']] = df[['A', 'B']].astype(int)                                                             # NUMPY.INT64: NEED TO USE NUMPY TO COMPARE STUFF - changing cols A and B to int64 (dont work if its string)
+    df[['A', 'B']] = df[['A', 'B']].apply(pd.to_numeric).astype(int)                                        # changing to numeric then int to be safe
 
-    df[["a", "b"]] = df[["a", "b"]].apply(pd.to_numeric) # Turning cols a and b to numbeic numbers, not string
+    df.loc[1]["col1"].item()                                                                                # if this returns numpy.float64, it is now float
+
+    df[["a", "b"]] = df[["a", "b"]].apply(pd.to_numeric)                                                    # Turning cols a and b to numbeic numbers, not string
 
 # Copy a df
     s2 = s1.copy()
