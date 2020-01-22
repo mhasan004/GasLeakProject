@@ -222,15 +222,20 @@ def WebscraperJsonToCSV():
     jsonDF = jsonDF.drop(columns=["LastInspected"])                                                                 # Dropping this col fom the jsonDF                         
     csvHeader = list(jsonDF.drop(columns=["DateReported"]).columns.values)                                          # (this change will be replced is csv has header) Title: "DateReported" Will be replaced by "Date,Time,Hour" So will now 
     csvHeader.extend(replaceColWith)                                                                                # (this change will be replced is csv has header) Title: Adding the "Date,Time,Hour" to the title
-    with open(csvFile, 'r') as csvfile:                                                                             # Open the csv File so we can read it
-        csvTable = [row for row in csv.DictReader(csvfile)]
-        if len(csvTable) == 0:                                                                                      # a) csv is empty so add my header: [TicketNumber,Latitude,Longitude,Zip,ClassificationTyp,Date,Time,Hour
-            with open(csvFile, 'w', newline='') as outf:
-                writer = csv.writer(outf)
-                writer.writerow(csvHeader)
-                print("Added Header: "+str(csvHeader))
-        else:
-            csvHeader=list(pd.read_csv(csvFile).columns)                                                            # b) Since the csv already had data, it means i will append new data to it so just use the header of that csv file.    
+    try:
+        with open(csvFile, 'r') as csvfile:                                                                             # Open the csv File so we can read it
+            csvTable = [row for row in csv.DictReader(csvfile)]
+            if len(csvTable) == 0:                                                                                      # a) csv is empty so add my header: [TicketNumber,Latitude,Longitude,Zip,ClassificationTyp,Date,Time,Hour
+                with open(csvFile, 'w', newline='') as outf:
+                    writer = csv.writer(outf)
+                    writer.writerow(csvHeader)
+                    print("Added Header: "+str(csvHeader))
+            else:
+                csvHeader=list(pd.read_csv(csvFile).columns)                                                            # b) Since the csv already had data, it means i will append new data to it so just use the header of that csv file.    
+    except:
+        Print("...Couldnt read "+csvFile+" so will re-run function...")
+        return WebscraperJsonToCSV()
+        
     # 3) FIND THE NEW TICKETS 
     csvDF = pd.read_csv(csvFile)                                                                                    # Reading the list of tickets i current have on file and making a dataframe to read them
     mergedDF = jsonDF.merge(csvDF.drop_duplicates(), on=['TicketNumber'], how='left', indicator=True)               # Will take all the keys of jsonDF. Will merge with keys of right DF (wont display) and will keep only the merged keys 
@@ -268,7 +273,7 @@ def WebscraperJsonToCSV():
     scheduler.resume() #****resuming the job
 # 8) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=3) # need to give enough time to go the entire process
+scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=30) # need to give enough time to go the entire process
 scheduler.start()
 
 
