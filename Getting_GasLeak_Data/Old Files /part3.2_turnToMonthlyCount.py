@@ -2,7 +2,7 @@ import csv
 import pandas as pd                                                                                                 # to read csv file and store conent into a data frame. To turn json response string into a dataframe
 
 csvHourlyFile = "GasHistory_ReportFrequency_Hourly.csv"                                                             # In PART C we will turn the ticket history data to hourly data
-csvMonthlyFile = "GasHistory_ReporyFrequency_Monthly.csv"                                                           # IN PART C weill will use the hourly csv to create the number of reports for the month
+csvMonthlyFile = "GasHistory_ReportFrequency_Monthly.csv"                                                           # IN PART C weill will use the hourly csv to create the number of reports for the month
 months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
 # PART C FUNCTION: Make Hourly reports from the gas leak history csv file

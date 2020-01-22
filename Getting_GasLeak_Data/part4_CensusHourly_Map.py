@@ -6,7 +6,7 @@ import platform
 import pandas as pd
 
 sf = "NY_SP/tl_2019_36_tract.shp"
-csvFile = "GasHistory_reportsPerCensusTract.csv"
+csvFile = "GasHistory_ReportFrequency_Hourly.csv"
 
 dataf = pd.read_csv(csvFile)                   # Read the csv file and make a data frame
 shapef = gp.read_file(sf)                      # Read the shape file and make a data frame
