@@ -159,12 +159,12 @@ def turnHourly_toMonthlyReport():
     for row in range(0,len(hourlyDF)):
         if row in skipIndex:
             continue
-        monthlyDF = hourlyDF.loc[                                                                                   # Querying for all rows that has took place in the same year and month - aka df of monthly reports
+        monthlyDF_withIndex = hourlyDF.loc[                                                                                   # Querying for all rows that has took place in the same year and month - aka df of monthly reports
             (hourlyDF['Year']  == hourlyDF['Year'][row]) &
             (hourlyDF['Month'] == hourlyDF['Month'][row])
         ]
         skipIndex.extend(monthlyDF.index.tolist())                                                                  # Since i have these rows already, can skip them
-        monthlyDF = monthlyDF.reset_index(drop=True)                                                                # resetting the index of the df
+        monthlyDF = monthlyDF.reset_index(drop=True)                                                                # resetting the index of the df (didnt do this in the other function)
         monthlyDFArray.append(monthlyDF)                                                                            # adding this month's df to the array so i can reference this later
 
     # Going through each monthly DF and making small temporary DF for each CensusTract for that month and outputing only one row for each censustract for each month that contaisn the totla report of that census tract for that month
