@@ -7,23 +7,6 @@ import platform
 import pandas as pd
 import numpy as np
 
-
-
-# ##########################################################
-# def set_pandas_display_options() -> None:
-#     # Ref: https://stackoverflow.com/a/52432757/
-#     display = pd.options.display
-
-#     display.max_columns = 1000
-#     display.max_rows = 1000
-#     display.max_colwidth = 199
-#     display.width = None
-#     # display.precision = 2  # set as needed
-
-# # set_pandas_display_options()
-
-# #########################################################
-
 shapeFile = "NY_SP/tl_2019_36_tract.shp"
 csvFile = "GasHistory_ReportFrequency_Monthly.csv"
 monthlyDF = pd.read_csv(csvFile)                                                                            # Read the csv file and make a data frame
@@ -84,10 +67,6 @@ for row in range(0,len(monthlyDF)):
     censusForThisMonth = thisMonthsDF.CensusTract.tolist()                                                  # need to put census tracts into an array, if i use directly from thisMonthsDF i get errors when there is no 
     thisMonth = monthlyDF['MonthYear'][row]
     
-    # print("--------------------------------------------------------------------------------------- Month: "+thisMonth)
-    # print(thisMonthsDF)
-    # print(censusForThisMonth)
-    
     # 2) FIND BLOCKS FOR EACH TRACT: We have the list of census tracts for this month. Will find all census block geometries for each tract in array. Will put all block geometries that make up the particular tract in tractShapesGDF and append it to thisMonthPlotGDF to have geometries for all tracts of the month
     for tractRow in range(0, len(censusForThisMonth)):
         tractShapesGDF = shapeGDF.loc[                                                                         # this df that contains all census block geometries to make each tract
@@ -110,66 +89,10 @@ for row in range(0,len(monthlyDF)):
         thisMonthPlotGDF.at[gdfRow, "MonthYear"] = thisMonth
 
     # 4) Now that i have the geo dataframe to plot all the census tracts of the month, can now plot them:
-    # map = thisMonthPlotGDF.plot(columns = "NumberOfReports", cmap="Greens", )
-    # map.set_title(label="Number of Reports per Census Tract per Month ("+thisMonth+")")
-    thisMonthPlotGDF.plot()
-    
-
-
-
-
-
-
-
-
-
-
-
-
-    # thisMonthPlotGDF = thisMonthPlotGDF.reset_index(drop=True)                                                # reset the index]
-    # thisMonthsDF.rename(columns={'CensusTract':'NAME'}, inplace=True)                                       # to merge the pd with gpd, need to chnage col of pd not gpd
-    # count=count+1  
-    # print(thisMonthPlotGDF)
-    
-    # print("-----------dups:")
-    # ids = thisMonthPlotGDF["GEOID"]
-    # print(thisMonthPlotGDF[ids.isin(ids[ids.duplicated()])].sort_values("GEOID"))
-
-    # print("--------dropping dups")
-    # thisMonthPlotGDF = thisMonthPlotGDF.drop_duplicates().reset_index(drop=True) 
-    # print(thisMonthPlotGDF)
-
-
-    # print("join_left: ------\n")
-    # join = thisMonthPlotGDF.merge(thisMonthsDF, on='NAME', how='left', indicator=True).reset_index(drop=True)                
-    # print(join)
-
-
-
-
-    # print("join_left_bothonly: ------\n")
-    # join_both = join.loc[join['_merge']=="both"] 
-    # print(join_both)
-
-    # print("join_left_leftonly: ------\n")
-    # join_l = join.loc[join['_merge']=="left_only"] 
-    # print(join_l)
-
-    # print("Census Tracs to print:    "+str(censusForThisMonth))                                             # * Print the list of census tracts for this month
-    # print("--------------------------------------------------------------------------did : "+str(monthlyDF['MonthYear'][row])+"      NumberOfBlocksToPrint: "+str(len(thisMonthPlotGDF.NAME))+"     GraphID: "+str(count))
-    
-
-
-
-
-
-    
-# #     # map = thisMonthPlotGDF.plot(columns = "NumberOfReports", cmap="Greens", )
-# #     # map.set_title(label="Number of Reports per Census Tract per Month ("+thisMonth+")")
-# #     # thisMonthPlotGDF.drop(thisMonthPlotGDF.index, inplace=True)                                               # Cleared the df so that i can do the next month
-    
-
-# # # %%
-
+    map = thisMonthPlotGDF.plot(column='TotalMonthlyReport',figsize = (10,8),legend = True)
+    map.set_title(label = 'Number of Reports per Census Tract for {0}'.format(thisMonth), fontdict={'fontsize': 16}, loc='center')
+    leg = map.get_legend()
+    leg.set_title('Number Of Reports')
+    leg.set_bbox_to_anchor((1.1,0.5,0.1,0.5))                          # Adjusted numbers to find the best location and size of the legend
 
 # %%
