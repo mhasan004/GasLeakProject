@@ -6,17 +6,17 @@ import platform
 import pandas as pd
 
 ##########################################################
-def set_pandas_display_options() -> None:
-    # Ref: https://stackoverflow.com/a/52432757/
-    display = pd.options.display
+# def set_pandas_display_options() -> None:
+#     # Ref: https://stackoverflow.com/a/52432757/
+#     display = pd.options.display
 
-    display.max_columns = 1000
-    display.max_rows = 1000
-    display.max_colwidth = 199
-    display.width = None
-    # display.precision = 2  # set as needed
+#     display.max_columns = 1000
+#     display.max_rows = 1000
+#     display.max_colwidth = 199
+#     display.width = None
+#     # display.precision = 2  # set as needed
 
-set_pandas_display_options()
+# set_pandas_display_options()
 
 #########################################################
 
@@ -49,7 +49,7 @@ for row in range(0,len(hourlyDF)):
     
 newShapeDF = shapeDF.copy()
 newShapeDF.drop(newShapeDF.index, inplace=True)                                       # copied shapef df and emptied it to get empty df. idk why but making empty df with the cols of shapdf dont work
-# shapeDF.plot()
+shapeDF.plot()
 # print(monthlyDFArray[len(monthlyDFArray)-1])
 
 
@@ -73,7 +73,7 @@ for dfRow in range(0,len(monthlyDFArray)):
     newShapeDF.plot(cmap='rainbow')
     print("------------------------------------------------------------------------------------"+plotTitle+"     Block in Tract:"+str(len(newShapeDF))+ "       reports# in month: "+str(len(monthlyDFArray[dfRow])))
 
-    print(newShapeDF)
+    # print(newShapeDF)
     newShapeDF.drop(newShapeDF.index, inplace=True) 
    
 # %%

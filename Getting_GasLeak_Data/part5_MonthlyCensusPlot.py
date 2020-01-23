@@ -8,48 +8,168 @@ import pandas as pd
 import numpy as np
 
 
+
+# ##########################################################
+# def set_pandas_display_options() -> None:
+#     # Ref: https://stackoverflow.com/a/52432757/
+#     display = pd.options.display
+
+#     display.max_columns = 1000
+#     display.max_rows = 1000
+#     display.max_colwidth = 199
+#     display.width = None
+#     # display.precision = 2  # set as needed
+
+# # set_pandas_display_options()
+
+# #########################################################
+
 shapeFile = "NY_SP/tl_2019_36_tract.shp"
 csvFile = "GasHistory_ReportFrequency_Monthly.csv"
-shapeDF = gp.read_file(shapeFile)                                                                           # Read the shape file and make a data frame
 monthlyDF = pd.read_csv(csvFile)                                                                            # Read the csv file and make a data frame
+shapeGDF = gp.read_file(shapeFile)                                                                           # Read the shape file and make a data frame
+shapeGDF["TotalMonthlyReport" ] = np.int
+shapeGDF["MonthYear"] = np.str                                                                               # adding two new cols to shapeGDF
 
+# INTRODUCING A NEW PROBLEM: Changing the datatype of some columns to int to to making querying easier
 monthlyDF[['Month', 'Year']] = monthlyDF.MonthYear.str.split("-",expand=True)                               # Splitng the "MonthYear" column into "Month", "Year" for easier querying
 monthlyDF[['Year', 'CensusTract']] = monthlyDF[['Year', 'CensusTract']].apply(pd.to_numeric).astype(int)    # Turning "Year" and "CensusTract" to numpy.int64 values so can query them (NAME col is in int while CensusTract is in float)
-shapeDF[['NAME']] = shapeDF[['NAME']].apply(pd.to_numeric).astype(int)                                      # Turning "NAME" - the CensusTract number to numpy.int64 values so can query them
-shapeDF.plot()
+shapeGDF[['NAME']] = shapeGDF[['NAME']].apply(pd.to_numeric).astype(int)                                      # Turning "NAME" - the CensusTract number to numpy.int64 values so can query them
 
-thisMonthPlotDF = shapeDF.copy()
-thisMonthPlotDF.drop(thisMonthPlotDF.index, inplace=True)                                                   # copied shapef df and emptied it to get empty df. idk why but making empty df with the cols of shapdDF dont work
+# Making a new empty gdf for each month
+thisMonthPlotGDF = shapeGDF.copy()
+thisMonthPlotGDF.drop(thisMonthPlotGDF.index, inplace=True)                                                   # copied shapef df and emptied it to get empty df. idk why but making empty df with the cols of shapdDF dont work
 
+# FIXING NEW PROBLEM: FOR THE CSV, I CHNAGED COL TYPE FO INT SO I HAVE DUPLICATE TRACTS, NEED TO SUM THEM: The "CensusTract" columsn ("NAME") in the shapefile is of int. The csv is of float. I turns csv to int. There could be two of the same CensusTract on the csv now. Ex: before 112.2 and 112.4 not both are 112
+print("Creating a new monthlyDF without interger CensusTract duplicates...")
+skipI = []                                                                                          
+monthlyDF_withoutDups = pd.DataFrame(columns=list(monthlyDF.columns))                               # ceatign a new DF to hold the non duplicate of monthlyDF
+count = 0
+for row in range(0,len(monthlyDF)):
+    if row in skipI:
+        continue
+    dupDF = monthlyDF.loc[                                                                           # thisMonthsDF = df that contains all rows for that month-year
+        (monthlyDF['CensusTract']  == monthlyDF['CensusTract'][row]) &
+        (monthlyDF['MonthYear']  == monthlyDF['MonthYear'][row])
+    ]  
+    skipI.extend(dupDF.index.tolist()) 
+    dupDF = dupDF.reset_index(drop=True)
+    wasD = len(dupDF)
+    reportSum = 0
+    for dupRows in range(0, len(dupDF)):
+        reportSum = reportSum + dupDF.iloc[dupRows]["TotalReports"]
+    
+    dupDF["TotalReports"] = reportSum
+    dupDF = dupDF.drop_duplicates()
+    monthlyDF_withoutDups = monthlyDF_withoutDups.append(dupDF)
+monthlyDF = monthlyDF_withoutDups.reset_index(drop=True)                                            # New monthlyDF without the repeated Interger CensusTract per month, sumed the reports of those duplicates
 
+print("creating GEO Plot GDF for each tract...")
 skipIndex = []
 count = 0
 for row in range(0,len(monthlyDF)):
+    thisMonthPlotGDF.drop(thisMonthPlotGDF.index, inplace=True)                           # resetting the month df for this new month
     if row in skipIndex:
         continue
+
+    # 1) Getting all the census tracts of this month
     thisMonthsDF = monthlyDF.loc[                                                                           # thisMonthsDF = df that contains all rows for that month-year
         (monthlyDF['MonthYear']  == monthlyDF['MonthYear'][row]) 
-    ]
+    ]  
     if len(thisMonthsDF) == 0:                                                                              # If these r no reports for this month-year so skip
         continue
     skipIndex.extend(thisMonthsDF.index.tolist()) 
+    thisMonthsDF = thisMonthsDF.reset_index(drop=True)
+
     censusForThisMonth = thisMonthsDF.CensusTract.tolist()                                                  # need to put census tracts into an array, if i use directly from thisMonthsDF i get errors when there is no 
+    thisMonth = monthlyDF['MonthYear'][row]
     
+    # print("--------------------------------------------------------------------------------------- Month: "+thisMonth)
+    # print(thisMonthsDF)
+    # print(censusForThisMonth)
+    
+    # 2) FIND BLOCKS FOR EACH TRACT: We have the list of census tracts for this month. Will find all census block geometries for each tract in array. Will put all block geometries that make up the particular tract in tractShapesGDF and append it to thisMonthPlotGDF to have geometries for all tracts of the month
     for tractRow in range(0, len(censusForThisMonth)):
-        tractShapeDF = shapeDF.loc[                                                                         # this df that contains all census block shapes to make this tract
-            np.equal(shapeDF['NAME'], censusForThisMonth[tractRow])
+        tractShapesGDF = shapeGDF.loc[                                                                         # this df that contains all census block geometries to make each tract
+            np.equal(shapeGDF['NAME'], censusForThisMonth[tractRow])
         ]  
-        if len(tractShapeDF) == 0:
-            print("************************************ No geoid for Tract: "+str(censusForThisMonth[tractRow])) 
+        tractShapesGDF = tractShapesGDF
+        if len(tractShapesGDF) == 0:
+            print("*** No geoid/census block for this CensusTract: "+str(censusForThisMonth[tractRow])+" ***") 
             continue
-        thisMonthPlotDF = thisMonthPlotDF.append(tractShapeDF)
-    thisMonthPlotDF = thisMonthPlotDF.reset_index(drop=True)                                                # reset the index
-    count=count+1   
-    print(thisMonthPlotDF.NAME)                                                                             # * Print the list of geo id/ census tract that are needed to make the census tracts for this month
-    print("Census Tracs to print:    "+str(censusForThisMonth))                                             # * Print the list of census tracts for this month
-    print("--------------------------------------------------------------------------did : "+str(monthlyDF['MonthYear'][row])+"      NumberOfBlocksToPrint: "+str(len(thisMonthPlotDF.NAME))+"     GraphID: "+str(count))
-    thisMonthPlotDF.plot()
-    thisMonthPlotDF.drop(thisMonthPlotDF.index, inplace=True)                                               # Cleared the df so that i can do the next month
+        thisMonthPlotGDF = thisMonthPlotGDF.append(tractShapesGDF)                                          # append the block geometries gdf to this months gdf so we can plot this tract
+    thisMonthPlotGDF = thisMonthPlotGDF.reset_index(drop=True)  
     
+    # 3) Now that i have the census Tract geometires for this month, Go through the the GDF and edit the "MonthYear" and "TotalMonthlyReport" 
+    for gdfRow in range(0, len(thisMonthPlotGDF)):
+        # if thisMonth == "January-2019":
+        gdfRow_tract = thisMonthPlotGDF.iloc[gdfRow]["NAME"]
+        rowN = np.where(thisMonthsDF['CensusTract']==gdfRow_tract)[0]
+        gotRepNum = int(str(list(thisMonthsDF.iloc[rowN]['TotalReports'])).strip('[').strip(']'))#.strip("""'""").strip(' ') #got report number from the thisMonthsDF by getting the row were the Census Tract is from the PlotGDF and using the row# and TotalReports col name to get the report number
+        thisMonthPlotGDF.at[gdfRow, "TotalMonthlyReport"] = gotRepNum
+        thisMonthPlotGDF.at[gdfRow, "MonthYear"] = thisMonth
+
+    # 4) Now that i have the geo dataframe to plot all the census tracts of the month, can now plot them:
+    # map = thisMonthPlotGDF.plot(columns = "NumberOfReports", cmap="Greens", )
+    # map.set_title(label="Number of Reports per Census Tract per Month ("+thisMonth+")")
+    thisMonthPlotGDF.plot()
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    # thisMonthPlotGDF = thisMonthPlotGDF.reset_index(drop=True)                                                # reset the index]
+    # thisMonthsDF.rename(columns={'CensusTract':'NAME'}, inplace=True)                                       # to merge the pd with gpd, need to chnage col of pd not gpd
+    # count=count+1  
+    # print(thisMonthPlotGDF)
+    
+    # print("-----------dups:")
+    # ids = thisMonthPlotGDF["GEOID"]
+    # print(thisMonthPlotGDF[ids.isin(ids[ids.duplicated()])].sort_values("GEOID"))
+
+    # print("--------dropping dups")
+    # thisMonthPlotGDF = thisMonthPlotGDF.drop_duplicates().reset_index(drop=True) 
+    # print(thisMonthPlotGDF)
+
+
+    # print("join_left: ------\n")
+    # join = thisMonthPlotGDF.merge(thisMonthsDF, on='NAME', how='left', indicator=True).reset_index(drop=True)                
+    # print(join)
+
+
+
+
+    # print("join_left_bothonly: ------\n")
+    # join_both = join.loc[join['_merge']=="both"] 
+    # print(join_both)
+
+    # print("join_left_leftonly: ------\n")
+    # join_l = join.loc[join['_merge']=="left_only"] 
+    # print(join_l)
+
+    # print("Census Tracs to print:    "+str(censusForThisMonth))                                             # * Print the list of census tracts for this month
+    # print("--------------------------------------------------------------------------did : "+str(monthlyDF['MonthYear'][row])+"      NumberOfBlocksToPrint: "+str(len(thisMonthPlotGDF.NAME))+"     GraphID: "+str(count))
+    
+
+
+
+
+
+    
+# #     # map = thisMonthPlotGDF.plot(columns = "NumberOfReports", cmap="Greens", )
+# #     # map.set_title(label="Number of Reports per Census Tract per Month ("+thisMonth+")")
+# #     # thisMonthPlotGDF.drop(thisMonthPlotGDF.index, inplace=True)                                               # Cleared the df so that i can do the next month
+    
+
+# # # %%
+
 
 # %%

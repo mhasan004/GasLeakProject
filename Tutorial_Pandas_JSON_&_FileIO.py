@@ -72,11 +72,25 @@ print(dataj["key1"])
 # SPECIFICS:
     df["column in focusing on"][rowNumber]          # accesing an elemen of certain col
     df["col1", "col2"]                              # prints these columns only
-# CHNAGE a CELL - CHANGE A VALUE IN THE DF:
-    df.at['rowTag/Num', 'comTagNum'] = 10                    # rcommended way
+
+# GET ROW # where col == something
+    rowN = np.where(df['ColANme']=="Value")[0]               #better row in []
+    rown = df[df["ColName"] == "value"].index.tolist()       #annoying
+    vals = df.iloc[rown]['ColName'].tolist()                 #prints the col name of that row in array
+
+    rown = df.index[df['ColName'] == "value"].tolist()       #annoyinger
+# CHANGE a CELL - CHANGE A VALUE IN THE DF: 
+    df.at['rowTag/Num', 'comTagNum'] = 10                    # recommended way
     df.set_value('rowTag/Num', 'colTag/Num', "val/num")
 
     df.iloc[row, df.columns.get_loc("Col")] = "newVal"
+# ADD NEW COL:
+    df["NewColName"] = np.nan                                # Import numpy as np (this code adds a NaN col)
+    df["NewColName"] = np.str  
+
+    newCol = list(df.columns)                            # copying cols of df to an array
+    newCol.extend(["MonthYear", "TotalMonthlyReport"])   # extending the array 
+    shapeGDF = pd.DataFrame(columns=newGeoHeader)        # deletign df and adding these cols
 
 # FILTERING: only prints entries where the col "sex" is "M"
     # ex: Print all rows where "sex" col = "M":
