@@ -242,6 +242,7 @@ def WebscraperJsonToCSV():
     newTicketsArray = list(mergedDF.loc[mergedDF['_merge']=="left_only", "TicketNumber"])                           # This array holds all the tickets i dont have in my file
     newTicketDF = pd.DataFrame(columns=csvHeader)                                                                   # Making empty dataframe that has the columns of my csv file. This will be the df that will be modified and pushed to my csv
     if len(newTicketsArray) == 0:                                                                                   # No new Tickets, can end this iteration
+        scheduler.resume() #****resuming the job
         return
     for row in range(0,len(newTicketsArray)):                                                                       # Going through the array of new ticket number and adding only their rows to th new data frame
         print(newTicketsArray[row] + " not in set so adding it-----")
@@ -270,7 +271,6 @@ def WebscraperJsonToCSV():
     turnTickeyHistory_toHourlyReport()
     turnHourly_toMonthlyReport()
     git_push()
-    scheduler.resume() #****resuming the job
 # 8) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
 scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=30) # need to give enough time to go the entire process
