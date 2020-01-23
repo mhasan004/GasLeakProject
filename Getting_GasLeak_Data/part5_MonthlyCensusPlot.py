@@ -87,12 +87,15 @@ for row in range(0,len(monthlyDF)):
         gotRepNum = int(str(list(thisMonthsDF.iloc[rowN]['TotalReports'])).strip('[').strip(']'))#.strip("""'""").strip(' ') #got report number from the thisMonthsDF by getting the row were the Census Tract is from the PlotGDF and using the row# and TotalReports col name to get the report number
         thisMonthPlotGDF.at[gdfRow, "TotalMonthlyReport"] = gotRepNum
         thisMonthPlotGDF.at[gdfRow, "MonthYear"] = thisMonth
-
     # 4) Now that i have the geo dataframe to plot all the census tracts of the month, can now plot them:
-    map = thisMonthPlotGDF.plot(column='TotalMonthlyReport',figsize = (10,8),legend = True)
-    map.set_title(label = 'Number of Reports per Census Tract for {0}'.format(thisMonth), fontdict={'fontsize': 16}, loc='center')
+    # print(thisMonthPlotGDF.loc[                                                                         # What geoids have a TotalMonthlyReport of x?
+    #         np.equal(thisMonthPlotGDF['TotalMonthlyReport'], 10)
+    # ])
+    ax = shapeGDF.plot(color='green', alpha=0.02)
+
+    map = thisMonthPlotGDF.plot(column='TotalMonthlyReport',cmap = 'Reds', edgecolor='lightgray', linewidth = 0.2, figsize = (13,10),legend = True, ax=ax, alpha=1) #10,8
+    map.set_title(label = 'Number of Reports per Census Tract for {0}\n(Showing {1} Tracts, {2} GeoIDs)'.format(thisMonth, len(censusForThisMonth), len(thisMonthPlotGDF)), fontdict={'fontsize': 20}, loc='center')
     leg = map.get_legend()
     leg.set_title('Number Of Reports')
     leg.set_bbox_to_anchor((1.1,0.5,0.1,0.5))                          # Adjusted numbers to find the best location and size of the legend
-
 # %%
