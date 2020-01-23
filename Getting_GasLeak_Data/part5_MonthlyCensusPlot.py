@@ -91,9 +91,9 @@ for row in range(0,len(monthlyDF)):
     # print(thisMonthPlotGDF.loc[                                                                         # What geoids have a TotalMonthlyReport of x?
     #         np.equal(thisMonthPlotGDF['TotalMonthlyReport'], 10)
     # ])
-    ax = shapeGDF.plot(color='green', alpha=0.02)
+    # ax = shapeGDF.plot(color='green', alpha=0.02)
 
-    map = thisMonthPlotGDF.plot(column='TotalMonthlyReport',cmap = 'Reds', edgecolor='lightgray', linewidth = 0.2, figsize = (13,10),legend = True, ax=ax, alpha=1) #10,8
+    map = thisMonthPlotGDF.plot(column='TotalMonthlyReport',cmap = 'Reds', edgecolor='lightgray', linewidth = 0.2, figsize = (13,10),legend = True)#, ax=ax, alpha=1) #10,8
     map.set_title(label = 'Number of Reports per Census Tract for {0}\n(Showing {1} Tracts, {2} GeoIDs)'.format(thisMonth, len(censusForThisMonth), len(thisMonthPlotGDF)), fontdict={'fontsize': 20}, loc='center')
     leg = map.get_legend()
     leg.set_title('Number Of Reports')
