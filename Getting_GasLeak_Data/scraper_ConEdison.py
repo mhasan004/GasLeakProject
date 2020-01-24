@@ -271,9 +271,13 @@ def WebscraperJsonToCSV():
     turnTickeyHistory_toHourlyReport()
     turnHourly_toMonthlyReport()
     git_push()
+    scheduler.resume() #****resuming the job
+
+
+    
 # 8) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=30) # need to give enough time to go the entire process
+scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=30, id="scrapeJob") # need to give enough time to go the entire process
 scheduler.start()
 
 
