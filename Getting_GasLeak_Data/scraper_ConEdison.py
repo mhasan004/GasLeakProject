@@ -233,7 +233,8 @@ def WebscraperJsonToCSV():
             else:
                 csvHeader=list(pd.read_csv(csvFile).columns)                                                            # b) Since the csv already had data, it means i will append new data to it so just use the header of that csv file.    
     except:
-        Print("...Couldnt read "+csvFile+" so will re-run function...")
+        scheduler.resume() #****resuming the job
+        print("...Couldnt read "+csvFile+" so will re-run function...")
         return WebscraperJsonToCSV()
         
     # 3) FIND THE NEW TICKETS 
@@ -277,7 +278,7 @@ def WebscraperJsonToCSV():
     
 # 8) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=30, id="scrapeJob") # need to give enough time to go the entire process
+scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=30, id="scrapeJob") # need to give enough time to go the entire process
 scheduler.start()
 
 
