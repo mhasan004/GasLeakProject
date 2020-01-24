@@ -233,8 +233,7 @@ def WebscraperJsonToCSV():
             else:
                 csvHeader=list(pd.read_csv(csvFile).columns)                                                            # b) Since the csv already had data, it means i will append new data to it so just use the header of that csv file.    
     except:
-        scheduler.resume() #****resuming the job
-        print("...Couldnt read "+csvFile+" so will re-run function...")
+        print("...Couldnt read file so will re-run function...")
         return WebscraperJsonToCSV()
         
     # 3) FIND THE NEW TICKETS 
