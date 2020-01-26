@@ -140,9 +140,11 @@ print(dataj["key1"])
     next(df.iterrows())
 # DROP A COL:
     df.drop(columns=['B', 'C'])
+# DROP ROWS:
+    df = df.drop(df.index[1:len(df)])                                      # drop add rows except first
+
 # RESET INDEX COUNT
     df = df.reset_index(drop=True)                                         # rsetting the index
-
 
 ############################################# 4) Writing to txt #####################################
 outf = open("file.txt","w+")

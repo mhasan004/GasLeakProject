@@ -66,7 +66,7 @@ def turnToDateTimeHr(microsoftDate):
     return (dateTimeHr)                                                                
 
 # PART B FUNCTION: Get [CensusTrack, CensusBlock, CountyName] from Longitude and Latitude coordintes using the Census Beru's API which returns a JSON file 
-def getCensusTract(longitude, latitude,retryRun=0):                                                                 # returns an array [censusTract, CensusBlock, CountyName]
+def getCensusTract(longitude, latitude, retryRun = 0):                                                                 # returns an array [censusTract, CensusBlock, CountyName]
     url = "https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x={0}&y={1}&benchmark=Public_AR_Current&vintage=Current_Current&format=json".format(longitude,latitude)
     if retryRun == 11:                                                                                              # Failed to get json data 11 times with this longitude and latitude so need to skip this one
         print("*****Failed 11 times to get geodata so will insert 'error'*****")

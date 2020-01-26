@@ -1,13 +1,10 @@
-
+# Getting the coned data and adding the cols that i want:
 from urllib.request import urlopen                                                      # Getting the json data from the url
 import requests
 import json
 import pandas as pd                                                                     # To read and write csv files
 import numpy as np
-csvConEdFile  = "GasHistory_ConEdisonTracts_2010.csv"
-expandCols = [ "CensusTract_2010", "CensusBlock_2010", "CountyName_2010", "GEOID_2010", 
-    "CensusTract_2010_ID", "CensusTract_2010_NAME", "CensusBlock_2010_ID", "CensusBlock_2010_NAME"
-]  
+csvFile  = "GasHistory_2010_ConEdisonTracts.csv"
 
 # Function to populate those expandCols
 def getCensusTract(longitude, latitude,retryRun=0):                                                                 # returns an array [censusTract, CensusBlock, CountyName]
@@ -41,7 +38,9 @@ def getCensusTract(longitude, latitude,retryRun=0):                             
     return
 
 # A) adding empty new cols to the df
-df = pd.read_csv(csvConEdFile)                                                          # read the csv file and store to df
+expandCols = [ "CensusTract_2010", "CensusBlock_2010", "CountyName_2010", "GEOID_2010", 
+    "CensusTract_2010_ID", "CensusTract_2010_NAME", "CensusBlock_2010_ID", "CensusBlock_2010_NAME"]  
+df = pd.read_csv(csvFile)                                                          # read the csv file and store to df
 for col in range(0, len(expandCols)):
     df[expandCols[col]] = np.str
 
@@ -57,4 +56,4 @@ for row in range(0,len(df)):
     else:
         print("*** Number of col to add and values to polulate cols are not the same!! ******")
 
-df.to_csv(csvConEdFile, index=False)
+df.to_csv(csvFile, index=False)
