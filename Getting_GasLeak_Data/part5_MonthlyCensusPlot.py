@@ -22,7 +22,7 @@ shapeGDF[['NAME']] = shapeGDF[['NAME']].apply(pd.to_numeric).astype(int)        
 # Making a new empty gdf for each month
 thisMonthPlotGDF = shapeGDF.copy()
 thisMonthPlotGDF.drop(thisMonthPlotGDF.index, inplace=True)                                                   # copied shapef df and emptied it to get empty df. idk why but making empty df with the cols of shapdDF dont work
-
+shapeGDF.plot()
 # FIXING NEW PROBLEM: FOR THE CSV, I CHNAGED COL TYPE FO INT SO I HAVE DUPLICATE TRACTS, NEED TO SUM THEM: The "CensusTract" columsn ("NAME") in the shapefile is of int. The csv is of float. I turns csv to int. There could be two of the same CensusTract on the csv now. Ex: before 112.2 and 112.4 not both are 112
 print("Creating a new monthlyDF without interger CensusTract duplicates...")
 skipI = []                                                                                          
@@ -72,7 +72,7 @@ for row in range(0,len(monthlyDF)):
         tractShapesGDF = shapeGDF.loc[                                                                         # this df that contains all census block geometries to make each tract
             np.equal(shapeGDF['NAME'], censusForThisMonth[tractRow])
         ]  
-        tractShapesGDF = tractShapesGDF
+        # tractShapesGDF = tractShapesGDF
         if len(tractShapesGDF) == 0:
             print("*** No geoid/census block for this CensusTract: "+str(censusForThisMonth[tractRow])+" ***") 
             continue
@@ -93,8 +93,8 @@ for row in range(0,len(monthlyDF)):
     # ])
     # ax = shapeGDF.plot(color='green', alpha=0.02)
 
-    map = thisMonthPlotGDF.plot(column='TotalMonthlyReport',cmap = 'Reds', edgecolor='lightgray', linewidth = 0.2, figsize = (13,10),legend = True)#, ax=ax, alpha=1) #10,8
-    map.set_title(label = 'Number of Reports per Census Tract for {0}\n(Showing {1} Tracts, {2} GeoIDs)'.format(thisMonth, len(censusForThisMonth), len(thisMonthPlotGDF)), fontdict={'fontsize': 20}, loc='center')
+    map = thisMonthPlotGDF.plot(column='TotalMonthlyReport',cmap = 'Reds', edgecolor='lightgray', linewidth = 0.1, figsize = (14,11),legend = True)#, ax=ax, alpha=1) #10,8
+    map.set_title(label = 'Number of Gas leak Reports per Census Tract for\n{0}\n(Showing {1} Tracts, {2} GeoIDs)'.format(thisMonth, len(censusForThisMonth), len(thisMonthPlotGDF)), fontdict={'fontsize': 20}, loc='center')
     leg = map.get_legend()
     leg.set_title('Number Of Reports')
     leg.set_bbox_to_anchor((1.1,0.5,0.1,0.5))                          # Adjusted numbers to find the best location and size of the legend

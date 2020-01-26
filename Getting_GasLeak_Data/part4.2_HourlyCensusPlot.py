@@ -18,7 +18,8 @@ import pandas as pd
 
 # set_pandas_display_options()
 
-#########################################################
+########################################e(plotTitle)
+    # print(plotTitle#################
 
 
 
@@ -68,7 +69,7 @@ for dfRow in range(0,len(monthlyDFArray)):
     for row in range(0, len(tract)):
         newShapeDF = newShapeDF.append(shapeDF[shapeDF.NAME == str(int(tract[row]))])         # Prints all GEOID's (prints all blocks) that has this Census Tract
     # newShapeDF.set_title(plotTitle)
-    # print(plotTitle)
+    print(plotTitle)
 
     newShapeDF.plot(cmap='rainbow')
     print("------------------------------------------------------------------------------------"+plotTitle+"     Block in Tract:"+str(len(newShapeDF))+ "       reports# in month: "+str(len(monthlyDFArray[dfRow])))

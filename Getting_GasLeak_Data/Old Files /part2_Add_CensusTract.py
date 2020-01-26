@@ -47,7 +47,7 @@ df = pd.read_csv(csvConEdFile)                                                  
 for row in range(0,len(df)):
     retryRun = 0
     # b) using the lat and long coords of each entry to find the census data and adding to the respective arrays to add to csv col later
-    returnArray = getCensusTract(float(df.loc[row]["Longitude"].item()), float(df.loc[row]["Latitude"].item()))
+    returnArray = getCensusTract(float(df.iloc[row]["Longitude"].item()), float(df.iloc[row]["Latitude"].item()))
     censusTract.append(returnArray[0])
     censusBlock.append(returnArray[1])
     countyName.append(returnArray[2])
