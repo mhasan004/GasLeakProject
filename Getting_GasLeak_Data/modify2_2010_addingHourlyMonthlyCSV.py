@@ -9,7 +9,6 @@ csvFile       = "GasHistory_2010_ConEdisonTracts.csv"
 csvHourlyFile = "GasHistory_2010_ReportFrequency_Hourly.csv"                                                             # In PART C we will turn the ticket history data to hourly data
 csvMonthlyFile = "GasHistory_2010_ReportFrequency_Monthly.csv"                                                             # In PART C we will turn the ticket history data to hourly data
 
-
 # PART C1 FUNCTION: Make Hourly reports from the gas leak history csv file
 def turnTickeyHistory_toHourlyReport():
     global csvFile
