@@ -64,21 +64,26 @@ def turnTickeyHistory_toHourlyReport():
 
 # PART C2 FUNCTION: Trung the Hourly Frequency report into monthly report
 def turnHourly_toMonthlyReport():
-    global csvFile
     global csvHourlyFile
+    global csvMonthlyFile
     months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     hourlyDF = pd.read_csv(csvHourlyFile)                                                                            # Read Tracts file
     for row in range(0, len(hourlyDF)):                                                                             # adding empty cols to the hourly df so can merge with the empty monthly df and have these cols
         hourlyDF["MonthYear"] = str
         hourlyDF["TotalReports"] = int
 
-    print(hourlyDF)
-    hourlyDF[['Month','Day', 'Year']] = hourlyDF.Date.str.split("/",expand=True)                                    # Splitng the "Date" column into "Month", "Day", "Year" for easier querying
-    hourlyDF[['Month','Day', 'Year']] = hourlyDF[['Month','Day', 'Year']].apply(pd.to_numeric)                      # Turning "Month", "Day", "Year" to numeric values so can query them
-    # rowsForDF = []
     csvHeader = ["MonthYear", "CensusTract_2010", "TotalReports", "CensusTract_2010_ID", "CensusTract_2010_NAME"]
     outDF = pd.DataFrame(columns=csvHeader)                                                                         # making newDF with the cols i want. This will be appended to the other csv
+    
+    csvOutClear = open(csvMonthlyFile, "w")
+    csvOutClear.truncate()    
+    with open(csvMonthlyFile, 'w', newline='') as outf:
+        writer = csv.writer(outf)
+        writer.writerow(csvHeader)
 
+    hourlyDF[['Month','Day', 'Year']] = hourlyDF.Date.str.split("/",expand=True)                                    # Splitng the "Date" column into "Month", "Day", "Year" for easier querying
+    hourlyDF[['Month','Day', 'Year']] = hourlyDF[['Month','Day', 'Year']].apply(pd.to_numeric)                      # Turning "Month", "Day", "Year" to numeric values so can query them
+    
     # Going through the hourly DF and creating new DF that holds the reports for each month. ADDING THESE DFs TO AN ARRAY TO EASILY ACCESS EACH MONTH'S DF:
     skipIndex = []                                                                                                  # Array that stores the indexes i will skip. Will query for reports in the same month, the resulting rows will be appeneded to be skipped
     monthlyDFArray = []                                                                                             # For each month, there will be a dataframe of reports, will store each month's dataframe to this index
@@ -130,5 +135,5 @@ def turnHourly_toMonthlyReport():
     with open(csvMonthlyFile,'a') as outCSV:                                                                         # Turning the DF into csv and appending the new data to the file
         outCSV.write(outDF.to_csv(header=False, index=False))
 
-# turnTickeyHistory_toHourlyReport()
+turnTickeyHistory_toHourlyReport()
 turnHourly_toMonthlyReport()
