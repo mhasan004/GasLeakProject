@@ -1,7 +1,0 @@
-To start the enviornment:
-    virtualenv gasdata
-    source gasdata/bin/activate
-to Deactivate:
-    deactivate
-To Get list:
-    pip3 freeze --local > req.txt 

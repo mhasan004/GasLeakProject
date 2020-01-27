@@ -1,6 +1,7 @@
 
 #%%     
 # Plotting the census tracts for all reports that appeared in a specific month                    
+import contextily as ctx
 import geopandas as gp
 import os
 import platform
@@ -115,16 +116,26 @@ for row in range(0,len(monthlyDF)):
     # # ])
     # # ax = shapeGDF.plot(color='green', alpha=0.02)
 
+    df = gp.read_file(gp.datasets.get_path('nybb'))
+    ax = df.plot(figsize=(10, 10), alpha=0.5, edgecolor='k')
+    df = df.to_crs(epsg=3857)
+
     # shapeGDF.plot()
     # map = thisMonthPlotGDF.plot(column='TotalMonthlyReport',cmap = 'Reds', edgecolor='lightgray', linewidth = 0.1, figsize = (14,11),legend = True)#, ax=ax, alpha=1) #10,8
     # map.set_title(label = 'Number of Gas leak Reports per Census Tract for\n{0}\n(Showing {1} Tracts, {2} GeoIDs)'.format(thisMonth, len(censusForThisMonth), len(thisMonthPlotGDF)), fontdict={'fontsize': 20}, loc='center')
-    # leg = map.get_legend()
-    # # leg.set_title('Number Of Reports')
-    # # leg.set_bbox_to_anchor((1.1,0.5,0.1,0.5))                           # Adjusted numbers to find the best location and size of the legend
-    map = thisMonthPlotGDF.plot(column='TotalMonthlyReport',cmap = 'Reds', edgecolor='lightgray', linewidth = 0.1, figsize = (14,11),legend = True)#, ax=ax, alpha=1) #10,8
-    map.set_title(label = 'Number of Gas leak Reports per Census Tract for\n{0}\n(Showing {1} Tracts, {2} GeoIDs)'.format(thisMonth, len(censusForThisMonth), len(thisMonthPlotGDF)), fontdict={'fontsize': 20}, loc='center')
-    if len(censusForThisMonth) != 0 and len(thisMonthPlotGDF) != 0: #there is a month that has one tract but no geoid! so cant get the legend
-        leg = map.get_legend()
-        leg.set_title('Number Of Reports')
-        leg.set_bbox_to_anchor((1.0,0.5,0.1,0.5))                          # Adjusted numbers to find the best location and size of the legend
+    # if len(censusForThisMonth) != 0 and len(thisMonthPlotGDF) != 0: #there is a month that has one tract but no geoid! so cant get the legend
+    #     leg = map.get_legend()
+    #     leg.set_title('Number Of Reports')
+    #     leg.set_bbox_to_anchor((1.0,0.5,0.1,0.5))                          # Adjusted numbers to find the best location and size of the legend
+
+
+
+
+
+
+
+
+
+
+
 # %%

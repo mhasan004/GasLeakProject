@@ -1,2 +1,0 @@
-virtualenv gasdata
-source gasdata/bin/activate
