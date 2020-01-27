@@ -121,7 +121,7 @@ print(dataj["key1"])
         groupedDF = groupedDF.drop(groupedDF.index[1:len(groupedDF)])                   # 7) Filtering otu row 0 only    
         outDF = outDF.append(groupedDF, ignore_index=True, sort = False)                # 8) adding row 0 to the output df
 # SORT:
-    df = df.sort_values(by=['col1', 'col2'])
+    df = df.sort_values(by=['col1', 'col2'], ascending=[True, False])
 
 
 

@@ -29,9 +29,10 @@ monthlyDF[['CensusTract_2010_ID']] = monthlyDF[['CensusTract_2010_ID']].apply(pd
 monthlyDF[['Month', 'Year']] = monthlyDF.MonthYear.str.split("-",expand=True)                               # Splitng the "MonthYear" column into "Month", "Year" for easier querying
 monthlyDF[['Year']]        = monthlyDF[['Year']].apply(pd.to_numeric).astype(int)    # Turning "Year" and "CensusTract" to numpy.int64 values so can query them (name col is in int while CensusTract is in float)
 
-monthlyDF = monthlyDF.sort_values(by=["Year", "Month", DF_TRACT_COL])
+monthlyDF = monthlyDF.sort_values(by=["Year", "Month", DF_TRACT_COL], ascending=[False, False, True])
 monthlyDF = monthlyDF.reset_index(drop=True)
-#%%
+
+
 ## SEE WHAT TRACTS ARE IN CONED SITE BUT NOT IN THE SHAPE FILE:
 conSet = set()
 shpSet = set()
@@ -114,10 +115,16 @@ for row in range(0,len(monthlyDF)):
     # # ])
     # # ax = shapeGDF.plot(color='green', alpha=0.02)
 
-    shapeGDF.plot()
+    # shapeGDF.plot()
+    # map = thisMonthPlotGDF.plot(column='TotalMonthlyReport',cmap = 'Reds', edgecolor='lightgray', linewidth = 0.1, figsize = (14,11),legend = True)#, ax=ax, alpha=1) #10,8
+    # map.set_title(label = 'Number of Gas leak Reports per Census Tract for\n{0}\n(Showing {1} Tracts, {2} GeoIDs)'.format(thisMonth, len(censusForThisMonth), len(thisMonthPlotGDF)), fontdict={'fontsize': 20}, loc='center')
+    # leg = map.get_legend()
+    # # leg.set_title('Number Of Reports')
+    # # leg.set_bbox_to_anchor((1.1,0.5,0.1,0.5))                           # Adjusted numbers to find the best location and size of the legend
     map = thisMonthPlotGDF.plot(column='TotalMonthlyReport',cmap = 'Reds', edgecolor='lightgray', linewidth = 0.1, figsize = (14,11),legend = True)#, ax=ax, alpha=1) #10,8
     map.set_title(label = 'Number of Gas leak Reports per Census Tract for\n{0}\n(Showing {1} Tracts, {2} GeoIDs)'.format(thisMonth, len(censusForThisMonth), len(thisMonthPlotGDF)), fontdict={'fontsize': 20}, loc='center')
-    leg = map.get_legend()
-    # leg.set_title('Number Of Reports')
-    # leg.set_bbox_to_anchor((1.1,0.5,0.1,0.5))                           # Adjusted numbers to find the best location and size of the legend
+    if len(censusForThisMonth) != 0 and len(thisMonthPlotGDF) != 0: #there is a month that has one tract but no geoid! so cant get the legend
+        leg = map.get_legend()
+        leg.set_title('Number Of Reports')
+        leg.set_bbox_to_anchor((1.0,0.5,0.1,0.5))                          # Adjusted numbers to find the best location and size of the legend
 # %%
