@@ -92,6 +92,39 @@ print(dataj["key1"])
     newCol.extend(["MonthYear", "TotalMonthlyReport"])   # extending the array 
     shapeGDF = pd.DataFrame(columns=newGeoHeader)        # deletign df and adding these cols
 
+#  ADD NEW COLS TO MERGING DFS (FULL PROCESS):
+    inDF = pd.read_csv(csvInFile)                        
+    # for row in range(0, len(inDF)):                        # 1) add these new empty cols to the original df          
+    inDF["newCol1"] = int
+    inDF["newCol2"] = int
+
+    csvHeader = ["col1", "col2", "newCol1", "newCol2"]      # 2) add the headers i want for the new df, add the new cols as well
+    csvOutClear = open(csvOutFile, "w")                     # 3) clear the out csv file
+    csvOutClear.truncate()       
+
+    outDF = pd.DataFrame(columns=csvHeader)                 #4) add cols to the df for the outcsv                                    
+    skipIndex = [] 
+    for row in range(0,len(conDF)):
+        if row in skipIndex:
+            continue
+        groupedDF = pd.DataFrame(columns=csvHeader)             # 5) MERGING: find all the rows they got in common
+        groupedDF = inDF.loc[   
+            (inDF['col1'] == inDF['col1'][row]) & 
+            (coinDFnDF['col2'] == float(conDF['col2'][row]))    
+        ] 
+        skipIndex.extend(groupedDF.index.tolist())    
+        groupedDF = groupedDF.reset_index(drop=True)      
+        groupedDF = groupedDF.filter(csvHeader)   
+
+        groupedDF.iloc[0, groupedDF.columns.get_loc("newCol1")] = "adding val to new col"   # 6) ADDING VALS TO NEW COLS  (for row 0)                    
+        groupedDF.iloc[0, groupedDF.columns.get_loc("newCOl2")] = "adding val to new col"
+        groupedDF = groupedDF.drop(groupedDF.index[1:len(groupedDF)])                   # 7) Filtering otu row 0 only    
+        outDF = outDF.append(groupedDF, ignore_index=True, sort = False)                # 8) adding row 0 to the output df
+# SORT:
+    df = df.sort_values(by=['col1', 'col2'])
+
+
+
 # FILTERING: only prints entries where the col "sex" is "M"
     # ex: Print all rows where "sex" col = "M":
         df.sex == "M"                              # 1) BOOLEAN: prints the "sex" cols only but they are True or False        
