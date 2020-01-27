@@ -1,14 +1,14 @@
-
 #%%     
 # Plotting the census tracts for all reports that appeared in a specific month                    
-import contextily as ctx
+# import contextily as ctx
+# import matploylib.pyplot as plt
 import geopandas as gp
 import os
 import platform
 import pandas as pd
 import numpy as np
 
-#shapeFile = "NYU_NYC_ShapeFile/nyu_2451_34513.shp"
+# shapeFile = "NYU_NYC_ShapeFile/nyu_2451_34513.shp"
 shapeFile = "NYU_NYC_34505_SP/nyu_2451_34505.shp"
 csvFile = "GasHistory_2010_ReportFrequency_Monthly.csv"
 monthlyDF = pd.read_csv(csvFile)                                                                            # Read the csv file and make a data frame
@@ -33,7 +33,6 @@ monthlyDF[['Year']]        = monthlyDF[['Year']].apply(pd.to_numeric).astype(int
 monthlyDF = monthlyDF.sort_values(by=["Year", "Month", DF_TRACT_COL], ascending=[False, False, True])
 monthlyDF = monthlyDF.reset_index(drop=True)
 
-
 ## SEE WHAT TRACTS ARE IN CONED SITE BUT NOT IN THE SHAPE FILE:
 conSet = set()
 shpSet = set()
@@ -53,23 +52,13 @@ for i in range(0, len(conSet)):
         noneTracts.append(float(conSet[i]))
         noneCount = noneCount +1
 # print("Census Tracts not in GDF:\n"+s+"\n")
-# print("Array:\n"+str(noneTracts)+"\n")
-print("ConEd Tract Number:     "+str(len(conSet)))
-print("Shapefile Tract Number: "+str(len(shpSet)))
-print("Mising tracts: "+str(noneCount))
+print("Number of Census Tracts in ConEdison data: "+str(len(conSet)))
+print("Number of Census Tracts in Shapefile:      "+str(len(shpSet)))
+print("Number of Census Tracts missing from Shapefile: "+str(noneCount))
 print("----------------------------------")
-############################################################################
-# for i in range(0, len(shapeGDF)):
-#     if (shapeGDF.iloc[i][GDF_TRACT_COL] >= 11) and (shapeGDF.iloc[i][GDF_TRACT_COL] < 12):
-#         print(shapeGDF.iloc[i])
-#         print("---------------------------------------------------------------------------------------"+str(shapeGDF.iloc[i][GDF_TRACT_COL]))
-############################################################################
 
-# # Making a new empty gdf for each month
+# Making a new empty gdf for each month
 thisMonthPlotGDF = shapeGDF.copy()
-
-# thisMonthPlotGDF.drop(thisMonthPlotGDF.index, inplace=True)                                                   # copied shapef df and emptied it to get empty df. idk why but making empty df with the cols of shapdDF dont work
-
 print("Creating GDF for particular months in monthly report freq data...")
 skipIndex = []
 count = 0
@@ -88,9 +77,7 @@ for row in range(0,len(monthlyDF)):
     thisMonthsDF = thisMonthsDF.reset_index(drop=True)
     censusForThisMonth = thisMonthsDF.CensusTract_2010.tolist()                                                  # need to put census tracts into an array, if i use directly from thisMonthsDF i get errors when there is no 
     thisMonth = monthlyDF['MonthYear'][row]
-    # print(type(censusForThisMonth[0]))
-    # print(type( shapeGDF.iloc[0][GDF_TRACT_COL]))
-    # print(np.equal(censusForThisMonth[0],  shapeGDF.iloc[0][GDF_TRACT_COL]))
+
     # 2) FIND BLOCKS FOR EACH TRACT: We have the list of census tracts for this month. Will find all census block geometries for each tract in array. Will put all block geometries that make up the particular tract in tractShapesGDF and append it to thisMonthPlotGDF to have geometries for all tracts of the month
     for tractRow in range(0, len(censusForThisMonth)):
         tractShapesGDF = shapeGDF.loc[                                                                         # this df that contains all census block geometries to make each tract
@@ -102,6 +89,7 @@ for row in range(0,len(monthlyDF)):
             continue
         thisMonthPlotGDF = thisMonthPlotGDF.append(tractShapesGDF)                                          # append the block geometries gdf to this months gdf so we can plot this tract
     thisMonthPlotGDF = thisMonthPlotGDF.reset_index(drop=True)  
+    
     # 3) Now that i have the census Tract geometires for this month, Go through the the GDF and edit the "MonthYear" and "TotalMonthlyReport" 
     for gdfRow in range(0, len(thisMonthPlotGDF)):
         # if thisMonth == "January-2019":
@@ -110,32 +98,20 @@ for row in range(0,len(monthlyDF)):
         gotRepNum = int(str(list(thisMonthsDF.iloc[rowN]['TotalReports'])).strip('[').strip(']'))#.strip("""'""").strip(' ') #got report number from the thisMonthsDF by getting the row were the Census Tract is from the PlotGDF and using the row# and TotalReports col name to get the report number
         thisMonthPlotGDF.at[gdfRow, "TotalMonthlyReport"] = gotRepNum
         thisMonthPlotGDF.at[gdfRow, "MonthYear"] = thisMonth
-    # # 4) Now that i have the geo dataframe to plot all the census tracts of the month, can now plot them:
-    # # print(thisMonthPlotGDF.iloc[                                                                         # What geoids have a TotalMonthlyReport of x?
-    # #     np.equal(thisMonthPlotGDF['TotalMonthlyReport'], 10)
-    # # ])
-    # # ax = shapeGDF.plot(color='green', alpha=0.02)
+    
+    # 4) Now that i have the geo dataframe to plot all the census tracts of the month, can now plot them:
 
-    df = gp.read_file(gp.datasets.get_path('nybb'))
-    ax = df.plot(figsize=(10, 10), alpha=0.5, edgecolor='k')
-    df = df.to_crs(epsg=3857)
-
-    # shapeGDF.plot()
-    # map = thisMonthPlotGDF.plot(column='TotalMonthlyReport',cmap = 'Reds', edgecolor='lightgray', linewidth = 0.1, figsize = (14,11),legend = True)#, ax=ax, alpha=1) #10,8
-    # map.set_title(label = 'Number of Gas leak Reports per Census Tract for\n{0}\n(Showing {1} Tracts, {2} GeoIDs)'.format(thisMonth, len(censusForThisMonth), len(thisMonthPlotGDF)), fontdict={'fontsize': 20}, loc='center')
-    # if len(censusForThisMonth) != 0 and len(thisMonthPlotGDF) != 0: #there is a month that has one tract but no geoid! so cant get the legend
-    #     leg = map.get_legend()
-    #     leg.set_title('Number Of Reports')
-    #     leg.set_bbox_to_anchor((1.0,0.5,0.1,0.5))                          # Adjusted numbers to find the best location and size of the legend
-
-
-
-
-
-
-
-
-
-
+    # df = gp.read_file(gp.datasets.get_path('nybb'))
+    # ax = df.plot(figsize=(10, 10), alpha=0.5, edgecolor='k')
+    # df = df.to_crs(epsg=3857)
+    # fig, ax = plt.subplots(1,1
+    # df1.plot.(ax=ax))
+    ax = shapeGDF.plot(alpha=0.08, figsize = (14,11))
+    map = thisMonthPlotGDF.plot(column='TotalMonthlyReport',cmap = 'Reds', edgecolor='lightgray', linewidth = 0.2, figsize = (14,11),legend = True, ax=ax)#, ax=ax, alpha=1) #10,8
+    map.set_title(label = 'Number of Gas Leak Reports per Census Tract for\n{0}\n(Showing {1} Tracts, {2} GeoIDs)'.format(thisMonth, len(censusForThisMonth), len(thisMonthPlotGDF)), fontdict={'fontsize': 20}, loc='center')
+    if len(censusForThisMonth) != 0 and len(thisMonthPlotGDF) != 0: #there is a month that has one tract but no geoid! so cant get the legend
+        leg = map.get_legend()
+        leg.set_title('Number Of Reports')
+        leg.set_bbox_to_anchor((1.1,0.5,0.1,0.5))                          # Adjusted numbers to find the best location and size of the legend
 
 # %%
