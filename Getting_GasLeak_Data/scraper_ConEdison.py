@@ -265,7 +265,7 @@ def WebscraperJsonToCSV():
     # 6) WRITE TO CSV FILE:
     print("Appending new Gas Leak reports to file...")
     with open(csvFile,'a') as outCSV:                                                                               # Turning the DF into csv and appending the new data to the file
-        outCSV.write(newTicketDF.to_csv(header=False, index=False))
+        outCSV.write(newTicketDF.to_csv(header=False))
     
     # 7) WRITING NEW HOURLY FILE BASED ON GAS LEAK HISTORY FILE AND PUSHING TO GH
     turnTickeyHistory_toHourlyReport()
