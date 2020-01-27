@@ -92,7 +92,6 @@ for row in range(0,len(monthlyDF)):
     #         np.equal(thisMonthPlotGDF['TotalMonthlyReport'], 10)
     # ])
     # ax = shapeGDF.plot(color='green', alpha=0.02)
-
     map = thisMonthPlotGDF.plot(column='TotalMonthlyReport',cmap = 'Reds', edgecolor='lightgray', linewidth = 0.1, figsize = (14,11),legend = True)#, ax=ax, alpha=1) #10,8
     map.set_title(label = 'Number of Gas leak Reports per Census Tract for\n{0}\n(Showing {1} Tracts, {2} GeoIDs)'.format(thisMonth, len(censusForThisMonth), len(thisMonthPlotGDF)), fontdict={'fontsize': 20}, loc='center')
     leg = map.get_legend()
