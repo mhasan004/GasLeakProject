@@ -269,16 +269,16 @@ def WebscraperJsonToCSV():
        outCSV.write(newTicketDF.to_csv(header=False, index=False))
     
     # 7) WRITING NEW HOURLY FILE BASED ON GAS LEAK HISTORY FILE AND PUSHING TO GH
-    turnTickeyHistory_toHourlyReport()
-    turnHourly_toMonthlyReport()
-    git_push()
+    # turnTickeyHistory_toHourlyReport()
+    # turnHourly_toMonthlyReport()
+    # git_push()
     scheduler.resume() #****resuming the job
 
 
     
 # 8) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=30) # need to give enough time to go the entire process
+scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=5) # need to give enough time to go the entire process
 scheduler.start()
 
 
