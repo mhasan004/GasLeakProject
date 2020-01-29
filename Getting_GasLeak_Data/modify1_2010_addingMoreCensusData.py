@@ -1,10 +1,10 @@
-# Getting the coned data and adding the cols that i want:
+# Getting Using long/lat data from coned and making new cols to hold census data for each report:
 from urllib.request import urlopen                                                      # Getting the json data from the url
 import requests
 import json
 import pandas as pd                                                                     # To read and write csv files
 import numpy as np
-csvFile  = "GasHistory_2010_ConEdisonTracts.csv"
+csvFile  = "del.csv"#"GasHistory_2010_ConEdisonTracts.csv"
 
 # Function to populate those expandCols
 def getCensusTract(longitude, latitude,retryRun=0):                                                                 # returns an array [censusTract, CensusBlock, CountyName]
@@ -49,7 +49,7 @@ for row in range(0,len(df)):
     retryRun = 0
     returnArray = getCensusTract(float(df.iloc[row]["Longitude"].item()), float(df.iloc[row]["Latitude"].item()))    # returnArray = [tractBASENAME, blockBASENAME, countyName, geoid, tract id, tract name, block id, block name]
     
-    # Make sure the Cols index and return index are the same so it prints to right cols
+    # Make sure the "expandCols" index and "returnArray" index are the same so it prints to right cols
     if len(expandCols) == len(returnArray):
         for colToWrite in range(0, len(expandCols)):
             df.at[row, expandCols[colToWrite]] = returnArray[colToWrite] 
