@@ -13,6 +13,7 @@ shapeFile = "NYU_NYC_34505_SP/nyu_2451_34505.shp"
 csvFile = "GasHistory_2010_ReportFrequency_Monthly.csv"
 monthlyDF = pd.read_csv(csvFile)                                                                            # Read the csv file and make a data frame
 shapeGDF = gp.read_file(shapeFile)                                                                           # Read the shape file and make a data frame
+shapeGDF.plot(figsize = (10,9))
 
 GDF_TRACT_COL = "name"
 DF_TRACT_COL  = "CensusTract_2010"
@@ -98,16 +99,11 @@ for row in range(0,len(monthlyDF)):
         gotRepNum = int(str(list(thisMonthsDF.iloc[rowN]['TotalReports'])).strip('[').strip(']'))#.strip("""'""").strip(' ') #got report number from the thisMonthsDF by getting the row were the Census Tract is from the PlotGDF and using the row# and TotalReports col name to get the report number
         thisMonthPlotGDF.at[gdfRow, "TotalMonthlyReport"] = gotRepNum
         thisMonthPlotGDF.at[gdfRow, "MonthYear"] = thisMonth
-    
+    print(thisMonthPlotGDF)
+#%%
     # 4) Now that i have the geo dataframe to plot all the census tracts of the month, can now plot them:
-
-    # df = gp.read_file(gp.datasets.get_path('nybb'))
-    # ax = df.plot(figsize=(10, 10), alpha=0.5, edgecolor='k')
-    # df = df.to_crs(epsg=3857)
-    # fig, ax = plt.subplots(1,1
-    # df1.plot.(ax=ax))
-    ax = shapeGDF.plot(alpha=0.08, figsize = (14,11))
-    map = thisMonthPlotGDF.plot(column='TotalMonthlyReport',cmap = 'Reds', edgecolor='lightgray', linewidth = 0.2, figsize = (14,11),legend = True, ax=ax)#, ax=ax, alpha=1) #10,8
+    ax = shapeGDF.plot(alpha=0.08, figsize = (14,13))
+    map = thisMonthPlotGDF.plot(column='TotalMonthlyReport',cmap = 'Reds', edgecolor='black', linewidth = 0.3, figsize = (14,11),legend = True, ax=ax)#, ax=ax, alpha=1) #10,8
     map.set_title(label = 'Number of Gas Leak Reports per Census Tract for\n{0}\n(Showing {1} Tracts, {2} GeoIDs)'.format(thisMonth, len(censusForThisMonth), len(thisMonthPlotGDF)), fontdict={'fontsize': 20}, loc='center')
     if len(censusForThisMonth) != 0 and len(thisMonthPlotGDF) != 0: #there is a month that has one tract but no geoid! so cant get the legend
         leg = map.get_legend()

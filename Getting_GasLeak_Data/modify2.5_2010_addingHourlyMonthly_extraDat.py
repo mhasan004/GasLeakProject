@@ -15,12 +15,18 @@ def turnTickeyHistory_toHourlyReport():
     global csvHourlyFile
     csvOutHasData = False                                                                                           # Does the out file have data already? if so can get it and use it and modify it
     conDF = pd.read_csv(csvFile)                                                                                     # Read Tracts file
-    for row in range(0, len(conDF)):
-        conDF["NumberOfReports"] = int
-        conDF["Year"] = int
 
-    csvHeader = ["Year", "Date", "Hour", "CensusTract_2010","NumberOfReports", 
-        "CensusTract_2010_ID", "CensusTract_2010_NAME"]                                                             # My new csv need these headers        
+    # outDF WILL HAVE ALL THESE NEW COLS. NEED TO ADD THEM TO conDF so it can have it.adding new col to outDF so need to add it to conDF
+    for row in range(0, len(conDF)):
+        conDF["NumberOfReports"] = int      
+        conDF["Year"] = int
+        conDF["GEOID_list"] = str
+        conDF["CensusBlockID_list"] = str
+    # LISTING COLS I WANT FOR outDF: adding the conDF data to outDF
+    csvHeader = ["Year", "Date", "Hour", "CensusTract_2010","NumberOfReports", "CensusTract_2010_ID", "CensusTract_2010_NAME",
+        "CountyName_2010", "GEOID_list", "CensusBlockID_list" 
+        ]                                                             # My new csv need these headers        
+   
     csvOutClear = open(csvHourlyFile, "w")
     csvOutClear.truncate()                                                                                          # deleting everything in the file (will delete this code once i figure out how to update existing file)
     
@@ -49,10 +55,19 @@ def turnTickeyHistory_toHourlyReport():
             (conDF['CensusTract_2010_ID'] == float(conDF['CensusTract_2010_ID'][row]))    ] 
         skipIndex.extend(groupedDF.index.tolist())    
         groupedDF = groupedDF.reset_index(drop=True)      
+        
+        # Now that i hae the mini df for each hour per census tract, will input list of geoids, and blocks for that hour in that census tract
+        blockList = []
+        geoidList = []
+        for blockRow in range(0,len(groupedDF)):
+            geoidList.append(groupedDF.iloc[blockRow]["GEOID_2010"])
+            blockList.append(groupedDF.iloc[blockRow]["CensusBlock_2010_ID"])
         groupedDF = groupedDF.filter(csvHeader)                                                                     # Getting rid of those unwanted cols i got from "conDF"
 
         # Appending row to "outDF" by using small trick to get "groupDF" to one row to easily add it. Since all the rows will now have the same vals, will change the "NumberOfReports" cell and drop the other rows by droppping na's
         # Since the groupedDF was new and the conDF both didnt have "NumberOfReorts" column, it was exclused, will now add it back!
+        groupedDF.iloc[0, groupedDF.columns.get_loc("GEOID_list")] = str(geoidList)
+        groupedDF.iloc[0, groupedDF.columns.get_loc("CensusBlockID_list")] = str(blockList)
         groupedDF.iloc[0, groupedDF.columns.get_loc("NumberOfReports")] = len(groupedDF)                           # This DF will have the same rows but NumberOFRep and Year will be na, will only push the first row after modifying it and delte na rows.
         groupedDF.iloc[0, groupedDF.columns.get_loc("Year")] = int(groupedDF.iloc[0]["Date"].split("/")[2])
         groupedDF = groupedDF.drop(groupedDF.index[1:len(groupedDF)])                                               # **taking out the first orw and appending it
@@ -132,8 +147,8 @@ def turnHourly_toMonthlyReport():
     outDF = outDF.sort_values(by=['MonthYear', 'CensusTract_2010_ID'])
     outDF = outDF.reset_index(drop=True)
     print("Printing monthly report DFs to "+csvMonthlyFile+"...")
-    with open(csvMonthlyFile,'a') as outCSV:                                                                         # Turning the DF into csv and appending the new data to the file
-        outCSV.write(outDF.to_csv(header=False, index=False))
+    # with open(csvMonthlyFile,'a') as outCSV:                                                                         # Turning the DF into csv and appending the new data to the file
+    #     outCSV.write(outDF.to_csv(header=False, index=False))
 
 turnTickeyHistory_toHourlyReport()
 # turnHourly_toMonthlyReport()
