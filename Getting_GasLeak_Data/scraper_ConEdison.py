@@ -34,7 +34,7 @@ PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'                   
 # PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'                                                  # the path to the .git file (.git location on my Laptop)
 COMMIT_MESSAGE = 'Automated Push - New Ticket Update'                                                               # the commmit message when it is pushed
 scrapingCount = 0                                                                                                   # Just counting how many times i have scraped the website while this was running
-
+csvreadCount = 0
 # GIT PUSH FUNCTION: Setting up function to automatically push changes to github when there is a new ticket so that I can have access to the latest chnages
 def git_push():
     repo = Repo(PATH_OF_GIT_REPO)
@@ -197,6 +197,7 @@ def turnHourly_toMonthlyReport():
 # THE SCHEDULER WILL RUN THIS MAIN FUNCTION EVER X SECONDS/MINUTES/HOURS
 def WebscraperJsonToCSV():  
     global scrapingCount                                                                                            # Setting up the web scraping global iteration counter for debugging purposes
+    global csvReadCount
     scrapingCount = scrapingCount + 1
     scheduler.pause()           #*****pausing the sceduler
     # 1) GET JSON DATA: Webscrape the html response which is usually just the JSON data from the url and add to the JSON Dataframe: 
@@ -222,6 +223,7 @@ def WebscraperJsonToCSV():
     jsonDF = jsonDF.drop(columns=["LastInspected"])                                                                 # Dropping this col fom the jsonDF                         
     csvHeader = list(jsonDF.drop(columns=["DateReported"]).columns.values)                                          # (this change will be replced is csv has header) Title: "DateReported" Will be replaced by "Date,Time,Hour" So will now 
     csvHeader.extend(replaceColWith)                                                                                # (this change will be replced is csv has header) Title: Adding the "Date,Time,Hour" to the title
+    
     try:
         with open(csvFile, 'r') as csvfile:                                                                             # Open the csv File so we can read it
             csvTable = [row for row in csv.DictReader(csvfile)]
@@ -232,11 +234,16 @@ def WebscraperJsonToCSV():
                     print("Added Header: "+str(csvHeader))
             else:
                 csvHeader=list(pd.read_csv(csvFile).columns)                                                            # b) Since the csv already had data, it means i will append new data to it so just use the header of that csv file.    
-    except Exception as e: 
+    except Exception as e:
+        csvReadCount = csvReadCount + 1
+        if csvReadCount == 11:
+            print("    Tried to read the csv file 11 times and failed, try next iteration")
+            return
         print("...Couldnt read file so will re-run function...")
-        print("Error: "+str(e))
+        print("    Error Code: "+str(e))
         return WebscraperJsonToCSV()
-        
+    csvReadCount = 0
+
     # # 3) FIND THE NEW TICKETS 
     csvDF = pd.read_csv(csvFile)                                                                                    # Reading the list of tickets i current have on file and making a dataframe to read them
     mergedDF = jsonDF.merge(csvDF.drop_duplicates(), on=['TicketNumber'], how='left', indicator=True)               # Will take all the keys of jsonDF. Will merge with keys of right DF (wont display) and will keep only the merged keys 
