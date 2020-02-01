@@ -214,6 +214,7 @@ def WebscraperJsonToCSV():
         print("Run Starting " + str(scrapingCount) + "       Reports Scraped: "+str(len(jsonDF)))
     except:
         print("Couldnt get the json data so will re-run function. This is Run "+ str(scrapingCount))
+        scheduler.resume() #****resuming the job 
         return WebscraperJsonToCSV()
     # 2) MODIFY CSV FILE: 
         # a) CSV IS EMPTY: print the the headers I want. 
@@ -241,6 +242,7 @@ def WebscraperJsonToCSV():
             return
         print("...Couldnt read file so will re-run function...")
         print("    Error Code: "+str(e))
+        scheduler.resume() #****resuming the job
         return WebscraperJsonToCSV()
     csvReadCount = 0
 
