@@ -1,8 +1,0 @@
-hourly: 
-    Add new cols: 
-        countyName for census tract
-        [zipcode list] for census tract
-        [census block list] for census tract
-        [TickletList] for cenus tract
-        [geoid]
-

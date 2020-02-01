@@ -108,6 +108,6 @@ for row in range(0,len(monthlyDF)):
     if len(censusForThisMonth) != 0 and len(thisMonthPlotGDF) != 0: #there is a month that has one tract but no geoid! so cant get the legend
         leg = map.get_legend()
         leg.set_title('Number Of Reports')
-        leg.set_bbox_to_anchor((1.1,0.5,0.1,0.5))                          # Adjusted numbers to find the best location and size of the legend
+        leg.set_bbox_to_anchor((1.1,0.5,0.1,0.5))                                               # Adjusted numbers to find the best location and size of the legend
 
 # %%
