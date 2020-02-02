@@ -230,11 +230,12 @@ def WebscraperJsonToCSV():
             csvTable = [row for row in csv.DictReader(csvfile)]
             if len(csvTable) == 0:                                                                                      # a) csv is empty so add my header: [TicketNumber,Latitude,Longitude,Zip,ClassificationTyp,Date,Time,Hour
                 with open(csvFile, 'w', newline='') as outf:
+                    print("Added Header: "+str(csvHeader))
                     writer = csv.writer(outf)
                     writer.writerow(csvHeader)
-                    print("Added Header: "+str(csvHeader))
             else:
                 csvHeader=list(pd.read_csv(csvFile).columns)                                                            # b) Since the csv already had data, it means i will append new data to it so just use the header of that csv file.    
+                print("     csv had data so copying the header")
     except Exception as e:
         csvReadCount = csvReadCount + 1
         if csvReadCount == 11:
@@ -244,6 +245,7 @@ def WebscraperJsonToCSV():
         print("    Error Code: "+str(e))
         scheduler.resume() #****resuming the job
         return WebscraperJsonToCSV()
+        return
     csvReadCount = 0
 
     # # 3) FIND THE NEW TICKETS 
