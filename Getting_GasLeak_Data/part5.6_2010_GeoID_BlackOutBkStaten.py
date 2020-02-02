@@ -9,18 +9,21 @@ import platform
 import pandas as pd
 import numpy as np
 
-# shapeFile = "NYU_NYC_ShapeFile/nyu_2451_34513.shp"
+# A) CREATING DF AND GDF:
 shapeFile = "NYU_NYC_34505_SP/nyu_2451_34505.shp"
 csvFile = "GasHistory_2010_ReportFrequency_Monthly.csv"
+brooklynFile = "TIGER_2010_County_Shapefiles/BrooklynCounty_2010SHP/tl_2010_36047_tract10.shp"
+statenFile = "TIGER_2010_County_Shapefiles/StatenIslanCounty_2010SHP"
 monthlyDF = pd.read_csv(csvFile)                                                                            # Read the csv file and make a data frame
 shapeGDF = gp.read_file(shapeFile)                                                                           # Read the shape file and make a data frame
-
+brooklynGDF = gp.read_file(brooklynFile)
+statenGDF = gp.read_file(statenFile)
 
 GDF_GEOID_COL = "tractid"
 DF_GEOID_COL  = "GEOID_SCT"
 MIN_NUM_TRACTS_NEEDED_TO_PRINT = 150 #max westchester got in a month is 110
 
-# ADDING NEW COLS ND CHANGING DATATYPE OF COLS SO WE CAN COMPARE THEM:
+# B) ADDING NEW COLS TO SHAPEGDF AND CHANGING DATATYPE OF COLS SO WE CAN COMPARE THEM:
 shapeGDF["MonthYear"] = str                                                                               # adding two new cols to shapeGDF
 shapeGDF["TotalMonthlyReport" ] = int
 shapeGDF["CountyName"] = str 
@@ -34,13 +37,54 @@ shapeGDF[['tractid']] = shapeGDF[['tractid']].apply(pd.to_numeric).astype(int)
 shapeGDF[['tractnum']] = shapeGDF[['tractnum']].apply(pd.to_numeric).astype(int)  
 shapeGDF[['name']] = shapeGDF[['name']].apply(pd.to_numeric).astype(int) 
 shapeGDF[['bcode']] = shapeGDF[['bcode']].apply(pd.to_numeric).astype(int) 
-print("======================================================================================================== RAW DATA: GDF and monthly DF ========================================================================================================")
-print(shapeGDF)
-print("------------------------------------------------------------------------ monthly DF:------------------------------------------")
-print(monthlyDF)
-print("=============================================================================================================== RAW DATA END =================================================================================================================")
+# print("======================================================================================================== RAW DATA: GDF and monthly DF ========================================================================================================")
+# print(shapeGDF)
+# print("------------------------------------------------------------------------ monthly DF:------------------------------------------")
+# print(monthlyDF)
+# print("=============================================================================================================== RAW DATA END =================================================================================================================")
 
-#  POPULATE THE NEWLY CREATED COLS:
+shapeGDF.to_csv("del_monthly.csv")
+# C) CON EDISON DOESNT INCLUDE DATA FROM STATEN ISLAND AND BROOKYLN SO GRAY THEM OUT
+# BROOKLYN OUTLINE GDF:
+print("Making Brooklyn and Staten Island Outline Maps...\n")
+bkGeoidList = list()
+for row in range(0, len(brooklynGDF)):
+    bkGeoidList.append(int(brooklynGDF.iloc[row]["GEOID10"]))
+brooklynOutlineGDF = shapeGDF.copy()
+brooklynOutlineGDF.drop(brooklynOutlineGDF.index, inplace=True)  
+skipGeoid = []
+for geoid in range(0, len(bkGeoidList)):        
+    bkGDF = shapeGDF.loc[                                                                               # thisMonthsDF = df that contains all rows for that month-year
+        (shapeGDF[GDF_GEOID_COL]  == bkGeoidList[geoid]) 
+    ]  
+    if len(bkGDF)==0:
+        print("******************* GEOID "+str(bkGeoidList[geoid])+" Is in the brooklyn geoi shp but not in nyc shp")
+    skipGeoid.extend(bkGDF.index.tolist())
+    bkGDF = bkGDF.reset_index(drop=True)
+    brooklynOutlineGDF = brooklynOutlineGDF.append(bkGDF)
+brooklynOutlineGDF.reset_index(drop=True)
+# STATEN ISLAND OUTLINE GDF:
+print("Making Brooklyn and Staten Island Outline Maps...\n")
+statenGeoidList = list()
+for row in range(0, len(statenGDF)):
+    statenGeoidList.append(int(statenGDF.iloc[row]["GEOID10"]))
+statenOutlineGDF = shapeGDF.copy()
+statenOutlineGDF.drop(statenOutlineGDF.index, inplace=True)  
+skipGeoid = []
+for geoid in range(0, len(statenGeoidList)):        
+    statenGDF = shapeGDF.loc[                                                                               # thisMonthsDF = df that contains all rows for that month-year
+        (shapeGDF[GDF_GEOID_COL]  == statenGeoidList[geoid]) 
+    ]  
+    if len(statenGDF)==0:
+        print("******************* GEOID "+str(statenGeoidList[geoid])+" Is in the staten island geoi shp but not in nyc shp")
+    skipGeoid.extend(statenGDF.index.tolist())
+    statenGDF = statenGDF.reset_index(drop=True)
+    statenOutlineGDF = statenOutlineGDF.append(statenGDF)
+statenOutlineGDF.reset_index(drop=True)
+
+
+
+# D) POPULATE THE NEWLY CREATED COLS:
 print("Populating new cols...")
 skipMonthIndex = []
 count = 0
@@ -62,12 +106,6 @@ for row in range(0,len(monthlyDF)):
     thisMonthsDF = thisMonthsDF.reset_index(drop=True)
     thisMonthGeoList = thisMonthsDF.GEOID_SCT.tolist()                                                          # need to put census tracts into an array, if i use directly from thisMonthsDF i get errors when there is no 
     thisMonthStr = monthlyDF['MonthYear'][row]
-    # print(len(thisMonthsDF))
-    # print(thisMonthsDF)
-    # countyTractMonth_list = thisMonthsDF.GEOID_SCT.tolist()
-    # print("\n----------------------------------------------------------------------------thisMonths data\n")
-    # print(thisMonthsDF)
-    # print("\n------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- Break down:\n")
 
     # 2) SAME COUNTY SEPERATION:
     skipCountyIndex = []
@@ -83,8 +121,6 @@ for row in range(0,len(monthlyDF)):
         skipCountyIndex.extend(thisMonthsCountyDF.index.tolist())
         thisMonthsCountyDF = thisMonthsCountyDF.reset_index(drop=True)
         thisCountyStr = monthlyDF['CountyName_2010'][row]
-        # print("======================================================================================================== RAW DATA FOR "+thisMonthsCountyDF.iloc[0]["CountyName_2010"])
-        # print(thisMonthsCountyDF)
 
         # 3) FROM THE SEPERATED COUNTY MINI DF -> FIND THE GEOID AND POPULATE THE COLS
         skipCountyGeoIdIndex = []
@@ -115,11 +151,16 @@ for row in range(0,len(monthlyDF)):
     countyTract_list = list()                                                            #
     for i in range(0, len(thisMonthPlotGDF)):
         countyTract_list.append(thisMonthPlotGDF.iloc[i]["CountyTract"])
+    thisMonthPlotGDF.to_csv("del_month.csv")
 
     # 5) PLOT THE MONTH'S DATA:
-    ax = shapeGDF.plot(alpha=0.08, figsize = (14,13))
-    map = thisMonthPlotGDF.plot(column='TotalMonthlyReport',cmap = 'Reds', edgecolor='black', linewidth = 0.3, figsize = (14,11),legend = True, ax=ax)#, ax=ax, alpha=1) #10,8
-    map.set_title(label = 'Number of Gas Leak Reports per Census Tract for\n{0}\n(Showing {2}/{3} GeoIDs/Census Tracts)'.format(thisMonthStr, len(countyTract_list), len(thisMonthPlotGDF), len(thisMonthsDF)), fontdict={'fontsize': 20}, loc='center')
+    figx = 14
+    figy = 13
+    ax = shapeGDF.plot(alpha=0.05, edgecolor='black', linewidth = 0.6, figsize = (figx,figy))
+    ax = brooklynOutlineGDF.plot(alpha=0.2, ax=ax, figsize = (figx,figy), color="black")
+    ax = statenOutlineGDF.plot(alpha=0.2, ax=ax, figsize = (figx,figy), color="black")
+    map = thisMonthPlotGDF.plot(column='TotalMonthlyReport',cmap = 'Reds', edgecolor='black', linewidth = 0.3, figsize = (figx,figy),legend = True, ax=ax)#, ax=ax, alpha=1) #10,8
+    map.set_title(label = 'Number of Gas Leak Reports per Census Tract for\n{0}\n(Showing {2}/{3} GeoIDs-Census Tracts)'.format(thisMonthStr, len(countyTract_list), len(thisMonthPlotGDF), len(thisMonthsDF)), fontdict={'fontsize': 20}, loc='center')
 
 #%%
 
