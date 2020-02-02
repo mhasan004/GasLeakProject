@@ -1,4 +1,5 @@
 #%%     
+# PLOTTING WITH GEOID, WESTCHESTER SHP NOT FOUND YET
 # Plotting the census tracts for all reports that appeared in a specific month                    
 # import contextily as ctx
 # import matploylib.pyplot as plt
