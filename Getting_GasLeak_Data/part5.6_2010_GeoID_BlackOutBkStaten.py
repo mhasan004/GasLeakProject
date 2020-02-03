@@ -46,7 +46,7 @@ shapeGDF[['bcode']] = shapeGDF[['bcode']].apply(pd.to_numeric).astype(int)
 shapeGDF.to_csv("del_monthly.csv")
 # C) CON EDISON DOESNT INCLUDE DATA FROM STATEN ISLAND AND BROOKYLN SO GRAY THEM OUT
 # BROOKLYN OUTLINE GDF:
-print("Making Brooklyn and Staten Island Outline Maps...\n")
+print("\nMaking Brooklyn and Staten Island Outline Maps...")
 bkGeoidList = list()
 for row in range(0, len(brooklynGDF)):
     bkGeoidList.append(int(brooklynGDF.iloc[row]["GEOID10"]))
@@ -58,13 +58,13 @@ for geoid in range(0, len(bkGeoidList)):
         (shapeGDF[GDF_GEOID_COL]  == bkGeoidList[geoid]) 
     ]  
     if len(bkGDF)==0:
-        print("******************* GEOID "+str(bkGeoidList[geoid])+" Is in the brooklyn geoi shp but not in nyc shp")
+        print("******************* GEOID "+str(bkGeoidList[geoid])+" is in the Brooklyn shapefile but is not in NYU NYC shapefile")
     skipGeoid.extend(bkGDF.index.tolist())
     bkGDF = bkGDF.reset_index(drop=True)
     brooklynOutlineGDF = brooklynOutlineGDF.append(bkGDF)
 brooklynOutlineGDF.reset_index(drop=True)
 # STATEN ISLAND OUTLINE GDF:
-print("Making Brooklyn and Staten Island Outline Maps...\n")
+print("\nMaking Brooklyn and Staten Island Outline Maps...")
 statenGeoidList = list()
 for row in range(0, len(statenGDF)):
     statenGeoidList.append(int(statenGDF.iloc[row]["GEOID10"]))
@@ -76,7 +76,7 @@ for geoid in range(0, len(statenGeoidList)):
         (shapeGDF[GDF_GEOID_COL]  == statenGeoidList[geoid]) 
     ]  
     if len(statenGDF)==0:
-        print("******************* GEOID "+str(statenGeoidList[geoid])+" Is in the staten island geoi shp but not in nyc shp")
+        print("******************* GEOID "+str(statenGeoidList[geoid])+" is in the Staten Island shapefile but is not in NYU NYC shapefile")
     skipGeoid.extend(statenGDF.index.tolist())
     statenGDF = statenGDF.reset_index(drop=True)
     statenOutlineGDF = statenOutlineGDF.append(statenGDF)
@@ -85,7 +85,7 @@ statenOutlineGDF.reset_index(drop=True)
 
 
 # D) POPULATE THE NEWLY CREATED COLS:
-print("Populating new cols...")
+print("\nPopulating new created columns and ploting monthly maps..")
 skipMonthIndex = []
 count = 0
 thisMonthPlotGDF = shapeGDF.copy()
