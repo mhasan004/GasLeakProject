@@ -10,84 +10,89 @@ import pandas as pd
 import numpy as np
 
 # A) CREATING DF AND GDF:
-shapeFile = "NYU_NYC_34505_SP/nyu_2451_34505.shp"
+nycFile = "NYU_NYC_34505_SP/nyu_2451_34505.shp"
 csvFile = "GasHistory_2010_ReportFrequency_Monthly.csv"
 brooklynFile = "TIGER_2010_County_Shapefiles/BrooklynCounty_2010SHP/tl_2010_36047_tract10.shp"
 statenFile = "TIGER_2010_County_Shapefiles/StatenIslanCounty_2010SHP"
 westchesterFile = "TIGER_2010_County_Shapefiles/WestchesterCounty_2010SHP/tl_2010_36119_tract10.shp"
+westchesterFile2 = "westchester2010/wctigtrt10.shp"
 monthlyDF = pd.read_csv(csvFile)                                                                            # Read the csv file and make a data frame
-shapeGDF = gp.read_file(shapeFile)                                                                           # Read the shape file and make a data frame
+nycGDF = gp.read_file(nycFile)                                                                           # Read the shape file and make a data frame
 brooklynGDF = gp.read_file(brooklynFile)
 statenGDF = gp.read_file(statenFile)
 westchesterGDF = gp.read_file(westchesterFile)
+westchesterGDF2 = gp.read_file(westchesterFile2)
 
 GDF_GEOID_COL = "tractid"
 DF_GEOID_COL  = "GEOID_SCT"
 MIN_NUM_TRACTS_NEEDED_TO_PRINT = 150 #max westchester got in a month is 110
 
-# B) ADDING NEW COLS TO SHAPEGDF AND CHANGING DATATYPE OF COLS SO WE CAN COMPARE THEM:
-shapeGDF["MonthYear"] = str                                                                               # adding two new cols to shapeGDF
-shapeGDF["TotalMonthlyReport" ] = int
-shapeGDF["CountyName"] = str 
-shapeGDF["CensusBlockID_list"] = str  
-shapeGDF["Ticket_list"] = str  
-shapeGDF["Classification_list"] = str  
-shapeGDF["Zipcode_list"] = str 
-shapeGDF["CountyTract"] = str
-shapeGDF[[GDF_GEOID_COL]] = shapeGDF[[GDF_GEOID_COL]].apply(pd.to_numeric).astype(int)                                      # Turning GDF_GEOID_COL - the CensusTract number to numpy.int64 values so can query them
-shapeGDF[['tractid']] = shapeGDF[['tractid']].apply(pd.to_numeric).astype(int)  
-shapeGDF[['tractnum']] = shapeGDF[['tractnum']].apply(pd.to_numeric).astype(int)  
-shapeGDF[['name']] = shapeGDF[['name']].apply(pd.to_numeric).astype(int) 
-shapeGDF[['bcode']] = shapeGDF[['bcode']].apply(pd.to_numeric).astype(int) 
+# B) ADDING NEW COLS TO nycGDF AND CHANGING DATATYPE OF COLS SO WE CAN COMPARE THEM:
+nycGDF["MonthYear"] = str                                                                               # adding two new cols to nycGDF
+nycGDF["TotalMonthlyReport" ] = int
+nycGDF["CountyName"] = str 
+nycGDF["CensusBlockID_list"] = str  
+nycGDF["Ticket_list"] = str  
+nycGDF["Classification_list"] = str  
+nycGDF["Zipcode_list"] = str 
+nycGDF["CountyTract"] = str
+nycGDF[[GDF_GEOID_COL]] = nycGDF[[GDF_GEOID_COL]].apply(pd.to_numeric).astype(int)                                      # Turning GDF_GEOID_COL - the CensusTract number to numpy.int64 values so can query them
+nycGDF[['tractid']] = nycGDF[['tractid']].apply(pd.to_numeric).astype(int)  
+nycGDF[['tractnum']] = nycGDF[['tractnum']].apply(pd.to_numeric).astype(int)  
+nycGDF[['name']] = nycGDF[['name']].apply(pd.to_numeric).astype(int) 
+nycGDF[['bcode']] = nycGDF[['bcode']].apply(pd.to_numeric).astype(int) 
 # print("======================================================================================================== RAW DATA: GDF and monthly DF ========================================================================================================")
-# print(shapeGDF)
+# print(nycGDF)
 # print("------------------------------------------------------------------------ monthly DF:------------------------------------------")
 # print(monthlyDF)
 # print("=============================================================================================================== RAW DATA END =================================================================================================================")
 
-# C) CON EDISON DOESNT INCLUDE DATA FROM STATEN ISLAND AND BROOKYLN SO GRAY THEM OUT
-# BROOKLYN OUTLINE GDF:
-print("\nMaking Brooklyn and Staten Island Outline Maps...")
-bkGeoidList = list()
-for row in range(0, len(brooklynGDF)):
-    bkGeoidList.append(int(brooklynGDF.iloc[row]["GEOID10"]))
-brooklynOutlineGDF = shapeGDF.copy()
-brooklynOutlineGDF.drop(brooklynOutlineGDF.index, inplace=True)  
-skipGeoid = []
-for geoid in range(0, len(bkGeoidList)):        
-    bkGDF = shapeGDF.loc[                                                                               # thisMonthsDF = df that contains all rows for that month-year
-        (shapeGDF[GDF_GEOID_COL]  == bkGeoidList[geoid]) 
-    ]  
-    if len(bkGDF)==0:
-        print("******************* GEOID "+str(bkGeoidList[geoid])+" is in the Brooklyn shapefile but is not in NYU NYC shapefile")
-    skipGeoid.extend(bkGDF.index.tolist())
-    bkGDF = bkGDF.reset_index(drop=True)
-    brooklynOutlineGDF = brooklynOutlineGDF.append(bkGDF)
-brooklynOutlineGDF.reset_index(drop=True)
-# STATEN ISLAND OUTLINE GDF:
-print("\nMaking Brooklyn and Staten Island Outline Maps...")
-statenGeoidList = list()
-for row in range(0, len(statenGDF)):
-    statenGeoidList.append(int(statenGDF.iloc[row]["GEOID10"]))
-statenOutlineGDF = shapeGDF.copy()
-statenOutlineGDF.drop(statenOutlineGDF.index, inplace=True)  
-skipGeoid = []
-for geoid in range(0, len(statenGeoidList)):        
-    statenGDF = shapeGDF.loc[                                                                               # thisMonthsDF = df that contains all rows for that month-year
-        (shapeGDF[GDF_GEOID_COL]  == statenGeoidList[geoid]) 
-    ]  
-    if len(statenGDF)==0:
-        print("******************* GEOID "+str(statenGeoidList[geoid])+" is in the Staten Island shapefile but is not in NYU NYC shapefile")
-    skipGeoid.extend(statenGDF.index.tolist())
-    statenGDF = statenGDF.reset_index(drop=True)
-    statenOutlineGDF = statenOutlineGDF.append(statenGDF)
-statenOutlineGDF.reset_index(drop=True)
+# # C) CON EDISON DOESNT INCLUDE DATA FROM STATEN ISLAND AND BROOKYLN SO GRAY THEM OUT
+# # BROOKLYN OUTLINE GDF:
+# print("\nMaking Brooklyn and Staten Island Outline Maps...")
+# bkGeoidList = list()
+# for row in range(0, len(brooklynGDF)):
+#     bkGeoidList.append(int(brooklynGDF.iloc[row]["GEOID10"]))
+# brooklynOutlineGDF = nycGDF.copy()
+# brooklynOutlineGDF.drop(brooklynOutlineGDF.index, inplace=True)  
+# skipGeoid = []
+# for geoid in range(0, len(bkGeoidList)):        
+#     bkGDF = nycGDF.loc[                                                                               # thisMonthsDF = df that contains all rows for that month-year
+#         (nycGDF[GDF_GEOID_COL]  == bkGeoidList[geoid]) 
+#     ]  
+#     if len(bkGDF)==0:
+#         print("******************* GEOID "+str(bkGeoidList[geoid])+" is in the Brooklyn nycFile but is not in NYU NYC nycFile")
+#     skipGeoid.extend(bkGDF.index.tolist())
+#     bkGDF = bkGDF.reset_index(drop=True)
+#     brooklynOutlineGDF = brooklynOutlineGDF.append(bkGDF)
+# brooklynOutlineGDF.reset_index(drop=True)
+# # STATEN ISLAND OUTLINE GDF:
+# print("\nMaking Brooklyn and Staten Island Outline Maps...")
+# statenGeoidList = list()
+# for row in range(0, len(statenGDF)):
+#     statenGeoidList.append(int(statenGDF.iloc[row]["GEOID10"]))
+# statenOutlineGDF = nycGDF.copy()
+# statenOutlineGDF.drop(statenOutlineGDF.index, inplace=True)  
+# skipGeoid = []
+# for geoid in range(0, len(statenGeoidList)):        
+#     statenGDF = nycGDF.loc[                                                                               # thisMonthsDF = df that contains all rows for that month-year
+#         (nycGDF[GDF_GEOID_COL]  == statenGeoidList[geoid]) 
+#     ]  
+#     if len(statenGDF)==0:
+#         print("******************* GEOID "+str(statenGeoidList[geoid])+" is in the Staten Island nycFile but is not in NYU NYC nycFile")
+#     skipGeoid.extend(statenGDF.index.tolist())
+#     statenGDF = statenGDF.reset_index(drop=True)
+#     statenOutlineGDF = statenOutlineGDF.append(statenGDF)
+# statenOutlineGDF.reset_index(drop=True)
 
-# D.0) GETER FILE
-statenGDF.plot()
+# D.0) MERGE WESTCHESTER AND SHAPE GDF
 
+westchesterGDF2.plot()  # Westchester county map (connects directy with the nyc map)
+nycGDF.plot()           # NYC map
+ax = nycGDF.plot()
+westchesterGDF2.plot(ax=ax)
 
-
+#%%
 
 
 
@@ -96,7 +101,7 @@ statenGDF.plot()
 # print("\nPopulating new created columns and ploting monthly maps..")
 # skipMonthIndex = []
 # count = 0
-# thisMonthPlotGDF = shapeGDF.copy()
+# thisMonthPlotGDF = nycGDF.copy()
 # # 0) GO THROUGH EACH ROW OF THE MONTHLY CSV DATA AND PULL OUT ALL ROWS THAT ARE IN THE SAME MONTH -> FROM EACH MINI MONTH SEPERATED DF, SEPERATE FUTHER BY COUNTY NAME -> USE THE GEOID OF EACH COUNTY TO NAME THE GDF FILE
 # for row in range(0,len(monthlyDF)):
 #     thisMonthPlotGDF.drop(thisMonthPlotGDF.index, inplace=True)                           # resetting the month df for this new month
@@ -135,8 +140,8 @@ statenGDF.plot()
 #         for row3 in range(0,len(thisMonthsCountyDF)):
 #             if row3 in skipCountyGeoIdIndex:
 #                 continue
-#             thisMonthsCountyGeoGDF = shapeGDF.loc[                                                                               # thisMonthsCountyDF = df that contains all rows for that month-year
-#                 (shapeGDF[GDF_GEOID_COL]  == thisMonthsCountyDF[DF_GEOID_COL][row3]) 
+#             thisMonthsCountyGeoGDF = nycGDF.loc[                                                                               # thisMonthsCountyDF = df that contains all rows for that month-year
+#                 (nycGDF[GDF_GEOID_COL]  == thisMonthsCountyDF[DF_GEOID_COL][row3]) 
 #             ]      
 #             if len(thisMonthsCountyGeoGDF) == 0 and thisCountyStr != "Westchester County":                                                                                  # If these r no reports for this month-year so skip
 #                 print("----------------- NO BLOCK FOR THIS COUNTY: ")#+thisMonthsCountyGeoGDF[GDF_GEOID_COL][row3])
@@ -164,7 +169,7 @@ statenGDF.plot()
 #     # 5) PLOT THE MONTH'S DATA:
 #     figx = 14
 #     figy = 13
-#     ax = shapeGDF.plot(alpha=0.05, edgecolor='black', linewidth = 0.6, figsize = (figx,figy))
+#     ax = nycGDF.plot(alpha=0.05, edgecolor='black', linewidth = 0.6, figsize = (figx,figy))
 #     ax = brooklynOutlineGDF.plot(alpha=0.2, ax=ax, figsize = (figx,figy), color="black")
 #     ax = statenOutlineGDF.plot(alpha=0.2, ax=ax, figsize = (figx,figy), color="black")
 #     map = thisMonthPlotGDF.plot(column='TotalMonthlyReport',cmap = 'Reds', edgecolor='black', linewidth = 0.3, figsize = (figx,figy),legend = True, ax=ax)#, ax=ax, alpha=1) #10,8
