@@ -30,12 +30,12 @@ GDF_NYC_GEOID_COL = "tractid"
 GDF_West_GEOID_COL = "GEOID10"
 GDF_NYC_CENSUS_COL = "namelsad"
 GDF_West_CENSUS_COL = "NAMELSAD10"
-MIN_NUM_TRACTS_NEEDED_TO_PRINT = 200 #max westchester got in a month is 110
+MIN_NUM_TRACTS_NEEDED_TO_PRINT = 150 #max westchester got in a month is 110
 
 # B1) ADDING NEW COLS TO nycGDF westchesterGDF:    
 # B2) CHNAGE DATATYPE OF COLS SO WE CAN COMPARE THEM:
-mapArray = [nycGDF, westchesterGDF]
-geoidColArray = [GDF_NYC_GEOID_COL, GDF_West_GEOID_COL]
+mapArray       = [nycGDF,             westchesterGDF]
+geoidColArray  = [GDF_NYC_GEOID_COL,  GDF_West_GEOID_COL]
 censusColArray = [GDF_NYC_CENSUS_COL, GDF_West_CENSUS_COL]
 for mapt in range(0,len(mapArray)):
     mapArray[mapt]["MonthYear"] = str                                                                                               # adding two new cols to nycGDF
@@ -116,6 +116,23 @@ for row in range(0,len(monthlyDF)):
     thisMonthGeoList = thisMonthsDF.GEOID_SCT.tolist()                                                          # need to put census tracts into an array, if i use directly from thisMonthsDF i get errors when there is no 
     thisMonthYrStr = monthlyDF['MonthYear'][row]
 
+    # 1.2) CHECKING NUMBER FOR NYC AND WESTCHESTER COUNTY FROM CONED DATA 
+    westCount = 0
+    west = []
+    nycCount = 0
+    nyc = []
+    for i in range(0,len(thisMonthsDF)):
+        if thisMonthsDF.iloc[i]["CountyName_2010"]=="Westchester County":
+            westCount = westCount+1
+            west.append(thisMonthsDF.iloc[i][DF_GEOID_COL])
+        else:
+            nycCount = nycCount + 1
+            nyc.append(thisMonthsDF.iloc[i][DF_GEOID_COL])
+    print("--------------------------"+thisMonthYrStr)
+    print("coned data - nyc  count: "+str(nycCount) + "          array len: "+str(len(nyc)))
+    print("coned data - west count: "+str(westCount)+ "          array len: "+str(len(west)))
+    print("coned data - total:  "+str(nycCount+westCount)+"/"+str(len(thisMonthsDF)))
+    
     # 2) FOR CURRENT MONTH -> SEPERATE BY COUNTIES:
     skipCountyIndex = []
     for row2 in range(0,len(thisMonthsDF)):
@@ -130,26 +147,23 @@ for row in range(0,len(monthlyDF)):
         skipCountyIndex.extend(thisMonthsCountyDF.index.tolist())
         thisMonthsCountyDF = thisMonthsCountyDF.reset_index(drop=True)
         thisCountyStr = thisMonthsDF.iloc[row2]["CountyName_2010"]
-  
-        # 3) FOR THE COUNTY -> FIND THE GEOIDS POPULATE THE COLS
-        skipCountyGeoIdIndex = []
+        
+        # 2.2) I HAVE TWO SHAPEFILES (NYC, Westchester). My data has all the counties. Using target index, mapArray[] and geoidColArray[] to choose the shapefile i want
+        target = 0
+        if thisCountyStr == "Westchester County":
+            target = 1
+        
+        # 3) FOR THE COUNTY -> FIND THE GEOIDS FROM THE SHP AND POPULATE THE COLS
+        rowCOunterc = -1
         for row3 in range(0,len(thisMonthsCountyDF)):
-            if row3 in skipCountyGeoIdIndex:
-                continue
-            
-            # I HAVE TWO SHAPEFILES (NYC, Westchester). My data has all the counties. Using target index, mapArray[] and geoidColArray[] to choose the shapefile i want
-            target = 0
-            if thisCountyStr == "Westchester County":
-                target = 1
-
             thisMonthsCountyGeoGDF = mapArray[target].loc[                                                                               # thisMonthsCountyDF = df that contains all rows for that month-year
                 (mapArray[target][geoidColArray[target]]  == thisMonthsCountyDF[DF_GEOID_COL][row3]) 
             ] 
             if len(thisMonthsCountyGeoGDF) == 0:                                                                                  # If these r no reports for this month-year so skip
                 print("----------------- "+ thisMonthYrStr +":        NO GEOID THIS MONTH FOR COUNTY "+thisCountyStr)#+thisMonthsCountyGeoGDF[GDF_NYC_GEOID_COL][row3])
                 continue
-            skipCountyGeoIdIndex.extend(thisMonthsCountyGeoGDF.index.tolist())
             thisMonthsCountyGeoGDF  = thisMonthsCountyGeoGDF.reset_index(drop=True)
+
             # 4) POPULATING THE COLS I ADDED FROM THE MONTHLY CSV DATA FOR THE SAME GEOIDS
             thisMonthsCountyGeoGDF.at[0, "MonthYear"] = thisMonthsCountyDF.loc[row3]["MonthYear"]
             thisMonthsCountyGeoGDF.at[0, "TotalMonthlyReport"] = thisMonthsCountyDF.loc[row3]["TotalReports"]
@@ -161,29 +175,29 @@ for row in range(0,len(monthlyDF)):
             thisMonthsCountyGeoGDF.at[0, "CountyTract"] = thisMonthsCountyGeoGDF.iloc[0]["CountyName"]+"-"+str(thisMonthsCountyGeoGDF.iloc[0][censusColArray[target]]).split(" ")[2]   # Add "CountyName-TractNum" to the col
             if target == 0:
                 thisMonthPlot_nycGDF  = thisMonthPlot_nycGDF.append(thisMonthsCountyGeoGDF)
-            else:
+            elif target == 1:
                 thisMonthPlot_westGDF = thisMonthPlot_westGDF.append(thisMonthsCountyGeoGDF)
+            else:
+                print("ISSSSSSSSSSSSSSSUUUUUUUUUUUUUUUUUEEEEEEEEEEEEEEEEEEEEEEE!")
+            # print("")
         thisMonthPlot_westGDF = thisMonthPlot_westGDF.reset_index(drop=True)
         thisMonthPlot_nycGDF = thisMonthPlot_nycGDF.reset_index(drop=True)
-    countyTract_NYClist = list()                                                            #
-    for i in range(0, len(thisMonthPlot_nycGDF)):
-        countyTract_NYClist.append(thisMonthPlot_nycGDF.iloc[i]["CountyTract"])
-    countyTract_westlist = list()                                                            #
-    for i in range(0, len(thisMonthPlot_westGDF)):
-        countyTract_westlist.append(thisMonthPlot_westGDF.iloc[i]["CountyTract"])
+    print("plot nyc len: "+str(len(thisMonthPlot_nycGDF)))
+    print("plot west len: "+str(len(thisMonthPlot_westGDF)))
+    print('Plot total: '+str(len(thisMonthPlot_nycGDF)+ len(thisMonthPlot_westGDF))+"/"+str(len(thisMonthsDF)))
 
     # 5) PLOT THE MONTH'S DATA:
     figx = 14
     figy = 13
     ax = nycGDF.plot(alpha=0.05, edgecolor='black', linewidth = 0.6, figsize = (figx,figy))
-    ax = brooklynOutlineGDF.plot(alpha=0.2, ax=ax, figsize = (figx,figy), color="black")
-    ax = statenOutlineGDF.plot(alpha=0.2, ax=ax, figsize = (figx,figy), color="black")
+    ax = brooklynOutlineGDF.plot(alpha=0.5, ax=ax, figsize = (figx,figy), color="black")
+    ax = statenOutlineGDF.plot(alpha=0.5, ax=ax, figsize = (figx,figy), color="black")
     
     ax = thisMonthPlot_nycGDF.plot(column='TotalMonthlyReport',cmap = 'Reds', edgecolor='black', linewidth = 0.3, figsize = (figx,figy),legend = True, ax=ax)#, ax=ax, alpha=1) #10,8
     # map.set_title(label = 'Number of Gas Leak Reports per Census Tract for\n{0}\n(Showing {1}/{2} GeoIDs-Census Tracts)\n(Remaining Census Tracts are in Westcester County which isnt Plotted)'.format(thisMonthYrStr, len(thisMonthPlot_nycGDF), len(thisMonthsDF)), fontdict={'fontsize': 20}, loc='center')
     
     ax = westchesterGDF.plot(alpha=0.05, edgecolor='black', linewidth = 0.6, figsize = (figx,figy), ax=ax)
     map = thisMonthPlot_westGDF.plot(column='TotalMonthlyReport',cmap = 'Reds', edgecolor='black', linewidth = 0.3, figsize = (figx,figy),legend = True, ax=ax)#, ax=ax, alpha=1) #10,8
-    map.set_title(label = 'Number of Gas Leak Reports per Census Tract for\n{0}\n(Showing {1}/{2} GeoIDs-Census Tracts)\n(Remaining Census Tracts are in Westcester County which isnt Plotted)'.format(thisMonthYrStr, (len(thisMonthPlot_westGDF)+len(thisMonthPlot_nycGDF)), len(thisMonthsDF)), fontdict={'fontsize': 20}, loc='center')
+    map.set_title(label = 'Number of Gas Leak Reports per Census Tract for\n{0}\n(Showing {1}/{2} GeoIDs-Census Tracts)'.format(thisMonthYrStr, (len(thisMonthPlot_westGDF)+len(thisMonthPlot_nycGDF)), len(thisMonthsDF)), fontdict={'fontsize': 20}, loc='center')
 
 #%%
