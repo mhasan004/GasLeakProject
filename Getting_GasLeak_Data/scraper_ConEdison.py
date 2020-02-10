@@ -93,8 +93,8 @@ def turnTickeyHistory_toHourlyReport():
     csvHeader = ["Date","Hour","CensusTract","NumberOfReports"]                                                     # My new csv need these headers        
     csvOutClear = open(csvHourlyFile, "w")
     csvOutClear.truncate()                                                                                          # deleting everything in the file (will delete this code once i figure out how to update existing file)
-    with open(csvHourlyFile, 'r') as csvFile:                                                                       # Open the csv File so we can read it
-        csvTable = [row for row in csv.DictReader(csvFile)]
+    with open(csvHourlyFile, 'r') as csvFile2:                                                                       # Open the csv File so we can read it
+        csvTable = [row for row in csv.DictReader(csvFile2)]
         if len(csvTable) == 0:                                                                                      # a) csv is empty so add my header: ['Date', 'Hour', 'CensusTract', 'NumberOfReports']
             with open(csvHourlyFile, 'w', newline='') as outf:
                 writer = csv.writer(outf)
