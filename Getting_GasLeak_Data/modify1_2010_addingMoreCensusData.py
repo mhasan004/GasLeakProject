@@ -5,6 +5,7 @@ import json
 import pandas as pd                                                                     # To read and write csv files
 import numpy as np
 csvFile  = "del.csv"#"GasHistory_2010_ConEdisonTracts.csv"
+csvFile2  = "del2.csv"#"GasHistory_2010_ConEdisonTracts.csv"
 
 print("**** NEED TO DELETE THE ORIGINAL 2019 CENSUS TRACT,BLOCK AND COUNTY COLUMNS FROM THE OLD FILE - or just delete after runing this and use excel to del manually*****")
 # Function to populate those expandCols
@@ -39,7 +40,7 @@ def getCensusTract(longitude, latitude,retryRun=0):                             
     return
 
 # A) adding empty new cols to the df
-print("A")
+print("A Progess")
 expandCols = [ "CensusTract_2010", "CensusBlock_2010", "CountyName_2010", "GEOID_2010", 
     "CensusTract_2010_ID", "CensusTract_2010_NAME", "CensusBlock_2010_ID", "CensusBlock_2010_NAME"]  
 df = pd.read_csv(csvFile)                                                          # read the csv file and store to df
@@ -47,17 +48,16 @@ for col in range(0, len(expandCols)):
     df[expandCols[col]] = np.str
 
 # B) Using census api to fill in the cols
-print("B")
+print("B Progress")
 for row in range(0,len(df)):
     retryRun = 0
     print(row)
     returnArray = getCensusTract(float(df.iloc[row]["Longitude"].item()), float(df.iloc[row]["Latitude"].item()))    # returnArray = [tractBASENAME, blockBASENAME, countyName, geoid, tract id, tract name, block id, block name]
-    
     # Make sure the "expandCols" index and "returnArray" index are the same so it prints to right cols
     if len(expandCols) == len(returnArray):
         for colToWrite in range(0, len(expandCols)):
             df.at[row, expandCols[colToWrite]] = returnArray[colToWrite] 
     else:
         print("*** Number of col to add and values to polulate cols are not the same!! ******")
-
-df.to_csv(csvFile, index=False)
+df = df.drop(columns = ['CensusBlock', 'CensusTract', 'CountyName'])
+df.to_csv(csvFile2, index=False)

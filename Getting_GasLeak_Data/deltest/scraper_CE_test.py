@@ -27,7 +27,9 @@ csvHourlyFile   = "hourly.csv"  #"GasHistory_ReportFrequency_Hourly.csv"        
 csvMonthlyFile  = "monthly.csv" #"GasHistory_ReportFrequency_Monthly.csv"                                                           # IN PART C weill will use the hourly csv to create the number of reports for the month
 jsonFile = "SOME_JSON_FILE.json"                                                                                    # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
 url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&'                                          # Url to scrape JSOn data from
-replaceColWith = ["Date", "Time", "Hour", "CensusTract", "CensusBlock", "CountyName" ]                              # Replacing column DateReported with these "Date", "Time", "Hour and Made 3 more cols for Part 2 Census data
+replaceColWith = ["Date", "Time", "Hour", 
+ "CensusTract_2010", "CensusBlock_2010", "CountyName_2010", "GEOID_2010", 
+    "CensusTract_2010_ID", "CensusTract_2010_NAME", "CensusBlock_2010_ID", "CensusBlock_2010_NAME"]                              # Replacing column DateReported with these "Date", "Time", "Hour and Made 3 more cols for Part 2 Census data
 
 PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'                                                       # the path to the .git file (.git location on my raspberry pi)
 # PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'                                                  # the path to the .git file (.git location on my Laptop)
@@ -66,22 +68,34 @@ def turnToDateTimeHr(microsoftDate):
 
 # PART B FUNCTION: Get [CensusTrack, CensusBlock, CountyName] from Longitude and Latitude coordintes using the Census Beru's API which returns a JSON file 
 def getCensusTract(longitude, latitude, retryRun = 0):                                                                 # returns an array [censusTract, CensusBlock, CountyName]
-    url = "https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x={0}&y={1}&benchmark=Public_AR_Current&vintage=Current_Current&format=json".format(longitude,latitude)
+    #url = "https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x={0}&y={1}&benchmark=Public_AR_Current&vintage=Current_Current&format=json".format(longitude,latitude)
+    url = "https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x={0}&y={1}&benchmark=Public_AR_Census2010&vintage=Census2010_Census2010&format=json".format(longitude,latitude)
     if retryRun == 11:                                                                                              # Failed to get json data 11 times with this longitude and latitude so need to skip this one
         print("*****Failed 11 times to get geodata so will insert 'error'*****")
         return [str("error"), str("error"), str("error")]
     try:
         response = requests.get(url)
         dataJSON = response.json()
-        data = dataJSON["result"]
-        track = data["geographies"]["Census Tracts"][0]["BASENAME"]
-        block = data["geographies"]["2010 Census Blocks"][0]["BLOCK"]
-        county = data["geographies"]["Counties"][0]["NAME"] 
-        return [str(track), str(block), str(county)]
+        data    = dataJSON["result"]
+
+        tractNAME     = data["geographies"]["Census Tracts"][0]["NAME"]
+        tractBASENAME = data["geographies"]["Census Tracts"][0]["BASENAME"]
+        tractID       = data["geographies"]["Census Tracts"][0]["TRACT"]
+        countyNAME    = data["geographies"]["Counties"][0]["NAME"] 
+        blockGEOID =  data["geographies"]["Census Blocks"][0]["GEOID"]
+        blockNAME     = data["geographies"]["Census Blocks"][0]["NAME"] 
+        blockBASENAME = data["geographies"]["Census Blocks"][0]["BASENAME"]
+        blockID       = data["geographies"]["Census Blocks"][0]["BLOCK"]
+        # Returns: tractBASENAME, blockBASENAME, countyName, geoid, tractid and name, block id and name
+        return [
+            str(tractBASENAME), str(blockBASENAME), str(countyNAME), str(blockGEOID), 
+            str(tractID), str(tractNAME), str(blockID), str(blockNAME)
+        ]
     except:
         retryRun+=1
         print("Error on longitude, latitude: "+str(longitude)+","+str(latitude) + ".....retrying... "+str(retryRun))
         return getCensusTract(longitude, latitude,retryRun)                                                         # need to return the recursive function
+    return
 
 # PART C1 FUNCTION: Make Hourly reports from the gas leak history csv file
 def turnTickeyHistory_toHourlyReport():
@@ -217,6 +231,7 @@ def WebscraperJsonToCSV():
         print("Couldnt get the json data so will re-run function. This is Run "+ str(scrapingCount))
         scheduler.resume() #****resuming the job 
         return WebscraperJsonToCSV()
+
     # 2) MODIFY CSV FILE: 
         # a) CSV IS EMPTY: print the the headers I want. 
         # b) CSV NOT EMPTY: Get the header and that is what we will work with. Im also droping columns from json DF and adding new col titles to csvHeader array
@@ -285,7 +300,7 @@ def WebscraperJsonToCSV():
        outCSV.write(newTicketDF.to_csv(header=False, index=False))
     
     # 7) WRITING NEW HOURLY FILE BASED ON GAS LEAK HISTORY FILE AND PUSHING TO GH
-    turnTickeyHistory_toHourlyReport()
+    # turnTickeyHistory_toHourlyReport()
     # turnHourly_toMonthlyReport()
     # git_push()
     print("*************** PUSHED ***************")
