@@ -4,8 +4,8 @@ import requests
 import json
 import pandas as pd                                                                     # To read and write csv files
 import numpy as np
-csvFile  = "del.csv"#"GasHistory_2010_ConEdisonTracts.csv"
-csvFile2  = "del2.csv"#"GasHistory_2010_ConEdisonTracts.csv"
+csvFile   = "del.csv"#"DataFiles/GasHistory_2010_ConEdisonTracts.csv"
+csvFile2  = "del2.csv"#"DataFiles/GasHistory_2010_ConEdisonTracts.csv"
 
 print("**** NEED TO DELETE THE ORIGINAL 2019 CENSUS TRACT,BLOCK AND COUNTY COLUMNS FROM THE OLD FILE - or just delete after runing this and use excel to del manually*****")
 # Function to populate those expandCols
