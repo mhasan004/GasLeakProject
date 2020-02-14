@@ -1,87 +1,146 @@
 MonthYear,CensusTract_2010,TotalReports,CensusTract_2010_ID,CensusTract_2010_NAME,CountyName_2010,GEOID_SCT,CensusBlockID_list,Zipcode_list,Ticket_list,Classification_list,Month,Year
+February-2020,146.07,2,14607,Census Tract 146.07,Westchester County,36119014607,"[2012, 2025]","[10567, 10567]","['WL20002004', 'WL20002015']","['M', 'P']",2,2020
 February-2020,146.06,1,14606,Census Tract 146.06,Westchester County,36119014606,[2016],[10567],['WL20001788'],['M'],2,2020
-February-2020,139.0,2,13900,Census Tract 139,Westchester County,36119013900,"[3005, 2000]","[10520, 10520]","['WL20001626', 'WL20001640']","['M', 'P']",2,2020
-February-2020,136.0,1,13600,Census Tract 136,Westchester County,36119013600,[3012],[10562],['WL20001652'],['M'],2,2020
+February-2020,145.0,1,14500,Census Tract 145,Westchester County,36119014500,[2002],[10566],['WL20001870'],['M'],2,2020
+February-2020,139.0,3,13900,Census Tract 139,Westchester County,36119013900,"[4024, 3005, 2000]","[10520, 10520, 10520]","['WL20001928', 'WL20001626', 'WL20001640']","['M', 'M', 'P']",2,2020
+February-2020,136.0,2,13600,Census Tract 136,Westchester County,36119013600,"[3012, 3012]","[10562, 10562]","['WL20001974', 'WL20001652']","['P', 'M']",2,2020
 February-2020,131.02,1,13102,Census Tract 131.02,Westchester County,36119013102,[3019],[10514],['WL20001650'],['M'],2,2020
 February-2020,130.0,2,13000,Census Tract 130,Westchester County,36119013000,"[3000, 2001]","[10549, 10549]","['WL20001660', 'WL20001665']","['P', 'P']",2,2020
+February-2020,129.0,1,12900,Census Tract 129,Westchester County,36119012900,[1010],[10549],['WL20001949'],['M'],2,2020
+February-2020,127.0,1,12700,Census Tract 127,Westchester County,36119012700,[4024],[10506],['WL20001996'],['P'],2,2020
 February-2020,122.0,2,12200,Census Tract 122,Westchester County,36119012200,"[5039, 4006]","[10570, 10570]","['WL20001784', 'WL20001503']","['M', 'P']",2,2020
 February-2020,121.02,1,12102,Census Tract 121.02,Westchester County,36119012102,[3027],[10594],['WL20001754'],['M'],2,2020
+February-2020,119.02,1,11902,Census Tract 119.02,Westchester County,36119011902,[3004],[10595],['WL20001933'],['P'],2,2020
 February-2020,118.0,1,11800,Census Tract 118,Westchester County,36119011800,[3037],[10570],['WL20001654'],['P'],2,2020
 February-2020,116.0,2,11600,Census Tract 116,Westchester County,36119011600,"[3000, 3000]","[10591, 10591]","['WL20001740', 'WL20001666']","['M', 'M']",2,2020
-February-2020,115.0,1,11500,Census Tract 115,Westchester County,36119011500,[1022],[10591],['WL20001843'],['M'],2,2020
-February-2020,114.0,1,11400,Census Tract 114,Westchester County,36119011400,[1047],[10533],['WL20001773'],['P'],2,2020
-February-2020,112.0,1,11200,Census Tract 112,Westchester County,36119011200,[4040],[10523],['WL20001676'],['M'],2,2020
+February-2020,115.0,2,11500,Census Tract 115,Westchester County,36119011500,"[1026, 1022]","[10591, 10591]","['WL20002017', 'WL20001843']","['P', 'M']",2,2020
+February-2020,114.0,2,11400,Census Tract 114,Westchester County,36119011400,"[4018, 1047]","[10591, 10533]","['WL20002007', 'WL20001773']","['M', 'P']",2,2020
+February-2020,112.0,3,11200,Census Tract 112,Westchester County,36119011200,"[2040, 2040, 4040]","[10523, 10523, 10523]","['WL20002021', 'WL20002022', 'WL20001676']","['M', 'P', 'M']",2,2020
+February-2020,111.01,1,11101,Census Tract 111.01,Westchester County,36119011101,[1007],[10591],['WL20002052'],['M'],2,2020
 February-2020,110.0,1,11000,Census Tract 110,Westchester County,36119011000,[2015],[10523],['WL20001728'],['M'],2,2020
-February-2020,109.03,1,10903,Census Tract 109.03,Westchester County,36119010903,[2021],[10607],['WL20001672'],['P'],2,2020
+February-2020,109.03,2,10903,Census Tract 109.03,Westchester County,36119010903,"[4005, 2021]","[10607, 10607]","['WL20001894', 'WL20001672']","['P', 'P']",2,2020
 February-2020,109.02,2,10902,Census Tract 109.02,Westchester County,36119010902,"[4025, 4025]","[10607, 10603]","['WL20001668', 'WL20001648']","['P', 'P']",2,2020
 February-2020,109.01,1,10901,Census Tract 109.01,Westchester County,36119010901,[1037],[10603],['WL20001839'],['M'],2,2020
 February-2020,108.03,1,10803,Census Tract 108.03,Westchester County,36119010803,[2010],[10530],['WL20001774'],['M'],2,2020
+February-2020,108.01,2,10801,Census Tract 108.01,Westchester County,36119010801,"[2021, 2022]","[10583, 10530]","['WL20002009', 'WL20001910']","['P', 'M']",2,2020
 February-2020,106.0,1,10600,Census Tract 106,Westchester County,36119010600,[3008],[10502],['WL20001613'],['M'],2,2020
 February-2020,99.0,1,9900,Census Tract 99,Westchester County,36119009900,[3003],[10583],['WL20001500'],['M'],2,2020
+February-2020,98.0,1,9800,Census Tract 98,Westchester County,36119009800,[2023],[10583],['WL20001945'],['P'],2,2020
+February-2020,97.02,2,9702,Census Tract 97.02,Westchester County,36119009702,"[3020, 2024]","[10605, 10605]","['WL20001935', 'WL20001962']","['P', 'P']",2,2020
 February-2020,97.01,1,9701,Census Tract 97.01,Westchester County,36119009701,[3016],[10605],['WL20001679'],['M'],2,2020
+February-2020,94.0,2,9400,Census Tract 94,Westchester County,36119009400,"[3017, 2007]","[10605, 10601]","['WL20002057', 'WL20001889']","['P', 'M']",2,2020
+February-2020,92.0,1,9200,Census Tract 92,Westchester County,36119009200,[5014],[10606],['WL20001902'],['M'],2,2020
 February-2020,89.02,1,8902,Census Tract 89.02,Westchester County,36119008902,[3002],[10604],['WL20001625'],['P'],2,2020
-February-2020,83.02,1,8302,Census Tract 83.02,Westchester County,36119008302,[4030],[10573],['WL20001814'],['M'],2,2020
-February-2020,78.0,2,7800,Census Tract 78,Westchester County,36119007800,"[3002, 3006]","[10573, 10573]","['WL20001818', 'WL20001608']","['M', 'M']",2,2020
-February-2020,75.0,3,7500,Census Tract 75,Westchester County,36119007500,"[2004, 2014, 2017]","[10580, 10580, 10580]","['WL20001673', 'WL20001685', 'WL20001697']","['M', 'M', 'M']",2,2020
+February-2020,83.02,2,8302,Census Tract 83.02,Westchester County,36119008302,"[2011, 4030]","[10573, 10573]","['WL20001966', 'WL20001814']","['P', 'M']",2,2020
+February-2020,83.01,1,8301,Census Tract 83.01,Westchester County,36119008301,[1004],[10573],['WL20002019'],['M'],2,2020
+February-2020,82.0,1,8200,Census Tract 82,Westchester County,36119008200,[3003],[10573],['WL20001970'],['P'],2,2020
+February-2020,79.0,1,7900,Census Tract 79,Westchester County,36119007900,[2000],[10573],['WL20001867'],['M'],2,2020
+February-2020,78.0,3,7800,Census Tract 78,Westchester County,36119007800,"[3001, 3002, 3006]","[10573, 10573, 10573]","['WL20002035', 'WL20001818', 'WL20001608']","['M', 'M', 'M']",2,2020
+February-2020,76.0,1,7600,Census Tract 76,Westchester County,36119007600,[2020],[10580],['WL20001905'],['P'],2,2020
+February-2020,75.0,5,7500,Census Tract 75,Westchester County,36119007500,"[2002, 3019, 2004, 2014, 2017]","[10580, 10580, 10580, 10580, 10580]","['WL20002041', 'WL20001908', 'WL20001673', 'WL20001685', 'WL20001697']","['M', 'M', 'M', 'M', 'M']",2,2020
 February-2020,72.0,1,7200,Census Tract 72,Westchester County,36119007200,[2023],[10543],['WL20001611'],['M'],2,2020
-February-2020,69.0,3,6900,Census Tract 69,Westchester County,36119006900,"[3036, 4003, 4003]","[10538, 10538, 10538]","['WL20001734', 'WL20001630', 'WL20001634']","['M', 'M', 'M']",2,2020
-February-2020,68.01,1,6801,Census Tract 68.01,Westchester County,36119006801,[4005],[10583],['WL20001671'],['M'],2,2020
+February-2020,69.0,5,6900,Census Tract 69,Westchester County,36119006900,"[3026, 2002, 3036, 4003, 4003]","[10538, 10538, 10538, 10538, 10538]","['WL20001952', 'WL20001881', 'WL20001734', 'WL20001630', 'WL20001634']","['M', 'M', 'M', 'M', 'M']",2,2020
+February-2020,68.01,2,6801,Census Tract 68.01,Westchester County,36119006801,"[4003, 4005]","[10583, 10583]","['WL20001960', 'WL20001671']","['P', 'M']",2,2020
 February-2020,67.0,1,6700,Census Tract 67,Westchester County,36119006700,[1012],[10804],['WL20001514'],['M'],2,2020
-February-2020,50.02,1,5002,Census Tract 50.02,Westchester County,36119005002,[3013],[10709],['WL20001761'],['M'],2,2020
+February-2020,52.0,1,5200,Census Tract 52,Westchester County,36119005200,[2013],[10709],['WL20001883'],['P'],2,2020
+February-2020,50.02,2,5002,Census Tract 50.02,Westchester County,36119005002,"[2008, 3013]","[10709, 10709]","['WL20001987', 'WL20001761']","['M', 'M']",2,2020
 February-2020,48.0,2,4800,Census Tract 48,Westchester County,36119004800,"[1002, 1009]","[10707, 10707]","['WL20001785', 'WL20001691']","['P', 'P']",2,2020
+February-2020,24.03,1,2403,Census Tract 24.03,Westchester County,36119002403,[3000],[10704],['WL20001989'],['P'],2,2020
 February-2020,22.01,1,2201,Census Tract 22.01,Westchester County,36119002201,[2022],[10710],['WL20001842'],['M'],2,2020
 February-2020,21.03,2,2103,Census Tract 21.03,Westchester County,36119002103,"[1016, 1016]","[10707, 10707]","['WL20001643', 'WL20001512']","['M', 'M']",2,2020
+February-2020,21.01,1,2101,Census Tract 21.01,Westchester County,36119002101,[2008],[10710],['WL20002072'],['M'],2,2020
 February-2020,20.0,1,2000,Census Tract 20,Westchester County,36119002000,[2010],[10710],['WL20001526'],['P'],2,2020
+February-2020,18.0,1,1800,Census Tract 18,Westchester County,36119001800,[1007],[10710],['WL20001886'],['M'],2,2020
 February-2020,13.02,1,1302,Census Tract 13.02,Westchester County,36119001302,[1006],[10705],['WL20001675'],['P'],2,2020
-February-2020,13.01,1,1301,Census Tract 13.01,Westchester County,36119001301,[1021],[10705],['WL20001748'],['P'],2,2020
+February-2020,13.01,2,1301,Census Tract 13.01,Westchester County,36119001301,"[1013, 1021]","[10705, 10705]","['WL20001954', 'WL20001748']","['P', 'P']",2,2020
 February-2020,11.01,1,1101,Census Tract 11.01,Westchester County,36119001101,[2004],[10701],['WL20001743'],['M'],2,2020
 February-2020,1621.0,1,162100,Census Tract 1621,Queens County,36081162100,[2001],[11427],['QL20001126'],['P'],2,2020
-February-2020,1529.02,1,152902,Census Tract 1529.02,Queens County,36081152902,[3000],[11362],['QL20001308'],['M'],2,2020
+February-2020,1529.02,2,152902,Census Tract 1529.02,Queens County,36081152902,"[3000, 3000]","[11362, 11362]","['QL20001513', 'QL20001308']","['P', 'M']",2,2020
 February-2020,1429.0,1,142900,Census Tract 1429,Queens County,36081142900,[1005],[11358],['QL20001282'],['M'],2,2020
 February-2020,1409.01,2,140901,Census Tract 1409.01,Queens County,36081140901,"[1001, 1008]","[11364, 11364]","['QL20001251', 'QL20001254']","['M', 'P']",2,2020
+February-2020,1399.0,1,139900,Census Tract 1399,Queens County,36081139900,[1004],[11364],['QL20001426'],['P'],2,2020
 February-2020,1347.0,1,134700,Census Tract 1347,Queens County,36081134700,[1005],[11365],['QL20001122'],['P'],2,2020
 February-2020,1341.0,1,134100,Census Tract 1341,Queens County,36081134100,[2007],[11365],['QL20001118'],['M'],2,2020
 February-2020,1333.0,3,133300,Census Tract 1333,Queens County,36081133300,"[3006, 3006, 3006]","[11366, 11366, 11366]","['QL20001389', 'QL20001391', 'QL20001309']","['P', 'P', 'P']",2,2020
 February-2020,1277.0,1,127700,Census Tract 1277,Queens County,36081127700,[2000],[11432],['QL20001344'],['M'],2,2020
+February-2020,1227.01,1,122701,Census Tract 1227.01,Queens County,36081122701,[4000],[11365],['QL20001497'],['P'],2,2020
 February-2020,1175.0,1,117500,Census Tract 1175,Queens County,36081117500,[4007],[11358],['QL20001281'],['P'],2,2020
+February-2020,1171.0,1,117100,Census Tract 1171,Queens County,36081117100,[1003],[11354],['QL20001407'],['P'],2,2020
 February-2020,1141.0,1,114100,Census Tract 1141,Queens County,36081114100,[1003],[11358],['QL20001359'],['M'],2,2020
 February-2020,1099.0,1,109900,Census Tract 1099,Queens County,36081109900,[1006],[11361],['QL20001205'],['M'],2,2020
+February-2020,1039.0,1,103900,Census Tract 1039,Queens County,36081103900,[3004],[11357],['QL20001484'],['M'],2,2020
+February-2020,1017.0,1,101700,Census Tract 1017,Queens County,36081101700,[1000],[11357],['QL20001459'],['P'],2,2020
+February-2020,997.01,1,99701,Census Tract 997.01,Queens County,36081099701,[1005],[11357],['QL20001492'],['P'],2,2020
+February-2020,987.0,1,98700,Census Tract 987,Queens County,36081098700,[2003],[11357],['QL20001402'],['M'],2,2020
 February-2020,869.0,1,86900,Census Tract 869,Queens County,36081086900,[2021],[11354],['QL20001128'],['P'],2,2020
 February-2020,779.04,1,77904,Census Tract 779.04,Queens County,36081077904,[2001],[11367],['QL20001305'],['M'],2,2020
+February-2020,117.0,1,11700,Census Tract 117,Queens County,36081011700,[4001],[11105],['QL20001485'],['M'],2,2020
+February-2020,103.0,1,10300,Census Tract 103,Queens County,36081010300,[2002],[11105],['QL20001507'],['P'],2,2020
 February-2020,85.0,1,8500,Census Tract 85,Queens County,36081008500,[2000],[11101],['QL20001231'],['P'],2,2020
 February-2020,19.0,2,1900,Census Tract 19,Queens County,36081001900,"[1060, 1006]","[11101, 11101]","['QL20001267', 'QL20001223']","['P', 'P']",2,2020
-February-2020,7.0,1,700,Census Tract 7,Queens County,36081000700,[3003],[11101],['QL20001293'],['P'],2,2020
+February-2020,7.0,2,700,Census Tract 7,Queens County,36081000700,"[3008, 3003]","[11101, 11101]","['QL20001481', 'QL20001293']","['P', 'P']",2,2020
 February-2020,287.0,1,28700,Census Tract 287,New York County,36061028700,[1005],[10034],['ML20001717'],['M'],2,2020
+February-2020,271.0,1,27100,Census Tract 271,New York County,36061027100,[2003],[10033],['ML20002315'],['P'],2,2020
+February-2020,214.0,1,21400,Census Tract 214,New York County,36061021400,[1000],[10037],['ML20002249'],['P'],2,2020
+February-2020,212.0,1,21200,Census Tract 212,New York County,36061021200,[3000],[10037],['ML20002057'],['P'],2,2020
 February-2020,211.0,1,21100,Census Tract 211,New York County,36061021100,[1005],[10027],['ML20002093'],['P'],2,2020
 February-2020,198.0,1,19800,Census Tract 198,New York County,36061019800,[1003],[10035],['ML20001880'],['P'],2,2020
 February-2020,196.0,1,19600,Census Tract 196,New York County,36061019600,[2001],[10035],['ML20001896'],['P'],2,2020
 February-2020,180.0,1,18000,Census Tract 180,New York County,36061018000,[3002],[10029],['ML20001863'],['M'],2,2020
 February-2020,170.0,2,17000,Census Tract 170,New York County,36061017000,"[3001, 2000]","[10029, 10029]","['ML20001924', 'ML20001942']","['P', 'P']",2,2020
-February-2020,167.0,1,16700,Census Tract 167,New York County,36061016700,[2001],[10024],['ML20002185'],['M'],2,2020
+February-2020,167.0,4,16700,Census Tract 167,New York County,36061016700,"[2001, 2001, 2001, 2001]","[10024, 10024, 10024, 10024]","['ML20002185', 'ML20002196', 'ML20002206', 'ML20002215']","['M', 'M', 'M', 'P']",2,2020
 February-2020,164.0,1,16400,Census Tract 164,New York County,36061016400,[4000],[10029],['ML20001917'],['M'],2,2020
 February-2020,163.0,1,16300,Census Tract 163,New York County,36061016300,[1005],[10024],['ML20002160'],['M'],2,2020
+February-2020,161.0,1,16100,Census Tract 161,New York County,36061016100,[1000],[10024],['ML20002440'],['M'],2,2020
 February-2020,137.0,1,13700,Census Tract 137,New York County,36061013700,[4000],[10019],['ML20002155'],['M'],2,2020
+February-2020,135.0,1,13500,Census Tract 135,New York County,36061013500,[1006],[10019],['ML20002385'],['P'],2,2020
 February-2020,133.0,1,13300,Census Tract 133,New York County,36061013300,[4001],[10019],['ML20001728'],['P'],2,2020
+February-2020,127.0,1,12700,Census Tract 127,New York County,36061012700,[5000],[10019],['ML20002449'],['P'],2,2020
+February-2020,126.0,1,12600,Census Tract 126,New York County,36061012600,[1000],[10021],['ML20002198'],['P'],2,2020
+February-2020,114.01,1,11401,Census Tract 114.01,New York County,36061011401,[2002],[10022],['ML20002238'],['M'],2,2020
+February-2020,113.0,1,11300,Census Tract 113,New York County,36061011300,[1008],[10018],['ML20002507'],['P'],2,2020
 February-2020,109.0,1,10900,Census Tract 109,New York County,36061010900,[1002],[10018],['ML20002176'],['M'],2,2020
+February-2020,108.0,1,10800,Census Tract 108,New York County,36061010800,[2000],[10022],['ML20002486'],['M'],2,2020
+February-2020,104.0,2,10400,Census Tract 104,New York County,36061010400,"[1002, 1002]","[10019, 10019]","['ML20002327', 'ML20002334']","['M', 'P']",2,2020
+February-2020,102.0,1,10200,Census Tract 102,New York County,36061010200,[1005],[10022],['ML20002341'],['P'],2,2020
+February-2020,100.0,1,10000,Census Tract 100,New York County,36061010000,[2000],[10022],['ML20002495'],['M'],2,2020
 February-2020,97.0,1,9700,Census Tract 97,New York County,36061009700,[3000],[10001],['ML20001918'],['P'],2,2020
+February-2020,84.0,1,8400,Census Tract 84,New York County,36061008400,[2002],[10018],['ML20002402'],['P'],2,2020
 February-2020,81.0,1,8100,Census Tract 81,New York County,36061008100,[4000],[10011],['ML20001973'],['P'],2,2020
 February-2020,55.02,1,5502,Census Tract 55.02,New York County,36061005502,[1001],[10012],['ML20001865'],['P'],2,2020
+February-2020,47.0,1,4700,Census Tract 47,New York County,36061004700,[1003],[10012],['ML20002205'],['M'],2,2020
 February-2020,41.0,1,4100,Census Tract 41,New York County,36061004100,[6001],[10012],['ML20002049'],['P'],2,2020
+February-2020,40.0,1,4000,Census Tract 40,New York County,36061004000,[6000],[10003],['ML20002323'],['M'],2,2020
+February-2020,39.0,1,3900,Census Tract 39,New York County,36061003900,[1015],[10013],['ML20002466'],['M'],2,2020
+February-2020,33.0,1,3300,Census Tract 33,New York County,36061003300,[3022],[10013],['ML20002339'],['P'],2,2020
 February-2020,29.0,1,2900,Census Tract 29,New York County,36061002900,[4014],[10038],['ML20002042'],['P'],2,2020
-February-2020,15.01,2,1501,Census Tract 15.01,New York County,36061001501,"[1015, 2000]","[10038, 10038]","['ML20001848', 'ML20001878']","['P', 'P']",2,2020
+February-2020,22.02,1,2202,Census Tract 22.02,New York County,36061002202,[1001],[10003],['ML20002448'],['M'],2,2020
+February-2020,15.01,3,1501,Census Tract 15.01,New York County,36061001501,"[2003, 1015, 2000]","[10038, 10038, 10038]","['ML20002243', 'ML20001848', 'ML20001878']","['P', 'P', 'P']",2,2020
 February-2020,13.0,1,1300,Census Tract 13,New York County,36061001300,[1012],[10281],['ML20002099'],['M'],2,2020
+February-2020,8.0,1,800,Census Tract 8,New York County,36061000800,[1000],[10002],['ML20002460'],['P'],2,2020
+February-2020,6.0,1,600,Census Tract 6,New York County,36061000600,[1000],[10002],['ML20002265'],['P'],2,2020
+February-2020,516.0,1,51600,Census Tract 516,Bronx County,36005051600,[2006],[10464],['XL20002185'],['P'],2,2020
 February-2020,462.02,1,46202,Census Tract 462.02,Bronx County,36005046202,[5002],[10469],['XL20001717'],['P'],2,2020
 February-2020,429.02,1,42902,Census Tract 429.02,Bronx County,36005042902,[1000],[10467],['XL20001620'],['P'],2,2020
 February-2020,386.0,1,38600,Census Tract 386,Bronx County,36005038600,[4003],[10469],['XL20001986'],['M'],2,2020
+February-2020,345.0,1,34500,Census Tract 345,Bronx County,36005034500,[2004],[10471],['XL20002122'],['M'],2,2020
 February-2020,334.0,1,33400,Census Tract 334,Bronx County,36005033400,[1039],[10462],['XL20001934'],['P'],2,2020
 February-2020,323.0,1,32300,Census Tract 323,Bronx County,36005032300,[1001],[10471],['XL20001787'],['P'],2,2020
 February-2020,297.0,1,29700,Census Tract 297,Bronx County,36005029700,[2000],[10463],['XL20001769'],['P'],2,2020
+February-2020,288.0,1,28800,Census Tract 288,Bronx County,36005028800,[2002],[10461],['XL20002176'],['P'],2,2020
+February-2020,274.02,1,27402,Census Tract 274.02,Bronx County,36005027402,[2002],[10465],['XL20002225'],['P'],2,2020
+February-2020,274.01,1,27401,Census Tract 274.01,Bronx County,36005027401,[3009],[10465],['XL20002175'],['M'],2,2020
 February-2020,266.01,1,26601,Census Tract 266.01,Bronx County,36005026601,[1004],[10461],['XL20001743'],['P'],2,2020
+February-2020,230.0,1,23000,Census Tract 230,Bronx County,36005023000,[2004],[10462],['XL20002045'],['P'],2,2020
 February-2020,215.02,1,21502,Census Tract 215.02,Bronx County,36005021502,[2001],[10452],['XL20001895'],['P'],2,2020
 February-2020,210.02,1,21002,Census Tract 210.02,Bronx County,36005021002,[3000],[10462],['XL20001972'],['M'],2,2020
+February-2020,194.0,1,19400,Census Tract 194,Bronx County,36005019400,[1002],[10465],['XL20002172'],['M'],2,2020
 February-2020,152.0,1,15200,Census Tract 152,Bronx County,36005015200,[1000],[10465],['XL20001962'],['M'],2,2020
+February-2020,138.0,1,13800,Census Tract 138,Bronx County,36005013800,[2010],[10465],['XL20002047'],['P'],2,2020
+February-2020,118.0,1,11800,Census Tract 118,Bronx County,36005011800,[1003],[10465],['XL20002060'],['P'],2,2020
 February-2020,65.0,1,6500,Census Tract 65,Bronx County,36005006500,[3000],[10451],['XL20001783'],['P'],2,2020
 February-2020,54.0,1,5400,Census Tract 54,Bronx County,36005005400,[3002],[10472],['XL20001744'],['P'],2,2020
+February-2020,46.0,1,4600,Census Tract 46,Bronx County,36005004600,[1006],[10473],['XL20002158'],['M'],2,2020
 February-2020,28.0,1,2800,Census Tract 28,Bronx County,36005002800,[1009],[10473],['XL20001737'],['M'],2,2020
 January-2020,9810.0,1,981000,Census Tract 9810,Westchester County,36119981000,[1016],[10532],['WL20000275'],['M'],1,2020
 January-2020,148.11,1,14811,Census Tract 148.11,Westchester County,36119014811,[2005],[10598],['WL20000631'],['M'],1,2020
@@ -105,6 +164,7 @@ January-2020,132.01,3,13201,Census Tract 132.01,Westchester County,36119013201,"
 January-2020,131.04,5,13104,Census Tract 131.04,Westchester County,36119013104,"[4006, 1039, 4016, 4016, 2006]","[10514, 10549, 10514, 10514, 10514]","['WL20001152', 'WL20000470', 'WL20000407', 'WL20000446', 'WL20000136']","['M', 'P', 'M', 'M', 'P']",1,2020
 January-2020,130.0,3,13000,Census Tract 130,Westchester County,36119013000,"[2001, 2027, 3012]","[10549, 10549, 10549]","['WL20001072', 'WL20000812', 'WL20000139']","['P', 'M', 'M']",1,2020
 January-2020,128.02,1,12802,Census Tract 128.02,Westchester County,36119012802,[2006],[10507],['WL20000360'],['M'],1,2020
+January-2020,127.0,1,12700,Census Tract 127,Westchester County,36119012700,[2002],[10506],['WL20001221'],['P'],1,2020
 January-2020,123.04,4,12304,Census Tract 123.04,Westchester County,36119012304,"[1013, 1015, 1012, 1002]","[10504, 10504, 10504, 10504]","['WL20000314', 'WL20000325', 'WL20000196', 'WL20000209']","['M', 'M', 'M', 'M']",1,2020
 January-2020,123.03,3,12303,Census Tract 123.03,Westchester County,36119012303,"[1035, 3012, 3036]","[10504, 10504, 10504]","['WL20001166', 'WL20000533', 'WL20000256']","['M', 'M', 'P']",1,2020
 January-2020,122.0,3,12200,Census Tract 122,Westchester County,36119012200,"[5032, 4006, 5028]","[10570, 10570, 10570]","['WL20000999', 'WL20000195', 'WL20000219']","['P', 'M', 'M']",1,2020
