@@ -200,6 +200,7 @@ def WebscraperJsonToCSV():
     global csvReadCount
     scrapingCount = scrapingCount + 1
     scheduler.pause()           #*****pausing the sceduler
+    
     # 1) GET JSON DATA: Webscrape the html response which is usually just the JSON data from the url and add to the JSON Dataframe: 
     # jsonDF = pd.read_json(jsonFile, orient='records')                                                             # If im getting data from json file, comment out the rest of this section.
     try:
@@ -216,6 +217,7 @@ def WebscraperJsonToCSV():
         print("Couldnt get the json data so will re-run function. This is Run "+ str(scrapingCount))
         scheduler.resume() #****resuming the job 
         return WebscraperJsonToCSV()
+    
     # 2) MODIFY CSV FILE: 
         # a) CSV IS EMPTY: print the the headers I want. 
         # b) CSV NOT EMPTY: Get the header and that is what we will work with. Im also droping columns from json DF and adding new col titles to csvHeader array

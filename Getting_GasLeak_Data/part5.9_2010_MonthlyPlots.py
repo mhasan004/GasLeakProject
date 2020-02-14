@@ -8,10 +8,14 @@ import os
 import platform
 import pandas as pd
 import numpy as np
+import csv                             
 
 # A) CREATING DF AND GDF:
+csvFile     = "GasHistory_2010_ReportFrequency_Monthly.csv"
+outNYCFile  = "GasHistory_2010_ReportFrequency_Monthly_nycPlot.csv"
+outWestFile = "GasHistory_2010_ReportFrequency_Monthly_westchesterPlot.csv"
+
 nycFile = "NYU_NYC_34505_SP/nyu_2451_34505.shp"
-csvFile = "GasHistory_2010_ReportFrequency_Monthly.csv"
 brooklynFile = "TIGER_2010_County_Shapefiles/BrooklynCounty_2010SHP/tl_2010_36047_tract10.shp"
 statenFile = "TIGER_2010_County_Shapefiles/StatenIslanCounty_2010SHP"
 westchesterFile = "westchester2010/wctigtrt10.shp"
@@ -47,12 +51,6 @@ for mapt in range(0,len(mapArray)):
     mapArray[mapt]["Zipcode_list"] = str 
     mapArray[mapt]["CountyTract"] = str
     mapArray[mapt][[geoidColArray[mapt]]]   = mapArray[mapt][[geoidColArray[mapt]]].apply(pd.to_numeric).astype(int)                                      # Turning GDF_NYC_GEOID_COL - the CensusTract number to numpy.int64 values so can query them
-
-# print("======================================================================================================== RAW DATA: GDF and monthly DF ========================================================================================================")
-# print(nycGDF)
-# print("------------------------------------------------------------------------ monthly DF:------------------------------------------")
-# print(monthlyDF)
-# print("=============================================================================================================== RAW DATA END =================================================================================================================")
 
 # C) CON EDISON DOESNT INCLUDE DATA FROM STATEN ISLAND AND BROOKYLN SO GRAY THEM OUT
 # BROOKLYN OUTLINE GDF:
@@ -179,12 +177,33 @@ for row in range(0,len(monthlyDF)):
                 thisMonthPlot_westGDF = thisMonthPlot_westGDF.append(thisMonthsCountyGeoGDF)
             else:
                 print("ISSSSSSSSSSSSSSSUUUUUUUUUUUUUUUUUEEEEEEEEEEEEEEEEEEEEEEE!")
-            # print("")
         thisMonthPlot_westGDF = thisMonthPlot_westGDF.reset_index(drop=True)
         thisMonthPlot_nycGDF = thisMonthPlot_nycGDF.reset_index(drop=True)
     print("plot nyc len: "+str(len(thisMonthPlot_nycGDF)))
     print("plot west len: "+str(len(thisMonthPlot_westGDF)))
     print('Plot total: '+str(len(thisMonthPlot_nycGDF)+ len(thisMonthPlot_westGDF))+"/"+str(len(thisMonthsDF)))
+
+    # Append the monthly gdf data to the csv files
+    isNycFileEmpty = False
+    isWestFileEmpty = False
+    with open(outNYCFile, 'r') as f:                                                                             # Open the csv File so we can read it
+        csvTable = [row for row in csv.DictReader(f)]
+        if len(csvTable) == 0:
+            isNycFileEmpty = True
+    with open(outWestFile, 'r') as f:                                                                             # Open the csv File so we can read it
+        csvTable = [row for row in csv.DictReader(f)]
+        if len(csvTable) == 0:
+            isWestFileEmpty = True
+
+    if isNycFileEmpty:
+        thisMonthPlot_nycGDF.to_csv(outNYCFile, index=False)
+    else:
+        thisMonthPlot_nycGDF.to_csv(outNYCFile, index=False, mode='a', header=False)
+    if isWestFileEmpty:
+        thisMonthPlot_westGDF.to_csv(outWestFile, index=False)
+    else:
+        thisMonthPlot_westGDF.to_csv(outWestFile, index=False, mode='a', header=False)
+
 
     # 5) PLOT THE MONTH'S DATA:
     figx = 14
