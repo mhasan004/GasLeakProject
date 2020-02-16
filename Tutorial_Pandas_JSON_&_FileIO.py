@@ -123,7 +123,12 @@ print(dataj["key1"])
 # SORT:
     df = df.sort_values(by=['col1', 'col2'], ascending=[True, False])
 
-
+# DATA TYPES MAKING NEW PANDAS DF ********
+    csvHeader = ['Geoid', 'MonthYear_ConEd', 'NumberOfReports_ConEd', 'MonthYear_FDNY', 'NumberOfReports_FDNY', 'CountyName', 'CensusTract', "Month"] 
+    newDF = pd.DataFrame()
+    for col in range(0, len(csvHeader)):
+        newDF[csvHeader[col]] = str                 # for now set all data type to str
+    newDF[['A', 'B', 'D']] = newDF[['A', 'B', 'D']].apply(pd.to_numeric) #after filling data, chnge to whatever
 
 # FILTERING: only prints entries where the col "sex" is "M"
     # ex: Print all rows where "sex" col = "M":
@@ -154,13 +159,28 @@ print(dataj["key1"])
     # newTicketDF = mergedDF[mergedDF._merge == "left_only"].drop(columns="_merge")
     newTicketsArray = list(mergedDF.loc[mergedDF['_merge']=="left_only", "TicketNumber"] )                 # For the merged DF (has cols of both merged dfs), im looking at only the "TickerNumber" col where "_merge" == "Left_only"
 
-# CHANGING THE DATA TYPE OF A CEL/COL 
-    df[['A', 'B']] = df[['A', 'B']].astype(int)                                                             # NUMPY.INT64: NEED TO USE NUMPY TO COMPARE STUFF - changing cols A and B to int64 (dont work if its string)
+
+# SPECIFY DATA TYPE OF EMPTY DF:
+    # method1
+    df = pd.DataFrame(
+        columns=['A', 'B' ])
+    df = df.astype( 
+        dtype={
+            'A' : str, 
+            'B': str,
+        }
+    )
+    # method2
+
+# CHANGING THE DATA TYPE OF COL TO CERTAIN TYPE
+    # better way:
+    df[["a", "b"]] = df[["a", "b"]].apply(pd.to_numeric)                                                    # Turning cols a and b to numbeic numbers, not string
+    # ok way:
+    df[['A', 'B']] = df[['A', 'B']].astype(int)                                                            # NUMPY.INT64: NEED TO USE NUMPY TO COMPARE STUFF - changing cols A and B to int64 (dont work if its string)
     df[['A', 'B']] = df[['A', 'B']].apply(pd.to_numeric).astype(int)                                        # changing to numeric then int to be safe
 
     df.loc[1]["col1"].item()                                                                                # if this returns numpy.float64, it is now float
 
-    df[["a", "b"]] = df[["a", "b"]].apply(pd.to_numeric)                                                    # Turning cols a and b to numbeic numbers, not string
 
 # Copy a df
     s2 = s1.copy()
