@@ -77,7 +77,7 @@ fdnyMonthlyDF = fdnyMonthlyDF.rename(columns={"NumberOfReports": "NumberOfReport
 # print(vsDF)
 # print("----------------------------------------------------------------------------------------- 2")
 # print(fdnyMonthlyDF)
-# print("----------------------------------------------------------------------------------------- 3")
+# print("----------------------------------------------------------------------------------------- 3")``
 
 vsDF = vsDF.merge(fdnyMonthlyDF, left_on=['Geoid','Month'], right_on=['Geoid','Month'])
 # print(vsDF)
@@ -87,7 +87,7 @@ split_text = textwrap.wrap('This is a very long title and it would be great to h
 
 # PLOT:
 fig = px.scatter(vsDF, x="NumberOfReports_ConEd", y="NumberOfReports_FDNY", color="CountyName", hover_data=['MonthYear_ConEd', 'MonthYear_FDNY', 'Geoid', "CensusTract" ])
-titleStr =  'Number of Emergency Repairs by ConEdison (Dec2019-Feb2020) \nvs \nNumber of Gas Leak Reports made to NYFD (Jan, Feb, Dec 2018)'
+titleStr =  'Number of Inspections Conducted by ConEdison (Dec2019-Feb2020) \nvs \nNumber of Gas Leak Reports made to NYFD (Jan, Feb, Dec 2018)'
 print("***TITLE OF SCATTER PLOT:*** \n"+titleStr)
 fig.update_layout(title=titleStr)
 fig.show() 
