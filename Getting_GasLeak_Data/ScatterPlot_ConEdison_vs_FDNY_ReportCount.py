@@ -2,6 +2,8 @@
 import plotly.express as px
 import numpy as np
 import pandas as pd
+import textwrap                                                 # need this to make the long title
+
 
 csvConed = "DataFiles/GasHistory_2010_ReportFrequency_Monthly.csv"
 csvFDNY  = "DataFiles/FDNY/Geoid_Count2018.csv"#"DataFiles/FDNY/FDNY2018.csv"
@@ -78,13 +80,16 @@ fdnyMonthlyDF = fdnyMonthlyDF.rename(columns={"NumberOfReports": "NumberOfReport
 # print("----------------------------------------------------------------------------------------- 3")
 
 vsDF = vsDF.merge(fdnyMonthlyDF, left_on=['Geoid','Month'], right_on=['Geoid','Month'])
-print(vsDF)
+# print(vsDF)
 
+import textwrap
+split_text = textwrap.wrap('This is a very long title and it would be great to have it on three lines', width=30)
 
 # PLOT:
 fig = px.scatter(vsDF, x="NumberOfReports_ConEd", y="NumberOfReports_FDNY", color="CountyName", hover_data=['MonthYear_ConEd', 'MonthYear_FDNY', 'Geoid', "CensusTract" ])
-s = 'Num of Emergency Repairs by ConEdison (Dec2019-Feb2020) vs Num of Gas Leak Reports made to NYFD (2018)'
-fig.update_layout(title=s)
+titleStr =  'Number of Emergency Repairs by ConEdison (Dec2019-Feb2020) \nvs \nNumber of Gas Leak Reports made to NYFD (Jan, Feb, Dec 2018)'
+print("***TITLE OF SCATTER PLOT:*** \n"+titleStr)
+fig.update_layout(title=titleStr)
 fig.show() 
 
 #%%
