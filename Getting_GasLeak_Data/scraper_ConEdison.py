@@ -1,3 +1,5 @@
+
+# This is the old scraper, still havent added the code from modify1_2010...py and modify2.5_2010...py, which will make the code run more efficiently and collect more data
 # Scraper v4: Will periodicly scrape the con edison website to find new gas leak reports, then use the Census Bureau API to find Census Data of those locations and append to my csv file. Will then read the file and make a new csv file to trck reports per hour per Census Tract per day and create a map.
 # Part A (section 1 to 4, 6, 8): Mahmudul Hasan. Script to scrape JSON Gas Leak Data points from ConEdison everyday and put them into a csv file for further use
     # In the ConEdison Gas Leak Report Map, each report in the map represents a gas leak report. Each report has these seven keys: TicketNumber, Latitude, Longitude, Zipcode, Classification Type, Date Reported, Last Inspected.
