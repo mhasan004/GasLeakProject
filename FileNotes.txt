@@ -1,0 +1,13 @@
+1) 3 Scraper files: "Getting_GasLeak_Data/scraper_ConEdison.py", "Getting_GasLeak_Data/scraper_ConEdison2_modify_addingMoreCensusData2010.py", "Getting_GasLeak_Data/scraper_ConEdison3_modify_addingHourlyMonthly2010.py"
+
+    * "scraper_ConEdison.py" scrapes daily reports from conedison website and saves it to "Getting_GasLeak_Data/DataFiles/ConEdison"
+    * It saves each report into "GasHistory_ConEdisonTracts.csv"
+    * it then converts this file in terms of hourly reports per tract: "GasHistory_ReportFrequency_Hourly.csv" and monthly reports per tract:" GasHistory_ReportFrequency_Monthly.csv"
+
+    * UPDATE: the scraper used census data from 2019 but we only had shapefiles for 2010. So i had to make new csv files that held the census 2010 data and i added more information to these file
+        - "scraper_ConEdison2_modify_addingMoreCensusData2010.py" and "scraper_ConEdison3_modify_addingHourlyMonthly2010.py" just turns the 2019 census data into 2010 data
+            Data is stored in "GasHistory_2010_ConEdisonTracts.csv". I
+        - "Getting_GasLeak_Data/scraper_ConEdison3_modify_addingHourlyMonthly2010.py" turns it into monthly and hourly data
+
+2) "Getting_GasLeak_Data/Map_2010_ConEdison_MonthlyPlots.csv" maps the 2010 census csv data. It shows the number of repots per census tract eahc monthly
+   "Getting_GasLeak_Data/Map_2010_ConEdison_MonthlyPlots_MAPBOX_PLOTLY.csv" <-- im trying to convert the maps into an interactiv emap

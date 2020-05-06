@@ -24,9 +24,9 @@ from apscheduler.schedulers.blocking import BlockingScheduler                   
 from git import Repo                                                                                                # (GitPython) To push changes to gh
 
 # SETTING UP GLOBAL VARIABLES: need to change the first eight variables below
-csvFile        = "DataFiles/GasHistory_ConEdisonTracts.csv"                                                                          # add new tickets to the end of the csv file
-csvHourlyFile  = "DataFiles/GasHistory_ReportFrequency_Hourly.csv"                                                             # In PART C we will turn the ticket history data to hourly data
-csvMonthlyFile = "DataFiles/GasHistory_ReportFrequency_Monthly.csv"                                                           # IN PART C weill will use the hourly csv to create the number of reports for the month
+csvFile        = "DataFiles/ConEdison/GasHistory_ConEdisonTracts.csv"                                                                          # add new tickets to the end of the csv file
+csvHourlyFile  = "DataFiles/ConEdison/GasHistory_ReportFrequency_Hourly.csv"                                                             # In PART C we will turn the ticket history data to hourly data
+csvMonthlyFile = "DataFiles/ConEdison/GasHistory_ReportFrequency_Monthly.csv"                                                           # IN PART C weill will use the hourly csv to create the number of reports for the month
 jsonFile = "SOME_JSON_FILE.json"                                                                                    # Normally the programm will be scrape JSOn data from a url but sometimes it might need to extract JSOn data from a file. See step 2)
 url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&'                                          # Url to scrape JSOn data from
 dropCol = True                                                                                                      # If you want to drop a column, specify which ones in step 2 in WebscraperJsonToCSV()
