@@ -39,19 +39,20 @@ scrapingCount = 0                                                               
 csvreadCount = 0
 # GIT PUSH FUNCTION: Setting up function to automatically push changes to github when there is a new ticket so that I can have access to the latest chnages
 def git_push():
-    repo = Repo(PATH_OF_GIT_REPO)
-    try:
-        repo.remotes.origin.pull()                                                                                  # try pulling new changes from the github repo (if there are any) so i can push changes
-    except:
-        print("Couldnt pull from repo")
-    repo.git.add(update=True)
-    repo.index.commit(COMMIT_MESSAGE)
-    origin = repo.remote(name='origin')
-    try:
-        origin.push()                                                                                               # try pushing the changes to github
-        print("******** PUSHED TO GITHUB for Run " + str(scrapingCount)+"********")
-    except:
-        print('Some error occured while pushing the code')  
+    x =1
+    # repo = Repo(PATH_OF_GIT_REPO)
+    # try:
+    #     repo.remotes.origin.pull()                                                                                  # try pulling new changes from the github repo (if there are any) so i can push changes
+    # except:
+    #     print("Couldnt pull from repo")
+    # repo.git.add(update=True)
+    # repo.index.commit(COMMIT_MESSAGE)
+    # origin = repo.remote(name='origin')
+    # try:
+    #     origin.push()                                                                                               # try pushing the changes to github
+    #     print("******** PUSHED TO GITHUB for Run " + str(scrapingCount)+"********")
+    # except:
+    #     print('Some error occured while pushing the code')  
 
 
 # FUNCTION TO TURN MICROSOFT JSON DATE TO mm/dd/yyyy AND TIME: returns ["mm/dd/yyyy", "hh:mm AM/PM", "hh AM/PM"]
@@ -83,7 +84,7 @@ def getCensusTract(longitude, latitude, retryRun = 0):                          
         return [str(track), str(block), str(county)]
     except:
         retryRun+=1
-        print("Error on longitude, latitude: "+str(longitude)+","+str(latitude) + ".....retrying... "+str(retryRun))
+        print("     Error on longitude, latitude: "+str(longitude)+","+str(latitude) + ".....retrying... "+str(retryRun))
         return getCensusTract(longitude, latitude,retryRun)                                                         # need to return the recursive function
 
 # PART C1 FUNCTION: Make Hourly reports from the gas leak history csv file
@@ -107,7 +108,7 @@ def turnTickeyHistory_toHourlyReport():
 
     outDF = pd.DataFrame(columns=csvHeader)                                                                         # making newDF with the cols i want. This will be appended to the other csv
     skipIndex = [] 
-    print("Turning the Gas Leak Report csv into hourly reports DF...")
+    print("     Turning the Gas Leak Report csv into hourly reports DF...")
     for row in range(0,len(inDF)):
         if row in skipIndex:
             continue
@@ -138,7 +139,7 @@ def turnTickeyHistory_toHourlyReport():
         groupedDF.iloc[0, groupedDF.columns.get_loc("NumberOfReports")] = len(groupedDF)
         groupedDF = groupedDF.dropna()
         outDF = outDF.append(groupedDF, ignore_index=True, )
-    print("Printing hourly report DF to "+csvHourlyFile+"...")
+    print("     Printing hourly report DF to "+csvHourlyFile+"...")
     with open(csvHourlyFile,'a') as outCSV:                                                                         # Turning the DF into csv and appending the new data to the file
         outCSV.write(outDF.to_csv(header=False, index=False))
 
@@ -190,7 +191,7 @@ def turnHourly_toMonthlyReport():
             insertRow = [strMonthYr, monthlyDFArray[dfRow]['CensusTract'][row],reportSum ]                          # Adding the rows for that census Report for this month
             rowsForDF.append(insertRow)
     monthlyTractReportCountDF =  pd.DataFrame(rowsForDF, columns=colsForDF)
-    print("Printing monthly report DFs to "+csvMonthlyFile+"...")
+    print("     Printing monthly report DFs to "+csvMonthlyFile+"...")
     csvOutClear = open(csvMonthlyFile, "w")                                                                         # clearing the file
     csvOutClear.truncate()  
     with open(csvMonthlyFile,'a') as outCSV:                                                                        # Turning the DF into csv and appending the new data to the file
@@ -216,7 +217,7 @@ def WebscraperJsonToCSV():
         jsonDF = pd.read_json(jsonStr, orient='records')                                                            # Turning the json string to a pandas dataframe
         print("Run Starting " + str(scrapingCount) + "       Reports Scraped: "+str(len(jsonDF)))
     except:
-        print("Couldnt get the json data so will re-run function. This is Run "+ str(scrapingCount))
+        print("     Couldnt get the json data so will re-run function. This is Run "+ str(scrapingCount))
         scheduler.resume() #****resuming the job 
         return WebscraperJsonToCSV()
     
@@ -239,7 +240,7 @@ def WebscraperJsonToCSV():
                     writer.writerow(csvHeader)
             else:
                 csvHeader=list(pd.read_csv(csvFile).columns)                                                            # b) Since the csv already had data, it means i will append new data to it so just use the header of that csv file.    
-                print("     csv had data so copying the header")
+                # print("     csv had data so copying the header")
     except Exception as e:
         csvReadCount = csvReadCount + 1
         if csvReadCount == 11:
@@ -261,7 +262,7 @@ def WebscraperJsonToCSV():
         scheduler.resume() #****resuming the job
         return
     for row in range(0,len(newTicketsArray)):                                                                       # Going through the array of new ticket number and adding only their rows to th new data frame
-        print(newTicketsArray[row] + " not in set so adding it-----")
+        print("     "+newTicketsArray[row] + " not in set so adding it-----")
         newTicketDF = newTicketDF.append(jsonDF[jsonDF.TicketNumber == newTicketsArray[row]], sort=False, ignore_index=True)
 
     # 4 &) TURN THE MICROSOFT DATE IN "DateReported" INTO STANDARD FORMAT AND SEPERATE INTO "Date", "Time", "Hour" COLUMNS AND THEN DROP COLUMN "DateReported" :
@@ -271,7 +272,7 @@ def WebscraperJsonToCSV():
         newTicketDF.iloc[row, newTicketDF.columns.get_loc("Date")] = dateTimeHr[0]                                  # Adding the Date, Time, Hour values to the appropriate cells
         newTicketDF.iloc[row, newTicketDF.columns.get_loc("Time")] = dateTimeHr[1]
         newTicketDF.iloc[row, newTicketDF.columns.get_loc("Hour")] = dateTimeHr[2]
-        print("Getting Census data...")
+        print("     Getting Census data...")
         returnArray = getCensusTract(float(newTicketDF.loc[row]["Longitude"].item()), float(newTicketDF.loc[row]["Latitude"].item()))   # returns: [CensusTrack, CensusBlock, CountyName] from Census Beru's API
         newTicketDF.iloc[row, newTicketDF.columns.get_loc("CensusTract")] = returnArray[0]                          # Adding the CensusTrack, CensusBlock, CountyName values to the appropriate cells
         newTicketDF.iloc[row, newTicketDF.columns.get_loc("CensusBlock")] = returnArray[1]
@@ -279,7 +280,7 @@ def WebscraperJsonToCSV():
     newTicketDF = newTicketDF.drop(columns=["DateReported"])                                                        # Finally dropping the "DateReported" column    
     
     # 6) WRITE TO CSV FILE:
-    print("Appending new Gas Leak reports to file...")
+    print("     Appending new Gas Leak reports to file...")
     with open(csvFile,'a') as outCSV:                                                                               # Turning the DF into csv and appending the new data to the file
        outCSV.write(newTicketDF.to_csv(header=False, index=False))
     
@@ -293,7 +294,7 @@ def WebscraperJsonToCSV():
     
 # 8) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=30) # need to give enough time to go the entire process
+scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=5) # need to give enough time to go the entire process
 scheduler.start()
 
 
