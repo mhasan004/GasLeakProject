@@ -34,8 +34,8 @@ url = 'https://apps.coned.com/gasleakmapweb/GasLeakMapWeb.aspx?ajax=true&'      
 dropCol = True                                                                                                      # If you want to drop a column, specify which ones in step 2 in WebscraperJsonToCSV()
 replaceColWith = ["Date", "Time", "Hour"]#, "CensusTract", "CensusBlock", "CountyName" ]                              # Replacing column DateReported with these "Date", "Time", "Hour and Made 3 more cols for Part 2 Census data
 
-# PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'                                                       # the path to the .git file (.git location on my raspberry pi)
-PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'                                                  # the path to the .git file (.git location on my Laptop)
+PATH_OF_GIT_REPO = r'/home/pi/repositories/gh/GasLeakProject'                                                       # the path to the .git file (.git location on my raspberry pi)
+# PATH_OF_GIT_REPO = r'/home/hasan/repositories/gh/GasLeakProject'                                                  # the path to the .git file (.git location on my Laptop)
 COMMIT_MESSAGE = 'Automated Push - New Ticket Update'                                                               # the commmit message when it is pushed
 scrapingCount = 0                                                                                                   # Just counting how many times i have scraped the website while this was running
 csvreadCount = 0
@@ -391,7 +391,7 @@ def WebscraperJsonToCSV():
 
 # 8) RESCAN FOR TICKETS every x time using sceduler
 scheduler = BlockingScheduler()
-scheduler.add_job(WebscraperJsonToCSV, 'interval', seconds=5) # need to give enough time to go the entire process
+scheduler.add_job(WebscraperJsonToCSV, 'interval', minutes=30) # need to give enough time to go the entire process
 scheduler.start()
 
 
