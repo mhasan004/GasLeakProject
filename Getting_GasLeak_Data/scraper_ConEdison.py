@@ -45,15 +45,15 @@ def git_push():
     try:
         repo.remotes.origin.pull()                                                                                  # try pulling new changes from the github repo (if there are any) so i can push changes
     except:
-        print("Couldnt pull from repo")
+        print("     Couldnt pull from repo\n")
     repo.git.add(update=True)
     repo.index.commit(COMMIT_MESSAGE)
     origin = repo.remote(name='origin')
     try:
         origin.push()                                                                                               # try pushing the changes to github
-        print("******** PUSHED TO GITHUB for Run " + str(scrapingCount)+"********")
+        print("     ******** PUSHED TO GITHUB for Run " + str(scrapingCount)+"********\n")
     except:
-        print('Some error occured while pushing the code')  
+        print('     Some error occured while pushing the code\n')  
 
 # FUNCTION TO TURN MICROSOFT JSON DATE TO mm/dd/yyyy AND TIME: returns ["mm/dd/yyyy", "hh:mm AM/PM", "hh AM/PM"]
 def turnToDateTimeHr(microsoftDate):         
