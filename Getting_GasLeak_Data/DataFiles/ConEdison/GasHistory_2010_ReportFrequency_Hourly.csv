@@ -1,4 +1,5 @@
 MonthYear,Date,Year,Hour,CensusTract_2010,NumberOfReports,CensusTract_2010_ID,CensusTract_2010_NAME,CountyName_2010,GEOID_list,CensusBlockID_list,Zipcode_list,Ticket_list
+May-2020,05/30/2020,2020,10 AM,1385.02,1,138502,Census Tract 1385.02,Queens County,[360811385021019],[1019],[11362],['QL20003257']
 May-2020,05/29/2020,2020,10 AM,143.0,1,14300,Census Tract 143,New York County,[360610143001033],[1033],[10065],['ML20006600']
 May-2020,05/29/2020,2020,09 AM,101.0,1,10100,Census Tract 101,New York County,[360610101001004],[1004],[10001],['ML20006598']
 May-2020,05/29/2020,2020,11 AM,68.0,1,6800,Census Tract 68,New York County,[360610068001002],[1002],[10010],['ML20006601']
