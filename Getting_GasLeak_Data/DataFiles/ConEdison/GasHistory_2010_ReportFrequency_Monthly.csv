@@ -1,4 +1,15 @@
 MonthYear,CensusTract_2010,TotalReports,CensusTract_2010_ID,CensusTract_2010_NAME,CountyName_2010,GEOID_SCT,CensusBlockID_list,Zipcode_list,Ticket_list,Classification_list,Month,Year
+June-2020,67.0,1,6700,Census Tract 67,Westchester County,36119006700,[4002],[10804],['WL20005218'],['M'],6,2020
+June-2020,14.02,1,1402,Census Tract 14.02,Westchester County,36119001402,[2003],[10705],['WL20005217'],['M'],6,2020
+June-2020,2.03,1,203,Census Tract 2.03,Westchester County,36119000203,[1002],[10705],['WL20005235'],['P'],6,2020
+June-2020,1385.02,1,138502,Census Tract 1385.02,Queens County,36081138502,[1019],[11362],['QL20003276'],['M'],6,2020
+June-2020,1191.0,1,119100,Census Tract 1191,Queens County,36081119100,[2000],[11358],['QL20003282'],['P'],6,2020
+June-2020,1059.0,1,105900,Census Tract 1059,Queens County,36081105900,[1002],[11357],['QL20003277'],['P'],6,2020
+June-2020,72.0,1,7200,Census Tract 72,New York County,36061007200,[4002],[10016],['ML20006696'],['P'],6,2020
+June-2020,34.0,1,3400,Census Tract 34,New York County,36061003400,[1001],[10009],['ML20006678'],['P'],6,2020
+June-2020,426.0,1,42600,Census Tract 426,Bronx County,36005042600,[2001],[10466],['XL20005916'],['M'],6,2020
+June-2020,387.0,1,38700,Census Tract 387,Bronx County,36005038700,[2002],[10458],['XL20005913'],['P'],6,2020
+June-2020,385.0,2,38500,Census Tract 385,Bronx County,36005038500,"[1009, 1007]","[10458, 10458]","['XL20005903', 'XL20005908']","['P', 'P']",6,2020
 May-2020,104.0,2,10400,Census Tract 104,Fairfield County,90010104003,"[3012, 3012]","[10573, 10573]","['WL20004580', 'WL20004536']","['P', 'M']",5,2020
 May-2020,148.11,1,14811,Census Tract 148.11,Westchester County,36119014811,[2010],[10598],['WL20004555'],['M'],5,2020
 May-2020,148.1,1,14810,Census Tract 148.10,Westchester County,36119014810,[1007],[10598],['WL20004958'],['M'],5,2020
