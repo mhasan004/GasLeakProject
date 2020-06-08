@@ -369,7 +369,7 @@ def WebscraperJsonToCSV():
     for row in range(0, len(newTicketDF)):                                                                          # Replacing DateReported with Date, Time, Hour columns
         print("     Getting Census data...")
         returnArray = getCensusTract(float(newTicketDF.loc[row]["Longitude"].item()), float(newTicketDF.loc[row]["Latitude"].item()))   # Returns: TractBASENAME, BlockBASENAME, CountyName, Geoid, TractID, TrackID Name, BlockID, Block Name] from Census Beru's API
-        if returnArray[0] = 'error':                                                                                # if there is an error, stop this ticket from being read
+        if returnArray[0] == 'error':                                                                                # if there is an error, stop this ticket from being read
             continue
         dateTimeHr = turnToDateTimeHr(str(newTicketDF["DateReported"][row]))                                        # Takes the microsoft date and returns: ["mm/dd/yyyy", "hh:mm AM/PM", "hh AM/PM"]
         newTicketDF.iloc[row, newTicketDF.columns.get_loc("Date")] = dateTimeHr[0]                                  # Adding the Date, Time, Hour values to the appropriate cells
