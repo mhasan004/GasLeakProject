@@ -24,7 +24,7 @@ from bs4 import BeautifulSoup                                                   
 from apscheduler.schedulers.blocking import BlockingScheduler                                                       # Sceduler. Will run a function every x seconds/minutes/hours
 from git import Repo                                                                                                # (GitPython) To push changes to gh
 
-# SETTING UP GLOBAL VARIABLES: need to change the first eight variables below
+ # SETTING UP GLOBAL VARIABLES: need to change the first eight variables below
 csvFile         = "DataFiles/ConEdison/GasHistory_2010_ConEdisonTracts.csv"
 csvHourlyFile   = "DataFiles/ConEdison/GasHistory_2010_ReportFrequency_Hourly.csv"                                                             # In PART C we will turn the ticket history data to hourly data
 csvMonthlyFile  = "DataFiles/ConEdison/GasHistory_2010_ReportFrequency_Monthly.csv"                                                             # In PART C we will turn the ticket history data to hourly data
@@ -367,12 +367,14 @@ def WebscraperJsonToCSV():
     # 5) WILL USE THE CENSUS BUREAU API TO GET CENSUS DATA BASED ON EACH TICKET'S LONGITUDE AND LATITUDE DATA:             
     returnCols = [ "CensusTract_2010", "CensusBlock_2010", "CountyName_2010", "GEOID_2010", "CensusTract_2010_ID", "CensusTract_2010_NAME", "CensusBlock_2010_ID", "CensusBlock_2010_NAME"]  
     for row in range(0, len(newTicketDF)):                                                                          # Replacing DateReported with Date, Time, Hour columns
+        print("     Getting Census data...")
+        returnArray = getCensusTract(float(newTicketDF.loc[row]["Longitude"].item()), float(newTicketDF.loc[row]["Latitude"].item()))   # Returns: TractBASENAME, BlockBASENAME, CountyName, Geoid, TractID, TrackID Name, BlockID, Block Name] from Census Beru's API
+        if returnArray[0] = 'error':                                                                                # if there is an error, stop this ticket from being read
+            continue
         dateTimeHr = turnToDateTimeHr(str(newTicketDF["DateReported"][row]))                                        # Takes the microsoft date and returns: ["mm/dd/yyyy", "hh:mm AM/PM", "hh AM/PM"]
         newTicketDF.iloc[row, newTicketDF.columns.get_loc("Date")] = dateTimeHr[0]                                  # Adding the Date, Time, Hour values to the appropriate cells
         newTicketDF.iloc[row, newTicketDF.columns.get_loc("Time")] = dateTimeHr[1]
         newTicketDF.iloc[row, newTicketDF.columns.get_loc("Hour")] = dateTimeHr[2]
-        print("     Getting Census data...")
-        returnArray = getCensusTract(float(newTicketDF.loc[row]["Longitude"].item()), float(newTicketDF.loc[row]["Latitude"].item()))   # Returns: TractBASENAME, BlockBASENAME, CountyName, Geoid, TractID, TrackID Name, BlockID, Block Name] from Census Beru's API
         if len(returnArray) == len(returnCols):
             for colToWrite in range(0, len(returnArray)):
                 newTicketDF.at[row, returnCols[colToWrite]] = returnArray[colToWrite]
