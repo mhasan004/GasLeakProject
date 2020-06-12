@@ -2,6 +2,7 @@ MonthYear,CensusTract_2010,TotalReports,CensusTract_2010_ID,CensusTract_2010_NAM
 June-2020,148.09,1,14809,Census Tract 148.09,Westchester County,36119014809,[1008],[10598],['WL20005256'],['M'],6,2020
 June-2020,143.0,1,14300,Census Tract 143,Westchester County,36119014300,[2013],[10566],['WL20005335'],['M'],6,2020
 June-2020,141.0,2,14100,Census Tract 141,Westchester County,36119014100,"[3002, 4014]","[10566, 10566]","['WL20005418', 'WL20005280']","['P', 'M']",6,2020
+June-2020,133.04,1,13304,Census Tract 133.04,Westchester County,36119013304,[3000],[10562],['WL20005464'],['M'],6,2020
 June-2020,120.0,1,12000,Census Tract 120,Westchester County,36119012000,[1001],[10532],['WL20005419'],['M'],6,2020
 June-2020,110.0,2,11000,Census Tract 110,Westchester County,36119011000,"[1031, 2006]","[10523, 10523]","['WL20005452', 'WL20005420']","['P', 'M']",6,2020
 June-2020,109.02,1,10902,Census Tract 109.02,Westchester County,36119010902,[2044],[10603],['WL20005379'],['M'],6,2020
@@ -32,7 +33,7 @@ June-2020,34.0,1,3400,Census Tract 34,Westchester County,36119003400,[2003],[105
 June-2020,33.0,1,3300,Census Tract 33,Westchester County,36119003300,[3005],[10553],['WL20005375'],['M'],6,2020
 June-2020,21.03,1,2103,Census Tract 21.03,Westchester County,36119002103,[1002],[10707],['WL20005244'],['P'],6,2020
 June-2020,16.0,1,1600,Census Tract 16,Westchester County,36119001600,[1000],[10701],['WL20005294'],['P'],6,2020
-June-2020,15.02,1,1502,Census Tract 15.02,Westchester County,36119001502,[3001],[10704],['WL20005445'],['M'],6,2020
+June-2020,15.02,2,1502,Census Tract 15.02,Westchester County,36119001502,"[3002, 3001]","[10704, 10704]","['WL20005470', 'WL20005445']","['M', 'M']",6,2020
 June-2020,14.02,1,1402,Census Tract 14.02,Westchester County,36119001402,[2003],[10705],['WL20005217'],['M'],6,2020
 June-2020,13.01,2,1301,Census Tract 13.01,Westchester County,36119001301,"[1010, 3000]","[10705, 10705]","['WL20005238', 'WL20005242']","['M', 'M']",6,2020
 June-2020,9.0,1,900,Census Tract 9,Westchester County,36119000900,[2026],[10703],['WL20005451'],['P'],6,2020
@@ -93,6 +94,7 @@ June-2020,286.0,1,28600,Census Tract 286,Bronx County,36005028600,[1004],[10461]
 June-2020,277.0,1,27700,Census Tract 277,Bronx County,36005027700,[1001],[10463],['XL20005988'],['P'],6,2020
 June-2020,274.01,1,27401,Census Tract 274.01,Bronx County,36005027401,[3004],[10465],['XL20006110'],['P'],6,2020
 June-2020,229.01,1,22901,Census Tract 229.01,Bronx County,36005022901,[3001],[10457],['XL20006108'],['P'],6,2020
+June-2020,205.02,1,20502,Census Tract 205.02,Bronx County,36005020502,[3000],[10453],['XL20006177'],['P'],6,2020
 June-2020,184.0,1,18400,Census Tract 184,Bronx County,36005018400,[4007],[10461],['XL20006022'],['M'],6,2020
 June-2020,167.0,1,16700,Census Tract 167,Bronx County,36005016700,[1001],[10457],['XL20006058'],['P'],6,2020
 June-2020,132.0,1,13200,Census Tract 132,Bronx County,36005013200,[4006],[10465],['XL20006149'],['M'],6,2020
