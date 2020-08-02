@@ -1,5 +1,12 @@
 MonthYear,CensusTract_2010,TotalReports,CensusTract_2010_ID,CensusTract_2010_NAME,CountyName_2010,GEOID_SCT,CensusBlockID_list,Zipcode_list,Ticket_list,Classification_list,Month,Year
+August-2020,106.0,1,10600,Census Tract 106,Westchester County,36119010600,[2005],[10502],['WL20006616'],['P'],8,2020
+August-2020,68.02,1,6802,Census Tract 68.02,Westchester County,36119006802,[4009],[10804],['WL20006614'],['M'],8,2020
+August-2020,66.0,1,6600,Census Tract 66,Westchester County,36119006600,[4009],[10801],['WL20006624'],['M'],8,2020
+August-2020,1551.02,1,155102,Census Tract 1551.02,Queens County,36081155102,[4003],[11004],['QL20004158'],['M'],8,2020
+August-2020,1123.0,1,112300,Census Tract 1123,Queens County,36081112300,[1003],[11361],['QL20004161'],['M'],8,2020
 August-2020,871.0,1,87100,Census Tract 871,Queens County,36081087100,[1001],[11354],['QL20004154'],['P'],8,2020
+August-2020,85.0,1,8500,Census Tract 85,Queens County,36081008500,[2000],[11101],['QL20004162'],['M'],8,2020
+August-2020,14.02,1,1402,Census Tract 14.02,New York County,36061001402,[2005],[10002],['ML20008765'],['P'],8,2020
 July-2020,148.11,1,14811,Census Tract 148.11,Westchester County,36119014811,[4009],[10598],['WL20006057'],['M'],7,2020
 July-2020,147.04,1,14704,Census Tract 147.04,Westchester County,36119014704,[1020],[10567],['WL20006430'],['M'],7,2020
 July-2020,146.07,1,14607,Census Tract 146.07,Westchester County,36119014607,[1011],[10567],['WL20006435'],['M'],7,2020
